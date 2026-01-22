@@ -2,888 +2,1816 @@
 <html lang="id" class="h-full">
  <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portal IPS Kelas 7</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <script src="/_sdk/element_sdk.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <style>
-    body {
-      box-sizing: border-box;
-    }
-    * {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    .gradient-bg {
-      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%);
-    }
-    .card-hover {
-      transition: all 0.3s ease;
-    }
-    .card-hover:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    }
-    .nav-btn {
-      position: relative;
-      overflow: hidden;
-    }
-    .nav-btn::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: white;
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-    .nav-btn:hover::after, .nav-btn.active::after {
-      width: 80%;
-    }
-    .chapter-card {
-      background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-      border-left: 4px solid;
-    }
-    .semester-badge {
-      background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-    }
-    .material-icon {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      font-size: 24px;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade {
-      animation: fadeIn 0.5s ease forwards;
-    }
-    .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
-    .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
-    .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
-    .login-card {
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.95);
-    }
-  </style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .glassmorphism-dark {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(102, 126, 234, 0.35);
+        }
+        
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .rotate-icon.rotated {
+            transform: rotate(180deg);
+        }
+        
+        .tab-active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 10px 30px -10px rgba(102, 126, 234, 0.5);
+        }
+        
+        .deadline-urgent {
+            border-left: 4px solid #ef4444;
+            animation: pulse-border 2s infinite;
+        }
+        
+        .deadline-warning {
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .deadline-normal {
+            border-left: 4px solid #10b981;
+        }
+        
+        @keyframes pulse-border {
+            0%, 100% { border-left-color: #ef4444; }
+            50% { border-left-color: #fca5a5; }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .animate-slide-in {
+            animation: slideIn 0.5s ease forwards;
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease forwards;
+        }
+        
+        .chapter-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .chapter-content.open {
+            max-height: 5000px;
+            padding-top: 1rem;
+            opacity: 1;
+        }
+        
+        .sub-chapter-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .sub-chapter-content.open {
+            max-height: 2000px;
+            opacity: 1;
+        }
+        
+        .toast {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+        
+        .input-focus:focus {
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: #667eea;
+            top: -100px;
+            right: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: #764ba2;
+            bottom: 10%;
+            left: -50px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: #f093fb;
+            top: 40%;
+            right: 10%;
+            animation: float 12s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 3px;
+        }
+        
+        .profile-avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .semester-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .semester-card.active {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .semester1-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+        
+        .semester2-header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .material-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .material-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Modal Iframe Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 1rem;
+        }
+        
+        .modal-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal-container {
+            width: 100%;
+            max-width: 1400px;
+            height: 90vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .modal-overlay.show .modal-container {
+            transform: scale(1);
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        
+        .modal-title {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .modal-close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-body {
+            flex: 1;
+            position: relative;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+        
+        .iframe-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1;
+        }
+        
+        .iframe-loader.hidden {
+            display: none;
+        }
+        
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(102, 126, 234, 0.2);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .loader-text {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        /* Link Input Styles for Teachers */
+        .link-input-group {
+            margin-top: 0.75rem;
+            padding: 1rem;
+            background: rgba(102, 126, 234, 0.05);
+            border: 2px dashed rgba(102, 126, 234, 0.3);
+            border-radius: 12px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .link-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+        }
+        
+        .link-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        }
+        
+        .save-link-btn {
+            width: 100%;
+            padding: 0.625rem 1rem;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .save-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .save-link-btn:active {
+            transform: translateY(0);
+        }
+        
+        .link-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        .link-status.empty {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+        
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+        
+        .material-btn.has-link {
+            animation: pulse-ring 2s infinite;
+        }
+        
+        /* Auto-selected task badge */
+        .auto-selected-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+    </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
  <body class="h-full bg-slate-50 overflow-auto">
-  <div class="min-h-full w-full"><!-- LOGIN PAGE -->
-   <div id="login-page" class="min-h-full gradient-bg flex items-center justify-center p-4">
-    <div class="w-full max-w-md">
-     <div class="text-center mb-8 animate-fade">
-      <div class="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4 backdrop-blur">
-       <svg class="w-12 h-12 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
-       </svg>
-      </div>
-      <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Portal IPS Kelas 7</h1>
-      <p class="text-blue-100">Silakan pilih jenis akun Anda</p>
+  <div id="app" class="min-h-full w-full"><!-- Modal Iframe Viewer -->
+   <div id="modal-viewer" class="modal-overlay">
+    <div class="modal-container">
+     <div class="modal-header">
+      <div class="modal-title">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+       </svg><span id="modal-content-title">Sedang Memuat Materi...</span>
+      </div><button onclick="closeModal()" class="modal-close-btn">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg> Tutup Materi </button>
      </div>
-     <div class="grid grid-cols-2 gap-4 mb-6"><button onclick="showLoginForm('siswa')" id="btn-siswa-tab" class="login-card p-6 rounded-2xl shadow-xl text-center group border-2 border-transparent hover:border-white transition">
-       <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-3">
-        <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-        </svg>
-       </div><h3 class="font-bold text-slate-800 text-lg mb-1">Login Siswa</h3><p class="text-sm text-slate-600">Akses materi &amp; tugas</p></button> <button onclick="showLoginForm('guru')" id="btn-guru-tab" class="login-card p-6 rounded-2xl shadow-xl text-center group border-2 border-transparent hover:border-white transition">
-       <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-3">
-        <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
-        </svg>
-       </div><h3 class="font-bold text-slate-800 text-lg mb-1">Login Guru</h3><p class="text-sm text-slate-600">Kelola portal &amp; materi</p></button>
-     </div><!-- FORM LOGIN SISWA -->
-     <div id="form-siswa" class="login-card p-8 rounded-2xl shadow-2xl animate-fade">
-      <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2"><span class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center text-green-600">👨‍🎓</span> Login Siswa</h2>
-      <div class="space-y-4">
-       <div><label class="block text-sm font-semibold text-slate-700 mb-2">Nama Lengkap</label> <input type="text" id="siswa-nama" class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-green-500 focus:outline-none transition" placeholder="Masukkan nama lengkap">
+     <div class="modal-body">
+      <div id="iframe-loader" class="iframe-loader">
+       <div class="loader-spinner"></div>
+       <div class="loader-text">
+        Memuat konten...
        </div>
-       <div><label class="block text-sm font-semibold text-slate-700 mb-2">Kelas</label> <select id="siswa-kelas" class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-green-500 focus:outline-none transition"> <option value="">Pilih Kelas</option> <option value="7E">7E</option> <option value="7F">7F</option> <option value="7G">7G</option></select>
-       </div><button onclick="loginSiswa()" class="w-full bg-gradient-to-r from-green-500 to-emerald-400 text-white font-bold py-3 rounded-xl hover:from-green-600 hover:to-emerald-500 transition shadow-lg"> 🚀 Masuk Portal </button>
-      </div>
-     </div><!-- FORM LOGIN GURU -->
-     <div id="form-guru" class="login-card p-8 rounded-2xl shadow-2xl animate-fade hidden">
-      <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2"><span class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600">👨‍🏫</span> Login Guru</h2>
-      <div class="space-y-4">
-       <div><label class="block text-sm font-semibold text-slate-700 mb-2">Password</label> <input type="password" id="guru-password" class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition" placeholder="Masukkan password">
-       </div><button onclick="loginGuru()" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 rounded-xl hover:from-purple-600 hover:to-pink-600 transition shadow-lg"> 🔑 Masuk Portal Admin </button>
-      </div>
+      </div><iframe id="content-iframe" class="modal-iframe" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
      </div>
     </div>
-   </div><!-- MAIN PORTAL (Hidden until logged in) -->
-   <div id="main-portal" class="hidden"><!-- NAVBAR -->
-    <nav class="gradient-bg text-white px-4 md:px-8 py-4 sticky top-0 z-50 shadow-lg">
-     <div class="max-w-7xl mx-auto flex justify-between items-center flex-wrap gap-4">
-      <div class="flex items-center gap-3">
-       <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
-        <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
+   </div><!-- Loading Overlay -->
+   <div id="loading-overlay" class="loading-overlay">
+    <div class="glassmorphism rounded-3xl p-8 flex flex-col items-center gap-4 animate-slide-in">
+     <div class="spinner"></div>
+     <div class="text-center">
+      <p class="text-lg font-semibold text-slate-800">Sedang Mengirim...</p>
+      <p class="text-sm text-slate-600">Mohon tunggu sebentar</p>
+     </div>
+    </div>
+   </div><!-- Toast Notification -->
+   <div id="toast" class="toast fixed top-6 right-6 z-50 glassmorphism rounded-2xl px-6 py-4 shadow-2xl flex items-center gap-3">
+    <div id="toast-icon" class="w-10 h-10 rounded-full flex items-center justify-center">
+     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+     </svg>
+    </div>
+    <div>
+     <p id="toast-title" class="font-semibold text-slate-800"></p>
+     <p id="toast-message" class="text-sm text-slate-600"></p>
+    </div>
+   </div><!-- Login Screen -->
+   <div id="login-screen" class="min-h-full w-full gradient-bg flex items-center justify-center p-4 relative">
+    <div class="floating-shapes">
+     <div class="shape shape-1"></div>
+     <div class="shape shape-2"></div>
+     <div class="shape shape-3"></div>
+    </div>
+    <div class="glassmorphism rounded-3xl p-8 md:p-12 w-full max-w-md relative z-10 animate-slide-in">
+     <div class="text-center mb-8">
+      <div class="w-20 h-20 mx-auto mb-6 profile-avatar rounded-2xl flex items-center justify-center shadow-lg">
+       <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+       </svg>
+      </div>
+      <h1 id="portal-title-display" class="text-3xl font-bold gradient-text mb-2">Portal IPS Kelas 7</h1>
+      <p id="welcome-text-display" class="text-slate-600">Selamat datang di portal pembelajaran</p>
+     </div>
+     <div class="space-y-4"><button onclick="login('siswa')" class="w-full py-4 px-6 btn-primary text-white font-semibold rounded-2xl flex items-center justify-center gap-3">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+       </svg> Masuk sebagai Siswa </button>
+      <div class="relative">
+       <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-slate-300"></div>
+       </div>
+       <div class="relative flex justify-center text-sm"><span class="px-4 bg-white/80 text-slate-500 rounded-full">atau</span>
+       </div>
+      </div>
+      <div class="space-y-3">
+       <div class="relative"><input type="password" id="teacher-password" placeholder="Password Guru" class="w-full py-4 px-6 bg-white/50 border border-slate-200 rounded-2xl input-focus focus:outline-none text-slate-700 placeholder-slate-400" onkeypress="if(event.key === 'Enter') login('guru')">
+        <svg class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
         </svg>
-       </div>
-       <div>
-        <h1 id="nav-title" class="font-bold text-base md:text-xl">Portal IPS Kelas 7</h1>
-        <p id="user-info" class="text-xs text-blue-100"></p>
-       </div>
-      </div>
-      <div class="flex gap-2 md:gap-4 flex-wrap"><button onclick="showSection('materi')" id="btn-materi" class="nav-btn px-3 py-2 rounded-lg hover:bg-white/10 transition font-medium text-sm md:text-base active"> 📚 Bahan Ajar </button> <button onclick="showSection('tugas')" id="btn-tugas" class="nav-btn px-3 py-2 rounded-lg hover:bg-white/10 transition font-medium text-sm md:text-base"> 📝 Tugas </button> <button onclick="showSection('guru')" id="btn-guru" class="nav-btn px-3 py-2 rounded-lg hover:bg-white/10 transition font-medium text-sm md:text-base"> 👨‍🏫 Profil Guru </button> <button onclick="logout()" class="px-3 py-2 bg-red-500 hover:bg-red-600 rounded-lg transition font-medium text-sm md:text-base"> 🚪 Keluar </button>
+       </div><button onclick="login('guru')" class="w-full py-4 px-6 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-2xl transition-all flex items-center justify-center gap-3">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg> Masuk sebagai Guru </button>
       </div>
      </div>
-    </nav><!-- MATERI SECTION -->
-    <section id="materi" class="max-w-7xl mx-auto p-4 md:p-6"><!-- Semester Selector -->
-     <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 animate-fade">
-      <h2 class="text-xl font-bold text-slate-800 mb-4">📅 Pilih Semester</h2>
-      <div class="grid grid-cols-2 gap-4"><button onclick="showSemester('smt1')" id="btn-smt1" class="semester-btn p-4 md:p-6 rounded-2xl border-2 border-slate-200 hover:border-blue-500 transition-all text-left group">
-        <div class="flex items-center gap-3 mb-2"><span class="text-3xl">📘</span> <span class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-blue-600">Semester 1</span>
-        </div><p class="text-sm text-slate-500">BAB 1 - BAB 2</p></button> <button onclick="showSemester('smt2')" id="btn-smt2" class="semester-btn p-4 md:p-6 rounded-2xl border-2 border-slate-200 hover:border-blue-500 transition-all text-left group">
-        <div class="flex items-center gap-3 mb-2"><span class="text-3xl">📗</span> <span class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-blue-600">Semester 2</span>
-        </div><p class="text-sm text-slate-500">BAB 3 - BAB 4 </p></button>
-      </div>
-     </div><!-- SEMESTER 1 -->
-     <div id="smt1" class="hidden space-y-8">
-      <div class="flex items-center gap-3 mb-6 animate-fade">
-       <div class="semester-badge px-4 py-2 rounded-full text-white font-bold">
-        Semester 1
-       </div>
-       <div class="h-1 flex-1 bg-gradient-to-r from-amber-400 to-transparent rounded"></div>
-      </div><!-- BAB 1 -->
-      <div class="chapter-card border-blue-500 p-6 rounded-2xl shadow-lg animate-fade animate-delay-1"><button onclick="toggleChapter('bab1')" class="w-full flex items-start gap-4 mb-6 text-left group">
-        <div class="material-icon bg-blue-100 text-blue-600 shrink-0">
-         🌍
-        </div>
-        <div class="flex-1"><span class="text-sm font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full">BAB 1</span>
-         <h3 class="text-xl md:text-2xl font-bold text-slate-800 mt-2 group-hover:text-blue-600 transition">Manusia, Tempat, dan Lingkungannya</h3>
-         <p class="text-slate-500 mt-1">Diri dan Keluarga di Tengah Lingkungan Sosial</p>
-        </div>
-        <div id="icon-bab1" class="text-2xl text-slate-400 transition-transform duration-300">
-         ▼
-        </div></button>
-       <div id="content-bab1" class="grid md:grid-cols-3 gap-4 hidden"><!-- PDF Material -->
-        <div class="bg-slate-50 rounded-xl p-4">
-         <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">📄</span> <span class="font-semibold text-slate-700">Materi PDF</span>
-         </div>
-         <div class="space-y-3 teacher-only"><input type="url" id="pdf-bab1" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://drive.google.com/..."> <button onclick="saveLink('bab1', 'pdf')" class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition"> 💾 Simpan Link PDF </button>
-         </div><a id="link-pdf-bab1" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-green-50 text-green-700 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition mt-3"> 📖 Buka PDF </a>
-        </div><!-- Video Material -->
-        <div class="bg-slate-50 rounded-xl p-4">
-         <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white">▶️</span> <span class="font-semibold text-slate-700">Video Pembelajaran</span>
-         </div>
-         <div class="space-y-3 teacher-only"><input type="url" id="video-bab1" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://youtube.com/..."> <button onclick="saveLink('bab1', 'video')" class="w-full bg-red-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition"> 💾 Simpan Link Video </button>
-         </div><a id="link-video-bab1" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-red-50 text-red-700 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition mt-3"> ▶️ Tonton Video </a>
-        </div><!-- Quiz Material -->
-        <div class="bg-slate-50 rounded-xl p-4">
-         <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white">🎯</span> <span class="font-semibold text-slate-700">Kuis Interaktif</span>
-         </div>
-         <div class="space-y-3 teacher-only"><input type="url" id="quiz-bab1" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."> <button onclick="saveLink('bab1', 'quiz')" class="w-full bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-600 transition"> 💾 Simpan Link Kuis </button>
-         </div><a id="link-quiz-bab1" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-purple-50 text-purple-700 py-2 rounded-lg text-sm font-medium hover:bg-purple-100 transition mt-3"> 🎯 Mulai Kuis </a>
-        </div>
-       </div>
-      </div><!-- BAB 2 -->
-      <div class="chapter-card border-green-500 p-6 rounded-2xl shadow-lg animate-fade animate-delay-2"><button onclick="toggleChapter('bab2')" class="w-full flex items-start gap-4 mb-6 text-left group">
-        <div class="material-icon bg-green-100 text-green-600 shrink-0">
-         🤝
-        </div>
-        <div class="flex-1"><span class="text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">BAB 2</span>
-         <h3 class="text-xl md:text-2xl font-bold text-slate-800 mt-2 group-hover:text-green-600 transition">Interaksi Sosial</h3>
-         <p class="text-slate-500 mt-1">Pengertian &amp; Bentuk Interaksi Sosial</p>
-        </div>
-        <div id="icon-bab2" class="text-2xl text-slate-400 transition-transform duration-300">
-         ▼
-        </div></button>
-       <div id="content-bab2" class="grid md:grid-cols-3 gap-4 hidden">
-        <div class="bg-slate-50 rounded-xl p-4">
-         <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">📄</span> <span class="font-semibold text-slate-700">Materi PDF</span>
-         </div>
-         <div class="space-y-3 teacher-only"><input type="url" id="pdf-bab2" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://drive.google.com/..."> <button onclick="saveLink('bab2', 'pdf')" class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition"> 💾 Simpan Link PDF </button>
-         </div><a id="link-pdf-bab2" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-green-50 text-green-700 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition mt-3"> 📖 Buka PDF </a>
-        </div>
-        <div class="bg-slate-50 rounded-xl p-4">
-         <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white">▶️</span> <span class="font-semibold text-slate-700">Video Pembelajaran</span>
-         </div>
-         <div class="space-y-3 teacher-only"><input type="url" id="video-bab2" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://youtube.com/..."> <button onclick="saveLink('bab2', 'video')" class="w-full bg-red-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition"> 💾 Simpan Link Video </button>
-         </div><a id="link-video-bab2" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-red-50 text-red-700 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition mt-3"> ▶️ Tonton Video </a>
-        </div>
-        <div class="bg-slate-50 rounded-xl p-4">
-         <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white">🎯</span> <span class="font-semibold text-slate-700">Kuis Interaktif</span>
-         </div>
-         <div class="space-y-3 teacher-only"><input type="url" id="quiz-bab2" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."> <button onclick="saveLink('bab2', 'quiz')" class="w-full bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-600 transition"> 💾 Simpan Link Kuis </button>
-         </div><a id="link-quiz-bab2" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-purple-50 text-purple-700 py-2 rounded-lg text-sm font-medium hover:bg-purple-100 transition mt-3"> 🎯 Mulai Kuis </a>
-        </div>
-       </div>
-      </div>
-     </div><!-- SEMESTER 2 -->
-     <div id="smt2" class="hidden space-y-8">
-      <div class="flex items-center gap-3 mb-6 animate-fade">
-       <div class="semester-badge px-4 py-2 rounded-full text-white font-bold">
-        Semester 2
-       </div>
-       <div class="h-1 flex-1 bg-gradient-to-r from-amber-400 to-transparent rounded"></div>
-      </div><!-- BAB 3 -->
-      <div class="chapter-card border-amber-500 p-6 rounded-2xl shadow-lg animate-fade animate-delay-1"><button onclick="toggleChapter('bab3')" class="w-full flex items-start gap-4 mb-6 text-left group">
-        <div class="material-icon bg-amber-100 text-amber-600 shrink-0">
-         🌏
-        </div>
-        <div class="flex-1"><span class="text-sm font-medium text-amber-600 bg-amber-50 px-3 py-1 rounded-full">BAB 3</span>
-         <h3 class="text-xl md:text-2xl font-bold text-slate-800 mt-2 group-hover:text-amber-600 transition">BAB 3 - Semester 2</h3>
-        </div>
-        <div id="icon-bab3" class="text-2xl text-slate-400 transition-transform duration-300">
-         ▼
-        </div></button>
-       <div id="content-bab3" class="hidden space-y-6"><!-- Sub-Bab 1-5 -->
-        <div class="pl-4 border-l-2 border-amber-300"><button onclick="toggleSubChapter('sub1')" class="w-full text-left group flex items-center justify-between mb-3"> <h4 class="font-bold text-slate-700 group-hover:text-amber-600 transition">📌 1. Pemanfaatan dan Pelestarian Sumber Daya Alam</h4><span id="icon-sub1" class="text-xl text-slate-400 transition-transform duration-300">▼</span> </button>
-         <div id="content-sub1" class="grid md:grid-cols-3 gap-4 hidden">
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">📄</span> <span class="font-semibold text-slate-700">Materi PDF</span>
-           </div>
-           <div class="space-y-3 teacher-only"><input type="url" id="pdf-sub1" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://drive.google.com/..."> <button onclick="saveLink('sub1', 'pdf')" class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition">💾 Simpan Link PDF</button>
-           </div><a id="link-pdf-sub1" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-green-50 text-green-700 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition mt-3">📖 Buka PDF</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white">▶️</span> <span class="font-semibold text-slate-700">Video Pembelajaran</span>
-           </div>
-           <div class="space-y-3 teacher-only"><input type="url" id="video-sub1" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://youtube.com/..."> <button onclick="saveLink('sub1', 'video')" class="w-full bg-red-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition">💾 Simpan Link Video</button>
-           </div><a id="link-video-sub1" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-red-50 text-red-700 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition mt-3">▶️ Tonton Video</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white">🎯</span> <span class="font-semibold text-slate-700">Kuis Interaktif</span>
-           </div>
-           <div class="space-y-3 teacher-only"><input type="url" id="quiz-sub1" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."> <button onclick="saveLink('sub1', 'quiz')" class="w-full bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-600 transition">💾 Simpan Link Kuis</button>
-           </div><a id="link-quiz-sub1" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-purple-50 text-purple-700 py-2 rounded-lg text-sm font-medium hover:bg-purple-100 transition mt-3">🎯 Mulai Kuis</a>
-          </div>
-         </div>
-        </div><!-- Sub-Bab 2 -->
-        <div class="pl-4 border-l-2 border-amber-300"><button onclick="toggleSubChapter('sub2')" class="w-full text-left group flex items-center justify-between mb-3"> <h4 class="font-bold text-slate-700 group-hover:text-amber-600 transition">📌 2. Potensi Indonesia Menjadi Negara Maju</h4><span id="icon-sub2" class="text-xl text-slate-400 transition-transform duration-300">▼</span> </button>
-         <div id="content-sub2" class="grid md:grid-cols-3 gap-4 hidden">
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">📄</span><span class="font-semibold text-slate-700">Materi PDF</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="pdf-sub2" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://drive.google.com/..."><button onclick="saveLink('sub2', 'pdf')" class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition">💾 Simpan Link PDF</button>
-           </div><a id="link-pdf-sub2" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-green-50 text-green-700 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition mt-3">📖 Buka PDF</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white">▶️</span><span class="font-semibold text-slate-700">Video Pembelajaran</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="video-sub2" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://youtube.com/..."><button onclick="saveLink('sub2', 'video')" class="w-full bg-red-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition">💾 Simpan Link Video</button>
-           </div><a id="link-video-sub2" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-red-50 text-red-700 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition mt-3">▶️ Tonton Video</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white">🎯</span><span class="font-semibold text-slate-700">Kuis Interaktif</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="quiz-sub2" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub2', 'quiz')" class="w-full bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-600 transition">💾 Simpan Link Kuis</button>
-           </div><a id="link-quiz-sub2" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-purple-50 text-purple-700 py-2 rounded-lg text-sm font-medium hover:bg-purple-100 transition mt-3">🎯 Mulai Kuis</a>
-          </div>
-         </div>
-        </div><!-- Sub-Bab 3-5 (Similar structure) -->
-        <div class="pl-4 border-l-2 border-amber-300"><button onclick="toggleSubChapter('sub3')" class="w-full text-left group flex items-center justify-between mb-3"> <h4 class="font-bold text-slate-700 group-hover:text-amber-600 transition">📌 3. Toponimi Wilayah</h4><span id="icon-sub3" class="text-xl text-slate-400 transition-transform duration-300">▼</span> </button>
-         <div id="content-sub3" class="grid md:grid-cols-3 gap-4 hidden">
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">📄</span><span class="font-semibold text-slate-700">Materi PDF</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="pdf-sub3" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://drive.google.com/..."><button onclick="saveLink('sub3', 'pdf')" class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition">💾 Simpan</button>
-           </div><a id="link-pdf-sub3" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-green-50 text-green-700 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition mt-3">📖 Buka PDF</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white">▶️</span><span class="font-semibold text-slate-700">Video</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="video-sub3" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://youtube.com/..."><button onclick="saveLink('sub3', 'video')" class="w-full bg-red-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition">💾 Simpan</button>
-           </div><a id="link-video-sub3" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-red-50 text-red-700 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition mt-3">▶️ Tonton</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white">🎯</span><span class="font-semibold text-slate-700">Kuis</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="quiz-sub3" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub3', 'quiz')" class="w-full bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-600 transition">💾 Simpan</button>
-           </div><a id="link-quiz-sub3" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-purple-50 text-purple-700 py-2 rounded-lg text-sm font-medium hover:bg-purple-100 transition mt-3">🎯 Mulai</a>
-          </div>
-         </div>
-        </div>
-        <div class="pl-4 border-l-2 border-amber-300"><button onclick="toggleSubChapter('sub4')" class="w-full text-left group flex items-center justify-between mb-3"> <h4 class="font-bold text-slate-700 group-hover:text-amber-600 transition">📌 4. Ekonomi di Lingkungan Sekitar</h4><span id="icon-sub4" class="text-xl text-slate-400 transition-transform duration-300">▼</span> </button>
-         <div id="content-sub4" class="grid md:grid-cols-3 gap-4 hidden">
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">📄</span><span class="font-semibold text-slate-700">Materi PDF</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="pdf-sub4" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://drive.google.com/..."><button onclick="saveLink('sub4', 'pdf')" class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition">💾 Simpan</button>
-           </div><a id="link-pdf-sub4" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-green-50 text-green-700 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition mt-3">📖 Buka PDF</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white">▶️</span><span class="font-semibold text-slate-700">Video</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="video-sub4" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://youtube.com/..."><button onclick="saveLink('sub4', 'video')" class="w-full bg-red-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition">💾 Simpan</button>
-           </div><a id="link-video-sub4" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-red-50 text-red-700 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition mt-3">▶️ Tonton</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white">🎯</span><span class="font-semibold text-slate-700">Kuis</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="quiz-sub4" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub4', 'quiz')" class="w-full bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-600 transition">💾 Simpan</button>
-           </div><a id="link-quiz-sub4" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-purple-50 text-purple-700 py-2 rounded-lg text-sm font-medium hover:bg-purple-100 transition mt-3">🎯 Mulai</a>
-          </div>
-         </div>
-        </div>
-        <div class="pl-4 border-l-2 border-amber-300"><button onclick="toggleSubChapter('sub5')" class="w-full text-left group flex items-center justify-between mb-3"> <h4 class="font-bold text-slate-700 group-hover:text-amber-600 transition">📌 5. Interaksi Sosial</h4><span id="icon-sub5" class="text-xl text-slate-400 transition-transform duration-300">▼</span> </button>
-         <div id="content-sub5" class="grid md:grid-cols-3 gap-4 hidden">
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">📄</span><span class="font-semibold text-slate-700">Materi PDF</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="pdf-sub5" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://drive.google.com/..."><button onclick="saveLink('sub5', 'pdf')" class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition">💾 Simpan</button>
-           </div><a id="link-pdf-sub5" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-green-50 text-green-700 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition mt-3">📖 Buka PDF</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white">▶️</span><span class="font-semibold text-slate-700">Video</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="video-sub5" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://youtube.com/..."><button onclick="saveLink('sub5', 'video')" class="w-full bg-red-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition">💾 Simpan</button>
-           </div><a id="link-video-sub5" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-red-50 text-red-700 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition mt-3">▶️ Tonton</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white">🎯</span><span class="font-semibold text-slate-700">Kuis</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="quiz-sub5" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub5', 'quiz')" class="w-full bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-600 transition">💾 Simpan</button>
-           </div><a id="link-quiz-sub5" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-purple-50 text-purple-700 py-2 rounded-lg text-sm font-medium hover:bg-purple-100 transition mt-3">🎯 Mulai</a>
-          </div>
-         </div>
-        </div>
-       </div>
-      </div><!-- BAB 4 with Sub 6-8 -->
-      <div class="chapter-card border-purple-500 p-6 rounded-2xl shadow-lg animate-fade animate-delay-2"><button onclick="toggleChapter('bab4')" class="w-full flex items-start gap-4 mb-6 text-left group">
-        <div class="material-icon bg-purple-100 text-purple-600 shrink-0">
-         🤝
-        </div>
-        <div class="flex-1"><span class="text-sm font-medium text-purple-600 bg-purple-50 px-3 py-1 rounded-full">BAB 4</span>
-         <h3 class="text-xl md:text-2xl font-bold text-slate-800 mt-2 group-hover:text-purple-600 transition">BAB 4 - Semester 2</h3>
-        </div>
-        <div id="icon-bab4" class="text-2xl text-slate-400 transition-transform duration-300">
-         ▼
-        </div></button>
-       <div id="content-bab4" class="hidden space-y-6">
-        <div class="pl-4 border-l-2 border-purple-300"><button onclick="toggleSubChapter('sub6')" class="w-full text-left group flex items-center justify-between mb-3"> <h4 class="font-bold text-slate-700 group-hover:text-purple-600 transition">📌 6. Permasalahan Kehidupan Sosial Budaya</h4><span id="icon-sub6" class="text-xl text-slate-400 transition-transform duration-300">▼</span> </button>
-         <div id="content-sub6" class="grid md:grid-cols-3 gap-4 hidden">
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">📄</span><span class="font-semibold text-slate-700">PDF</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="pdf-sub6" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub6', 'pdf')" class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition">💾 Simpan</button>
-           </div><a id="link-pdf-sub6" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-green-50 text-green-700 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition mt-3">📖 Buka</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white">▶️</span><span class="font-semibold text-slate-700">Video</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="video-sub6" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub6', 'video')" class="w-full bg-red-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition">💾 Simpan</button>
-           </div><a id="link-video-sub6" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-red-50 text-red-700 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition mt-3">▶️ Tonton</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white">🎯</span><span class="font-semibold text-slate-700">Kuis</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="quiz-sub6" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub6', 'quiz')" class="w-full bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-600 transition">💾 Simpan</button>
-           </div><a id="link-quiz-sub6" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-purple-50 text-purple-700 py-2 rounded-lg text-sm font-medium hover:bg-purple-100 transition mt-3">🎯 Mulai</a>
-          </div>
-         </div>
-        </div>
-        <div class="pl-4 border-l-2 border-purple-300"><button onclick="toggleSubChapter('sub7')" class="w-full text-left group flex items-center justify-between mb-3"> <h4 class="font-bold text-slate-700 group-hover:text-purple-600 transition">📌 7. Pemberdayaan Masyarakat</h4><span id="icon-sub7" class="text-xl text-slate-400 transition-transform duration-300">▼</span> </button>
-         <div id="content-sub7" class="grid md:grid-cols-3 gap-4 hidden">
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">📄</span><span class="font-semibold text-slate-700">PDF</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="pdf-sub7" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub7', 'pdf')" class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition">💾 Simpan</button>
-           </div><a id="link-pdf-sub7" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-green-50 text-green-700 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition mt-3">📖 Buka</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white">▶️</span><span class="font-semibold text-slate-700">Video</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="video-sub7" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub7', 'video')" class="w-full bg-red-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition">💾 Simpan</button>
-           </div><a id="link-video-sub7" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-red-50 text-red-700 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition mt-3">▶️ Tonton</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white">🎯</span><span class="font-semibold text-slate-700">Kuis</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="quiz-sub7" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub7', 'quiz')" class="w-full bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-600 transition">💾 Simpan</button>
-           </div><a id="link-quiz-sub7" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-purple-50 text-purple-700 py-2 rounded-lg text-sm font-medium hover:bg-purple-100 transition mt-3">🎯 Mulai</a>
-          </div>
-         </div>
-        </div>
-        <div class="pl-4 border-l-2 border-purple-300"><button onclick="toggleSubChapter('sub8')" class="w-full text-left group flex items-center justify-between mb-3"> <h4 class="font-bold text-slate-700 group-hover:text-purple-600 transition">📌 8. Peran Komunitas dalam Kehidupan Masyarakat</h4><span id="icon-sub8" class="text-xl text-slate-400 transition-transform duration-300">▼</span> </button>
-         <div id="content-sub8" class="grid md:grid-cols-3 gap-4 hidden">
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">📄</span><span class="font-semibold text-slate-700">PDF</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="pdf-sub8" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub8', 'pdf')" class="w-full bg-blue-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition">💾 Simpan</button>
-           </div><a id="link-pdf-sub8" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-green-50 text-green-700 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition mt-3">📖 Buka</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white">▶️</span><span class="font-semibold text-slate-700">Video</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="video-sub8" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub8', 'video')" class="w-full bg-red-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition">💾 Simpan</button>
-           </div><a id="link-video-sub8" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-red-50 text-red-700 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition mt-3">▶️ Tonton</a>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-4">
-           <div class="flex items-center gap-2 mb-3">
-            <span class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white">🎯</span><span class="font-semibold text-slate-700">Kuis</span>
-           </div>
-           <div class="space-y-3 teacher-only">
-            <input type="url" id="quiz-sub8" class="w-full px-3 py-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="https://..."><button onclick="saveLink('sub8', 'quiz')" class="w-full bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-600 transition">💾 Simpan</button>
-           </div><a id="link-quiz-sub8" href="#" target="_blank" rel="noopener noreferrer" class="hidden w-full block text-center bg-purple-50 text-purple-700 py-2 rounded-lg text-sm font-medium hover:bg-purple-100 transition mt-3">🎯 Mulai</a>
-          </div>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-    </section><!-- TUGAS SECTION -->
-    <section id="tugas" class="hidden max-w-4xl mx-auto p-6">
-     <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl animate-fade">
-      <div class="text-center mb-8">
-       <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-4">
-        <svg class="w-10 h-10 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-        </svg>
-       </div>
-       <h2 class="text-3xl font-bold text-slate-800 mb-2">📝 Pengumpulan Tugas</h2>
-       <p class="text-slate-600">Upload tugas atau PR kamu</p>
-      </div>
-      <div class="space-y-6">
-       <div><label class="block text-sm font-semibold text-slate-700 mb-2">Nama Lengkap</label> <input type="text" id="task-nama" readonly class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl bg-slate-50">
-       </div>
-       <div><label class="block text-sm font-semibold text-slate-700 mb-2">Kelas</label> <input type="text" id="task-kelas" readonly class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl bg-slate-50">
-       </div>
-       <div><label class="block text-sm font-semibold text-slate-700 mb-2">Jenis Tugas</label> <select id="task-type" class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-green-500 focus:outline-none transition"> <option value="">Pilih Jenis Tugas</option> <optgroup label="📝 Pekerjaan Rumah (PR)"> <option value="PR - Pemanfaatan dan Pelestarian SDA">PR - Pemanfaatan dan Pelestarian SDA</option> <option value="PR - Potensi Indonesia">PR - Potensi Indonesia</option> <option value="PR - Toponimi Wilayah">PR - Toponimi Wilayah</option> <option value="PR - Ekonomi Lingkungan">PR - Ekonomi Lingkungan</option> <option value="PR - Interaksi Sosial">PR - Interaksi Sosial</option> <option value="PR - Permasalahan Sosial Budaya">PR - Permasalahan Sosial Budaya</option> <option value="PR - Pemberdayaan Masyarakat">PR - Pemberdayaan Masyarakat</option> <option value="PR - Peran Komunitas">PR - Peran Komunitas</option> </optgroup> </select>
-       </div>
-       <div><label class="block text-sm font-semibold text-slate-700 mb-2">Link Google Drive</label> <input type="url" id="task-link" class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-green-500 focus:outline-none transition" placeholder="https://drive.google.com/...">
-        <p class="text-xs text-slate-500 mt-2">Upload file ke Google Drive, set ke 'Anyone with the link', lalu paste linknya di sini</p>
-       </div><button onclick="submitTask()" class="w-full bg-gradient-to-r from-green-500 to-emerald-400 text-white font-bold py-4 rounded-xl hover:from-green-600 hover:to-emerald-500 transition shadow-lg"> 🚀 Kirim Tugas </button>
-       <div id="task-status" class="hidden p-4 rounded-xl text-center font-medium"></div>
-      </div>
-     </div>
-    </section><!-- PROFIL GURU SECTION -->
-    <section id="guru" class="hidden max-w-4xl mx-auto p-6">
-     <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl text-center card-hover animate-fade">
-      <div class="relative inline-block mb-6">
-       <div class="w-36 h-36 md:w-44 md:h-44 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 p-1">
-        <div class="w-full h-full rounded-full bg-slate-200 flex items-center justify-center overflow-hidden">
-         <svg class="w-20 h-20 text-slate-400" fill="currentColor" viewbox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+     <p class="text-center text-xs text-slate-500 mt-8">© 2024 Portal Pembelajaran IPS</p>
+    </div>
+   </div><!-- Main Dashboard -->
+   <div id="dashboard" class="hidden min-h-full w-full bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50"><!-- Header -->
+    <header class="glassmorphism sticky top-0 z-40 border-b border-white/20">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+       <div class="flex items-center gap-4">
+        <div class="w-10 h-10 md:w-12 md:h-12 profile-avatar rounded-xl flex items-center justify-center">
+         <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
          </svg>
         </div>
-       </div>
-       <div class="absolute -bottom-2 -right-2 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
-        <svg class="w-6 h-6 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-        </svg>
-       </div>
-      </div>
-      <h2 id="teacher-name" class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">Taufiqi Hidayatulloh, S.Pd.</h2>
-      <p id="teacher-title" class="text-lg text-blue-600 font-medium mb-6">Guru IPS SMP</p>
-      <div class="flex justify-center gap-4 flex-wrap">
-       <div class="bg-blue-50 px-6 py-3 rounded-xl">
-        <p class="text-2xl font-bold text-blue-600">0</p>
-        <p class="text-sm text-slate-600">Tahun Mengajar</p>
-       </div>
-       <div class="bg-green-50 px-6 py-3 rounded-xl">
-        <p class="text-2xl font-bold text-green-600">82</p>
-        <p class="text-sm text-slate-600">Siswa</p>
-       </div>
-       <div class="bg-purple-50 px-6 py-3 rounded-xl">
-        <p class="text-2xl font-bold text-purple-600">IPS</p>
-        <p class="text-sm text-slate-600">Mata Pelajaran</p>
-       </div>
-      </div>
-      <div class="mt-8 p-6 bg-slate-50 rounded-2xl text-left">
-       <h3 class="font-bold text-slate-700 mb-3">💬 Pesan untuk Siswa</h3>
-       <p class="text-slate-600 italic">"Belajar IPS bukan hanya menghafal, tapi memahami bagaimana kita hidup bermasyarakat dan menjadi warga negara yang baik. Semangat belajar!"</p>
+        <div>
+         <h1 id="header-title" class="text-lg md:text-xl font-bold gradient-text">Portal IPS Kelas 7</h1>
+         <p id="user-role-badge" class="text-xs text-slate-500"></p>
+        </div>
+       </div><button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-all text-sm font-medium">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg><span class="hidden sm:inline">Keluar</span> </button>
       </div>
      </div>
-    </section><!-- Footer -->
-    <footer class="bg-slate-800 text-white py-8 mt-12">
-     <div class="max-w-7xl mx-auto px-6 text-center">
-      <p class="text-slate-400">© 2024 Portal IPS Kelas 7</p>
-      <p class="text-sm text-slate-500 mt-2">Dibuat dengan ❤️ untuk pembelajaran yang lebih baik</p>
+    </header><!-- Tab Navigation -->
+    <nav class="glassmorphism border-b border-white/20">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex gap-2 py-4 overflow-x-auto scrollbar-thin"><button onclick="switchTab('materi')" data-tab="materi" class="tab-btn tab-active px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap transition-all flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg> Materi </button> <button onclick="switchTab('tugas')" data-tab="tugas" class="tab-btn px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap transition-all flex items-center gap-2 bg-white/50 text-slate-600 hover:bg-white/80">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        </svg> Tugas </button> <button onclick="switchTab('profil')" data-tab="profil" class="tab-btn px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap transition-all flex items-center gap-2 bg-white/50 text-slate-600 hover:bg-white/80">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg> Profil Guru </button>
+      </div>
+     </div>
+    </nav><!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"><!-- Materi Tab -->
+     <div id="tab-materi" class="tab-content">
+      <div class="mb-8">
+       <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">📚 Materi Pembelajaran IPS</h2>
+       <p class="text-slate-600">Pilih semester dan bab untuk mempelajari materi</p>
+      </div><!-- Semester Toggle - Minimal & Side by Side -->
+      <div class="flex items-center justify-center gap-4 mb-8"><button onclick="switchSemester('semester1')" id="card-semester1" class="semester-card active glassmorphism rounded-2xl p-6 cursor-pointer flex items-center gap-4 hover:shadow-xl transition-all">
+        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center shadow-md"><span class="text-2xl">📘</span>
+        </div>
+        <div class="text-left">
+         <h3 class="text-lg font-bold text-slate-800">Semester 1</h3>
+         <p class="text-xs text-slate-500">Geografi &amp; Sosiologi</p>
+        </div></button>
+       <div class="w-px h-12 bg-slate-300"></div><button onclick="switchSemester('semester2')" id="card-semester2" class="semester-card glassmorphism rounded-2xl p-6 cursor-pointer flex items-center gap-4 hover:shadow-xl transition-all">
+        <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl flex items-center justify-center shadow-md"><span class="text-2xl">📗</span>
+        </div>
+        <div class="text-left">
+         <h3 class="text-lg font-bold text-slate-800">Semester 2</h3>
+         <p class="text-xs text-slate-500">SDA &amp; Ekonomi</p>
+        </div></button>
+      </div><!-- Materials Container -->
+      <div id="chapters-container" class="space-y-6"><!-- Chapters will be rendered here by JavaScript -->
+      </div>
+     </div><!-- Tugas Tab -->
+     <div id="tab-tugas" class="tab-content hidden">
+      <div class="mb-8">
+       <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">📝 Tugas &amp; Deadline</h2>
+       <p class="text-slate-600">Kelola dan kumpulkan tugas dengan tepat waktu</p>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-8"><!-- Left Column - Deadline Info / Form -->
+       <div><!-- Teacher: Deadline Form -->
+        <div id="deadline-form-section" class="teacher-only glassmorphism rounded-3xl p-6 md:p-8 card-hover">
+         <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center">
+           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+           </svg>
+          </div>
+          <div>
+           <h3 class="text-xl font-bold text-slate-800">Atur Deadline</h3>
+           <p class="text-sm text-slate-500">Tetapkan batas waktu pengumpulan tugas</p>
+          </div>
+         </div>
+         <div class="space-y-4">
+          <div><label for="deadline-title" class="block text-sm font-medium text-slate-700 mb-2">Judul Tugas</label> <input type="text" id="deadline-title" placeholder="Masukkan judul tugas..." class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
+           <p class="text-xs text-slate-500 mt-1">💡 Judul ini akan otomatis menjadi pilihan Jenis Tugas untuk siswa</p>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+           <div><label for="deadline-date" class="block text-sm font-medium text-slate-700 mb-2">Tanggal</label> <input type="date" id="deadline-date" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
+           </div>
+           <div><label for="deadline-time" class="block text-sm font-medium text-slate-700 mb-2">Jam</label> <input type="time" id="deadline-time" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
+           </div>
+          </div>
+          <div><label for="deadline-desc" class="block text-sm font-medium text-slate-700 mb-2">Deskripsi (Opsional)</label> <textarea id="deadline-desc" rows="3" placeholder="Tambahkan instruksi tugas..." class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none resize-none"></textarea>
+          </div><button onclick="saveDeadline()" class="w-full py-4 btn-primary text-white font-semibold rounded-xl flex items-center justify-center gap-2">
+           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+           </svg> Simpan Deadline </button>
+         </div>
+        </div><!-- Student: Deadline Display -->
+        <div id="deadline-display-section" class="student-only glassmorphism rounded-3xl p-6 md:p-8">
+         <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-pink-500 rounded-2xl flex items-center justify-center animate-pulse">
+           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+           </svg>
+          </div>
+          <div>
+           <h3 class="text-xl font-bold text-slate-800">Informasi Tugas Utama</h3>
+           <p class="text-sm text-slate-500">Perhatikan deadline pengumpulan</p>
+          </div>
+         </div>
+         <div id="current-deadline" class="space-y-4"><!-- Deadline info will be rendered here -->
+         </div>
+        </div>
+       </div><!-- Right Column - Submit Form -->
+       <div class="glassmorphism rounded-3xl p-6 md:p-8 card-hover">
+        <div class="flex items-center gap-3 mb-6">
+         <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-slate-800">Kumpulkan Tugas</h3>
+          <p class="text-sm text-slate-500">Upload tugas sebelum deadline</p>
+         </div>
+        </div>
+        <form id="submit-form" class="space-y-4" onsubmit="submitTaskToGoogleSheets(event)">
+         <div><label for="submit-name" class="block text-sm font-medium text-slate-700 mb-2">Nama Lengkap</label> <input type="text" id="submit-name" placeholder="Masukkan nama lengkap..." required class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
+         </div>
+         <div><label for="submit-class" class="block text-sm font-medium text-slate-700 mb-2">Kelas</label> <select id="submit-class" required class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none"> <option value="">Pilih Kelas</option> <option value="7E">7E</option> <option value="7F">7F</option> <option value="7G">7G</option> </select>
+         </div>
+         <div><label for="submit-task-type" class="block text-sm font-medium text-slate-700 mb-2"> Jenis Tugas <span id="auto-selected-indicator" class="hidden ml-2 text-xs text-emerald-600 font-semibold">✓ Otomatis dipilih</span> </label> <select id="submit-task-type" required class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none"> <option value="">Pilih Jenis Tugas</option> <option value="Tugas Harian">Tugas Harian</option> <option value="Tugas Proyek">Tugas Proyek</option> <option value="Tugas Kelompok">Tugas Kelompok</option> <option value="Ulangan Harian">Ulangan Harian</option> <option value="Remedial">Remedial</option> </select>
+          <div id="deadline-task-option-container"></div>
+         </div>
+         <div><label for="submit-link" class="block text-sm font-medium text-slate-700 mb-2">Link Tugas (Google Drive / Docs)</label> <input type="url" id="submit-link" placeholder="https://drive.google.com/..." required class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
+         </div>
+         <div><label for="submit-note" class="block text-sm font-medium text-slate-700 mb-2">Catatan (Opsional)</label> <textarea id="submit-note" rows="3" placeholder="Tambahkan catatan untuk guru..." class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none resize-none"></textarea>
+         </div><button type="submit" id="submit-button" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+          </svg> Kirim Tugas </button>
+        </form><!-- Submitted Tasks List (Teacher Only) -->
+        <div id="submitted-tasks" class="teacher-only mt-8 pt-6 border-t border-slate-200">
+         <h4 class="font-semibold text-slate-800 mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg> Tugas Terkumpul</h4>
+         <div id="tasks-list" class="space-y-3 max-h-64 overflow-y-auto scrollbar-thin"><!-- Tasks will be rendered here -->
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Profil Tab -->
+     <div id="tab-profil" class="tab-content hidden">
+      <div class="mb-8">
+       <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">👨‍🏫 Profil Guru</h2>
+       <p class="text-slate-600">Informasi pengajar mata pelajaran IPS</p>
+      </div>
+      <div class="max-w-2xl mx-auto">
+       <div class="glassmorphism rounded-3xl p-8 md:p-10 card-hover"><!-- Profile Header -->
+        <div class="text-center mb-8">
+         <div class="w-32 h-32 mx-auto mb-6 profile-avatar rounded-full flex items-center justify-center shadow-lg">
+          <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+         </div><!-- View Mode -->
+         <div id="profile-view" class="student-only">
+          <h3 id="profile-name-display" class="text-2xl font-bold text-slate-800 mb-1"></h3>
+          <p id="profile-nip-display" class="text-slate-500 mb-4"></p>
+          <p id="profile-bio-display" class="text-slate-600 italic"></p>
+         </div><!-- Edit Mode (Teacher) -->
+         <div id="profile-edit" class="teacher-only space-y-4">
+          <div><label for="edit-name" class="block text-sm font-medium text-slate-700 mb-2 text-left">Nama Lengkap</label> <input type="text" id="edit-name" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none text-center text-lg font-semibold">
+          </div>
+          <div><label for="edit-nip" class="block text-sm font-medium text-slate-700 mb-2 text-left">NIP</label> <input type="text" id="edit-nip" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none text-center">
+          </div>
+          <div><label for="edit-bio" class="block text-sm font-medium text-slate-700 mb-2 text-left">Bio / Motto</label> <textarea id="edit-bio" rows="2" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none text-center resize-none"></textarea>
+          </div>
+         </div>
+        </div><!-- Contact Info -->
+        <div class="border-t border-slate-200 pt-6">
+         <h4 class="font-semibold text-slate-800 mb-4 text-center">Kontak &amp; Sosial Media</h4><!-- View Mode Contacts -->
+         <div id="contacts-view" class="student-only flex flex-wrap justify-center gap-3"><a id="wa-link" href="#" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-3 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl transition-all font-medium">
+           <svg class="w-5 h-5" viewbox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+           </svg> WhatsApp </a> <a id="email-link" href="#" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-3 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl transition-all font-medium">
+           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+           </svg> Email </a>
+         </div><!-- Edit Mode Contacts -->
+         <div id="contacts-edit" class="teacher-only space-y-4">
+          <div><label for="edit-whatsapp" class="block text-sm font-medium text-slate-700 mb-2">Nomor WhatsApp</label> <input type="tel" id="edit-whatsapp" placeholder="628xxxxxxxxxx" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
+          </div>
+          <div><label for="edit-email" class="block text-sm font-medium text-slate-700 mb-2">Email</label> <input type="email" id="edit-email" placeholder="guru@email.com" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
+          </div><button onclick="saveProfile()" class="w-full py-4 btn-primary text-white font-semibold rounded-xl flex items-center justify-center gap-2 mt-6">
+           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+           </svg> Simpan Profil </button>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </main><!-- Footer -->
+    <footer class="glassmorphism border-t border-white/20 mt-12">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+       <div class="flex items-center gap-3">
+        <div class="w-10 h-10 profile-avatar rounded-xl flex items-center justify-center">
+         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+         </svg>
+        </div>
+        <div>
+         <p class="font-semibold text-slate-800">Portal IPS Kelas 7</p>
+         <p class="text-sm text-slate-500">Belajar dengan Mudah &amp; Menyenangkan</p>
+        </div>
+       </div>
+       <div class="text-center md:text-right">
+        <p class="text-sm text-slate-600">© 2024 Portal Pembelajaran IPS</p>
+        <p class="text-xs text-slate-500">Dibuat dengan ❤️ untuk Pendidikan Indonesia</p>
+       </div>
+      </div>
      </div>
     </footer>
-   </div><!-- Toast Notification -->
-   <div id="toast" class="hidden fixed top-4 right-4 z-50 p-4 rounded-xl shadow-2xl max-w-sm animate-fade">
-    <p id="toast-message" class="font-medium"></p>
    </div>
   </div>
   <script>
-    // Default configuration
-    const defaultConfig = {
-      site_title: 'Portal IPS Kelas 7',
-      teacher_name: 'Taufiqi Hidayatulloh, S.Pd.',
-      teacher_title: 'Guru IPS SMP'
-    };
-
-    let config = { ...defaultConfig };
-    let currentUser = null;
-
-    // Pre-populated links
-    const prePopulatedLinks = {
-      'pdf-sub1': 'https://drive.google.com/file/d/1QQ_BaxohRt5u4n7YFYC_6uc-QRHHQae0/view?usp=sharing',
-      'pdf-sub2': 'https://drive.google.com/file/d/1CwBSJvDdCzIjxsem7u5dcvIyyjcTVpb-/view?usp=sharing',
-      'pdf-sub3': 'https://drive.google.com/file/d/1P841uSx8BWthF_p9urwQmXCoMKBYwBn0/view?usp=sharing',
-      'pdf-sub4': 'https://drive.google.com/file/d/1Dj0xlKfij_4fSQ2wLZoFcv8CkPDFLYoZ/view?usp=sharing',
-      'pdf-sub5': 'https://drive.google.com/file/d/1deP96Zh0ohgoc_MAZUyOiEnIESyKGh5G/view?usp=sharing',
-      'pdf-sub6': 'https://drive.google.com/file/d/19HnIvbUXVq3RmqNibUoU1SaN13PYTrFV/view?usp=sharing',
-      'pdf-sub7': 'https://drive.google.com/file/d/1GsuD0-9g4ptk4t9myEG-ASUOGcxGpaK9/view?usp=sharing',
-      'pdf-sub8': 'https://drive.google.com/file/d/1Hr0fTnTKyUt6eyspNxaw_cJBrHLL41Ry/view?usp=sharing',
-      'video-sub1': 'https://youtu.be/oSQfTIDgHqI?si=0ADJwf_CvLOIkVmr',
-      'video-sub2': 'https://youtu.be/uQwpjqsxu8g?si=9qfJ6KUN-39Fgbus',
-      'video-sub3': 'https://youtu.be/aF8EXLaqx8o?si=ikDTvzM_HghIQpzX',
-      'video-sub4': 'https://youtu.be/KFIdUJaG9Go?si=xjQxUreODCsCPkVc',
-      'video-sub5': 'https://youtu.be/qW-7jPfGZrs?si=Zihcl5_fSSk2WjcN',
-      'video-sub6': 'https://youtu.be/tjziwprFj6o?si=T78EGPl9FnCRl7Ml',
-      'video-sub7': 'https://youtu.be/qWpL1utbr8c?si=SPoh6UyzKhvzXDuG',
-      'video-sub8': 'https://youtu.be/MIYBRej5t_A?si=z4gaXvzIagKWMWTP',
-      'quiz-sub1': 'https://imcosgreen.my.canva.site/quiz-sumber-daya-alam',
-      'quiz-sub2': 'https://imcosgreen.my.canva.site/quiz-interaktif-ips'
-    };
-
-    // Show toast notification
-    function showToast(message, type) {
-      const toast = document.getElementById('toast');
-      const toastMessage = document.getElementById('toast-message');
-      
-      toastMessage.textContent = message;
-      toast.classList.remove('hidden', 'bg-green-500', 'bg-red-500', 'bg-blue-500');
-      
-      if (type === 'success') {
-        toast.classList.add('bg-green-500', 'text-white');
-      } else if (type === 'error') {
-        toast.classList.add('bg-red-500', 'text-white');
-      } else {
-        toast.classList.add('bg-blue-500', 'text-white');
-      }
-
-      setTimeout(() => {
-        toast.classList.add('hidden');
-      }, 3000);
-    }
-
-    // Login form switcher
-    function showLoginForm(type) {
-      document.getElementById('form-siswa').classList.toggle('hidden', type !== 'siswa');
-      document.getElementById('form-guru').classList.toggle('hidden', type !== 'guru');
-      
-      document.getElementById('btn-siswa-tab').classList.toggle('border-white', type === 'siswa');
-      document.getElementById('btn-guru-tab').classList.toggle('border-white', type === 'guru');
-    }
-
-    // Login Siswa
-    function loginSiswa() {
-      const nama = document.getElementById('siswa-nama').value.trim();
-      const kelas = document.getElementById('siswa-kelas').value;
-
-      if (!nama || !kelas) {
-        showToast('❌ Nama dan kelas harus diisi!', 'error');
-        return;
-      }
-
-      currentUser = {
-        type: 'siswa',
-        nama: nama,
-        kelas: kelas
-      };
-
-      sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-      
-      document.getElementById('login-page').classList.add('hidden');
-      document.getElementById('main-portal').classList.remove('hidden');
-      document.getElementById('user-info').textContent = `${nama} - Kelas ${kelas}`;
-      
-      // Hide teacher-only elements
-      document.querySelectorAll('.teacher-only').forEach(el => el.classList.add('hidden'));
-      
-      // Pre-fill task form
-      document.getElementById('task-nama').value = nama;
-      document.getElementById('task-kelas').value = kelas;
-      
-      loadSavedLinks();
-      showToast('✅ Login berhasil! Selamat belajar!', 'success');
-    }
-
-    // Login Guru
-    function loginGuru() {
-      const password = document.getElementById('guru-password').value;
-
-      if (password !== 'jelly') {
-        showToast('❌ Password salah!', 'error');
-        return;
-      }
-
-      currentUser = {
-        type: 'guru'
-      };
-
-      sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-      
-      document.getElementById('login-page').classList.add('hidden');
-      document.getElementById('main-portal').classList.remove('hidden');
-      document.getElementById('user-info').textContent = 'Mode Admin Guru';
-      
-      // Show teacher-only elements
-      document.querySelectorAll('.teacher-only').forEach(el => el.classList.remove('hidden'));
-      
-      loadSavedLinks();
-      showToast('✅ Login berhasil! Selamat datang, Guru!', 'success');
-    }
-
-    // Logout
-    function logout() {
-      sessionStorage.removeItem('currentUser');
-      currentUser = null;
-      
-      document.getElementById('main-portal').classList.add('hidden');
-      document.getElementById('login-page').classList.remove('hidden');
-      
-      // Reset forms
-      document.getElementById('siswa-nama').value = '';
-      document.getElementById('siswa-kelas').value = '';
-      document.getElementById('guru-password').value = '';
-      
-      showToast('👋 Logout berhasil!', 'success');
-    }
-
-    // Check session on load
-    function checkSession() {
-      const savedUser = sessionStorage.getItem('currentUser');
-      if (savedUser) {
-        currentUser = JSON.parse(savedUser);
+        // ==================== GOOGLE SHEETS CONFIGURATION ====================
+        let GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxuBKz_csBSa1UbKeH7hxX-SKFZ0CaGKk5lPavd4vZxB2eoDhJCynydfdLN6c0ksunE/exec';
         
-        document.getElementById('login-page').classList.add('hidden');
-        document.getElementById('main-portal').classList.remove('hidden');
+        // ==================== CONFIGURATION ====================
+        const TEACHER_PASSWORD = 'jelly';
         
-        if (currentUser.type === 'siswa') {
-          document.getElementById('user-info').textContent = `${currentUser.nama} - Kelas ${currentUser.kelas}`;
-          document.querySelectorAll('.teacher-only').forEach(el => el.classList.add('hidden'));
-          document.getElementById('task-nama').value = currentUser.nama;
-          document.getElementById('task-kelas').value = currentUser.kelas;
-        } else {
-          document.getElementById('user-info').textContent = 'Mode Admin Guru';
-          document.querySelectorAll('.teacher-only').forEach(el => el.classList.remove('hidden'));
-        }
-        
-        loadSavedLinks();
-      }
-    }
+        // Default Data with COMPLETE Semester Structure
+        const defaultData = {
+            profile: {
+                name: 'Bapak/Ibu Guru IPS',
+                nip: '19XX0101XXXXXX001',
+                bio: '"Pendidikan adalah senjata paling ampuh untuk mengubah dunia"',
+                whatsapp: '628123456789',
+                email: 'guru.ips@sekolah.sch.id'
+            },
+            deadline: {
+                title: 'Tugas Bab 1: Kondisi Geografis Indonesia',
+                date: '',
+                time: '23:59',
+                description: 'Kerjakan latihan soal hal 25-27 dan upload dalam format PDF'
+            },
+            materials: {
+                semester1: [
+                    {
+                        id: 'bab1',
+                        title: 'BAB 1: Manusia, Tempat, dan Lingkungannya',
+                        icon: '🌏',
+                        color: 'blue',
+                        subChapters: [
+                            {
+                                id: 'bab1-1',
+                                title: '1.1 Konsep Ruang',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab1-2',
+                                title: '1.2 Letak Indonesia',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab1-3',
+                                title: '1.3 Kondisi Alam',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab1-4',
+                                title: '1.4 Sumber Daya Alam',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab1-5',
+                                title: '1.5 Pengaruh Lingkungan',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            }
+                        ]
+                    },
+                    {
+                        id: 'bab2',
+                        title: 'BAB 2: Interaksi Sosial',
+                        icon: '🤝',
+                        color: 'blue',
+                        subChapters: [
+                            {
+                                id: 'bab2-1',
+                                title: '2.1 Pengertian & Syarat Interaksi Sosial',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab2-2',
+                                title: '2.2 Faktor Pengaruh Interaksi Sosial',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab2-3',
+                                title: '2.3 Bentuk Interaksi Sosial',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab2-4',
+                                title: '2.4 Interaksi Sosial dalam Kehidupan Sehari-hari',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab2-5',
+                                title: '2.5 Dampak Interaksi Sosial',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            }
+                        ]
+                    }
+                ],
+                semester2: [
+                    {
+                        id: 'bab3',
+                        title: 'BAB 3: Sumber Daya Alam dan Wilayah',
+                        icon: '🌾',
+                        color: 'emerald',
+                        subChapters: [
+                            {
+                                id: 'bab3-1',
+                                title: '3.1 Pemanfaatan & Pelestarian SDA',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab3-2',
+                                title: '3.2 Potensi Negara Maju',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab3-3',
+                                title: '3.3 Toponimi',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab3-4',
+                                title: '3.4 Ekonomi Sekitar',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab3-5',
+                                title: '3.5 Interaksi Ekonomi',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            }
+                        ]
+                    },
+                    {
+                        id: 'bab4',
+                        title: 'BAB 4: Kehidupan Sosial dan Pemberdayaan Masyarakat',
+                        icon: '🏘️',
+                        color: 'emerald',
+                        subChapters: [
+                            {
+                                id: 'bab4-1',
+                                title: '4.1 Permasalahan Sosial Budaya',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab4-2',
+                                title: '4.2 Faktor Penyebab Masalah Sosial',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab4-3',
+                                title: '4.3 Dampak Masalah Sosial',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab4-4',
+                                title: '4.4 Pemberdayaan Masyarakat',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            },
+                            {
+                                id: 'bab4-5',
+                                title: '4.5 Peran Komunitas',
+                                pdf: '',
+                                video: '',
+                                quiz: ''
+                            }
+                        ]
+                    }
+                ]
+            },
+            currentSemester: 'semester1',
+            submittedTasks: []
+        };
 
-    // Save link (guru only)
-    function saveLink(chapter, type) {
-      if (!currentUser || currentUser.type !== 'guru') {
-        showToast('❌ Hanya guru yang bisa mengubah link!', 'error');
-        return;
-      }
+        // ==================== STATE MANAGEMENT ====================
+        let currentUser = null;
+        let appData = {};
+        let openChapterId = null;
 
-      const inputId = type + '-' + chapter;
-      const linkId = 'link-' + type + '-' + chapter;
-      const inputElement = document.getElementById(inputId);
-      const linkElement = document.getElementById(linkId);
-      
-      const url = inputElement.value.trim();
-      
-      if (!url) {
-        showToast('❌ Link tidak boleh kosong!', 'error');
-        return;
-      }
-      
-      try {
-        new URL(url);
-      } catch (e) {
-        showToast('❌ Format link tidak valid!', 'error');
-        return;
-      }
-      
-      localStorage.setItem(inputId, url);
-      linkElement.href = url;
-      linkElement.classList.remove('hidden');
-      
-      showToast('✅ Link berhasil disimpan!', 'success');
-    }
-
-    // Load saved links
-    function loadSavedLinks() {
-      const chapters = ['bab1', 'bab2', 'sub1', 'sub2', 'sub3', 'sub4', 'sub5', 'sub6', 'sub7', 'sub8'];
-      const types = ['pdf', 'video', 'quiz'];
-      
-      chapters.forEach(chapter => {
-        types.forEach(type => {
-          const storageKey = type + '-' + chapter;
-          let savedUrl = localStorage.getItem(storageKey);
-          
-          if (!savedUrl && prePopulatedLinks[storageKey]) {
-            savedUrl = prePopulatedLinks[storageKey];
-            localStorage.setItem(storageKey, savedUrl);
-          }
-          
-          if (savedUrl) {
-            const inputElement = document.getElementById(storageKey);
-            const linkElement = document.getElementById('link-' + storageKey);
-            
-            if (inputElement) inputElement.value = savedUrl;
-            if (linkElement) {
-              linkElement.href = savedUrl;
-              linkElement.classList.remove('hidden');
+        function loadData() {
+            const saved = localStorage.getItem('portalIPSData');
+            if (saved) {
+                appData = JSON.parse(saved);
+                appData.profile = { ...defaultData.profile, ...appData.profile };
+                appData.deadline = { ...defaultData.deadline, ...appData.deadline };
+                appData.materials = appData.materials || defaultData.materials;
+                appData.currentSemester = appData.currentSemester || 'semester1';
+                appData.submittedTasks = appData.submittedTasks || [];
+            } else {
+                appData = JSON.parse(JSON.stringify(defaultData));
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 7);
+                appData.deadline.date = tomorrow.toISOString().split('T')[0];
             }
-          }
-        });
-      });
-    }
+        }
 
-    // Submit task
-    function submitTask() {
-      const taskType = document.getElementById('task-type').value;
-      const taskLink = document.getElementById('task-link').value.trim();
+        function saveData() {
+            localStorage.setItem('portalIPSData', JSON.stringify(appData));
+        }
 
-      if (!taskType || !taskLink) {
-        showToast('❌ Jenis tugas dan link harus diisi!', 'error');
-        return;
-      }
+        // ==================== LINK MANAGEMENT (LocalStorage) ====================
+        function saveLink(subId, type) {
+            const inputId = `input-${type}-${subId}`;
+            const input = document.getElementById(inputId);
+            
+            if (!input) return;
+            
+            const url = input.value.trim();
+            
+            // Find and update the sub-chapter
+            for (const semester in appData.materials) {
+                appData.materials[semester].forEach(chapter => {
+                    chapter.subChapters.forEach(sub => {
+                        if (sub.id === subId) {
+                            sub[type] = url;
+                        }
+                    });
+                });
+            }
+            
+            saveData();
+            renderMaterials();
+            showToast('Link Tersimpan!', `Link ${type.toUpperCase()} berhasil disimpan`, 'success');
+        }
 
-      try {
-        new URL(taskLink);
-      } catch (e) {
-        showToast('❌ Format link tidak valid!', 'error');
-        return;
-      }
+        function getStoredLink(subId, type) {
+            for (const semester in appData.materials) {
+                for (const chapter of appData.materials[semester]) {
+                    for (const sub of chapter.subChapters) {
+                        if (sub.id === subId) {
+                            return sub[type] || '';
+                        }
+                    }
+                }
+            }
+            return '';
+        }
 
-      showToast('✅ Tugas berhasil dikirim!', 'success');
-      
-      document.getElementById('task-type').value = '';
-      document.getElementById('task-link').value = '';
-    }
+        // ==================== MODAL IFRAME VIEWER ====================
+        function openLink(url, title) {
+            if (!url || url === '') {
+                showToast('Link Kosong', 'Guru belum mengisi link untuk materi ini', 'warning');
+                return;
+            }
+            
+            // Convert YouTube URL to embed format
+            let embedUrl = url;
+            if (url.includes('youtube.com/watch?v=')) {
+                const videoId = url.split('watch?v=')[1].split('&')[0];
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            } else if (url.includes('youtu.be/')) {
+                const videoId = url.split('youtu.be/')[1].split('?')[0];
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            }
+            
+            const modal = document.getElementById('modal-viewer');
+            const iframe = document.getElementById('content-iframe');
+            const loader = document.getElementById('iframe-loader');
+            const modalTitle = document.getElementById('modal-content-title');
+            
+            modalTitle.textContent = title || 'Memuat Materi...';
+            loader.classList.remove('hidden');
+            iframe.src = '';
+            
+            modal.classList.add('show');
+            
+            // Load iframe after modal animation
+            setTimeout(() => {
+                iframe.src = embedUrl;
+                
+                iframe.onload = () => {
+                    loader.classList.add('hidden');
+                };
+                
+                // Hide loader after 3 seconds even if onload doesn't fire
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                }, 3000);
+            }, 300);
+        }
 
-    // Navigation
-    function showSection(section) {
-      document.getElementById('materi').classList.add('hidden');
-      document.getElementById('tugas').classList.add('hidden');
-      document.getElementById('guru').classList.add('hidden');
-      document.getElementById(section).classList.remove('hidden');
-      
-      document.getElementById('btn-materi').classList.remove('active');
-      document.getElementById('btn-tugas').classList.remove('active');
-      document.getElementById('btn-guru').classList.remove('active');
-      document.getElementById('btn-' + section).classList.add('active');
-    }
+        function closeModal() {
+            const modal = document.getElementById('modal-viewer');
+            const iframe = document.getElementById('content-iframe');
+            
+            modal.classList.remove('show');
+            
+            setTimeout(() => {
+                iframe.src = '';
+            }, 400);
+        }
 
-    function toggleChapter(id) {
-      const content = document.getElementById('content-' + id);
-      const icon = document.getElementById('icon-' + id);
-      
-      if (content.classList.contains('hidden')) {
-        content.classList.remove('hidden');
-        icon.style.transform = 'rotate(180deg)';
-      } else {
-        content.classList.add('hidden');
-        icon.style.transform = 'rotate(0deg)';
-      }
-    }
+        // ==================== UI FUNCTIONS ====================
+        function showToast(title, message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toast-icon');
+            const toastTitle = document.getElementById('toast-title');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+            
+            if (type === 'success') {
+                toastIcon.className = 'w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-emerald-400 to-teal-500';
+                toastIcon.innerHTML = '<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+            } else if (type === 'error') {
+                toastIcon.className = 'w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-red-400 to-pink-500';
+                toastIcon.innerHTML = '<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+            } else if (type === 'warning') {
+                toastIcon.className = 'w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-amber-400 to-orange-500';
+                toastIcon.innerHTML = '<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
+            }
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
 
-    function toggleSubChapter(id) {
-      const content = document.getElementById('content-' + id);
-      const icon = document.getElementById('icon-' + id);
-      
-      if (content.classList.contains('hidden')) {
-        content.classList.remove('hidden');
-        icon.style.transform = 'rotate(180deg)';
-      } else {
-        content.classList.add('hidden');
-        icon.style.transform = 'rotate(0deg)';
-      }
-    }
+        function showLoading() {
+            document.getElementById('loading-overlay').classList.add('show');
+        }
 
-    function showSemester(id) {
-      document.getElementById('smt1').classList.add('hidden');
-      document.getElementById('smt2').classList.add('hidden');
-      
-      document.querySelectorAll('.semester-btn').forEach(btn => {
-        btn.classList.remove('border-blue-500', 'bg-blue-50');
-        btn.classList.add('border-slate-200');
-      });
-      
-      if (id) {
-        document.getElementById(id).classList.remove('hidden');
-        document.getElementById('btn-' + id).classList.add('border-blue-500', 'bg-blue-50');
-        document.getElementById('btn-' + id).classList.remove('border-slate-200');
-      }
-    }
+        function hideLoading() {
+            document.getElementById('loading-overlay').classList.remove('show');
+        }
 
-    // Config handlers
-    async function onConfigChange(newConfig) {
-      config = { ...defaultConfig, ...newConfig };
-      
-      const navTitle = document.getElementById('nav-title');
-      if (navTitle) navTitle.textContent = config.site_title || defaultConfig.site_title;
-      
-      const teacherName = document.getElementById('teacher-name');
-      if (teacherName) teacherName.textContent = config.teacher_name || defaultConfig.teacher_name;
-      
-      const teacherTitle = document.getElementById('teacher-title');
-      if (teacherTitle) teacherTitle.textContent = config.teacher_title || defaultConfig.teacher_title;
-    }
+        function login(role) {
+            if (role === 'guru') {
+                const password = document.getElementById('teacher-password').value;
+                if (password !== TEACHER_PASSWORD) {
+                    showToast('Login Gagal', 'Password salah! Silakan coba lagi.', 'error');
+                    return;
+                }
+            }
+            
+            currentUser = role;
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            
+            document.getElementById('user-role-badge').textContent = role === 'guru' ? '👨‍🏫 Mode Guru' : '👨‍🎓 Mode Siswa';
+            
+            updateVisibility();
+            renderMaterials();
+            renderProfile();
+            renderDeadline();
+            renderSubmittedTasks();
+            updateTaskTypeDropdown(); // Add this line
+            
+            showToast('Login Berhasil', `Selamat datang, ${role === 'guru' ? 'Bapak/Ibu Guru' : 'Siswa'}!`, 'success');
+        }
 
-    function mapToCapabilities(config) {
-      return {
-        recolorables: [],
-        borderables: [],
-        fontEditable: undefined,
-        fontSizeable: undefined
-      };
-    }
+        function logout() {
+            currentUser = null;
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('teacher-password').value = '';
+            switchTab('materi');
+        }
 
-    function mapToEditPanelValues(config) {
-      return new Map([
-        ['site_title', config.site_title || defaultConfig.site_title],
-        ['teacher_name', config.teacher_name || defaultConfig.teacher_name],
-        ['teacher_title', config.teacher_title || defaultConfig.teacher_title]
-      ]);
-    }
+        function updateVisibility() {
+            const teacherOnly = document.querySelectorAll('.teacher-only');
+            const studentOnly = document.querySelectorAll('.student-only');
+            
+            teacherOnly.forEach(el => {
+                el.style.display = currentUser === 'guru' ? '' : 'none';
+            });
+            
+            studentOnly.forEach(el => {
+                el.style.display = currentUser === 'siswa' ? '' : 'none';
+            });
+        }
 
-    // Initialize
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange,
-        mapToCapabilities,
-        mapToEditPanelValues
-      });
-    }
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.dataset.tab === tabName) {
+                    btn.classList.add('tab-active');
+                    btn.classList.remove('bg-white/50', 'text-slate-600', 'hover:bg-white/80');
+                } else {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('bg-white/50', 'text-slate-600', 'hover:bg-white/80');
+                }
+            });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            
+            // Update dropdown when switching to tugas tab
+            if (tabName === 'tugas') {
+                updateTaskTypeDropdown();
+            }
+        }
 
-    checkSession();
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c0db8b56688e416',t:'MTc2ODkwMzE5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+        // ==================== SEMESTER FUNCTIONS ====================
+        function switchSemester(semester) {
+            appData.currentSemester = semester;
+            saveData();
+            
+            // Update active card styling
+            document.getElementById('card-semester1').classList.toggle('active', semester === 'semester1');
+            document.getElementById('card-semester2').classList.toggle('active', semester === 'semester2');
+            
+            // Reset open chapter
+            openChapterId = null;
+            
+            // Re-render materials
+            renderMaterials();
+            
+            showToast('Semester Diganti', `Menampilkan materi ${semester === 'semester1' ? 'Semester 1' : 'Semester 2'}`, 'success');
+        }
+
+        // ==================== MATERIALS FUNCTIONS ====================
+        function renderMaterials() {
+            const container = document.getElementById('chapters-container');
+            const currentSemester = appData.currentSemester;
+            const chapters = appData.materials[currentSemester];
+            
+            if (!chapters || chapters.length === 0) {
+                container.innerHTML = '<p class="text-center text-slate-500 py-8">Belum ada materi untuk semester ini</p>';
+                return;
+            }
+            
+            container.innerHTML = chapters.map(chapter => `
+                <div class="glassmorphism rounded-3xl overflow-hidden card-hover">
+                    <button onclick="toggleChapter('${chapter.id}')" class="w-full p-6 ${chapter.color === 'blue' ? 'semester1-header' : 'semester2-header'} text-left flex items-center justify-between hover:opacity-90 transition-all">
+                        <div class="flex items-center gap-4">
+                            <span class="text-4xl">${chapter.icon}</span>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">${chapter.title}</h3>
+                                <p class="text-sm text-white/80">${chapter.subChapters.length} Sub Bab</p>
+                            </div>
+                        </div>
+                        <svg id="icon-${chapter.id}" class="w-6 h-6 text-white rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    
+                    <div id="content-${chapter.id}" class="chapter-content px-6 pb-6">
+                        <div class="space-y-3">
+                            ${chapter.subChapters.map(sub => renderSubChapter(sub, chapter.id, chapter.color)).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderSubChapter(sub, chapterId, color) {
+            return `
+                <div class="bg-white/50 rounded-2xl overflow-hidden">
+                    <button onclick="toggleSubChapter('${sub.id}')" class="w-full p-4 text-left flex items-center justify-between hover:bg-white/80 transition-all">
+                        <span class="font-semibold text-slate-700">${sub.title}</span>
+                        <svg id="icon-${sub.id}" class="w-5 h-5 text-slate-400 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    
+                    <div id="content-${sub.id}" class="sub-chapter-content">
+                        <div class="px-4 pb-4">
+                            <div class="grid md:grid-cols-3 gap-3">
+                                ${renderMaterialButton('PDF', 'pdf', sub, color)}
+                                ${renderMaterialButton('Video', 'video', sub, color)}
+                                ${renderMaterialButton('Kuis', 'quiz', sub, color)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMaterialButton(label, type, sub, color) {
+            const icons = {
+                pdf: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>',
+                video: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',
+                quiz: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>'
+            };
+            
+            const colorClasses = {
+                pdf: 'from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700',
+                video: 'from-red-500 to-red-600 hover:from-red-600 hover:to-red-700',
+                quiz: 'from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700'
+            };
+            
+            const url = sub[type] || '';
+            const hasLink = url !== '';
+            const isTeacher = currentUser === 'guru';
+            
+            return `
+                <div>
+                    <button onclick="openLink('${url}', '${sub.title} - ${label}')" 
+                        class="material-btn ${hasLink ? 'has-link' : ''} w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r ${colorClasses[type]} text-white font-medium rounded-xl shadow-md">
+                        ${icons[type]}
+                        ${label}
+                    </button>
+                    ${isTeacher ? `
+                        <div class="link-input-group">
+                            <input type="url" id="input-${type}-${sub.id}" value="${url}" 
+                                placeholder="Masukkan link ${label}..." 
+                                class="link-input">
+                            <button onclick="saveLink('${sub.id}', '${type}')" 
+                                class="save-link-btn">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Simpan Link ${label}
+                            </button>
+                            <div class="link-status ${hasLink ? '' : 'empty'}">
+                                ${hasLink ? '✓ Link Tersimpan' : '⚠ Belum Ada Link'}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        function toggleChapter(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            // If clicking the same chapter, just toggle it
+            if (openChapterId === id) {
+                content.classList.toggle('open');
+                icon.classList.toggle('rotated');
+                openChapterId = content.classList.contains('open') ? id : null;
+            } else {
+                // Close previously open chapter
+                if (openChapterId) {
+                    const prevContent = document.getElementById(`content-${openChapterId}`);
+                    const prevIcon = document.getElementById(`icon-${openChapterId}`);
+                    if (prevContent) prevContent.classList.remove('open');
+                    if (prevIcon) prevIcon.classList.remove('rotated');
+                }
+                
+                // Open new chapter
+                content.classList.add('open');
+                icon.classList.add('rotated');
+                openChapterId = id;
+            }
+        }
+
+        function toggleSubChapter(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            content.classList.toggle('open');
+            icon.classList.toggle('rotated');
+        }
+
+        // ==================== DEADLINE & TASK TYPE SYNC ====================
+        function updateTaskTypeDropdown() {
+            const select = document.getElementById('submit-task-type');
+            const container = document.getElementById('deadline-task-option-container');
+            const indicator = document.getElementById('auto-selected-indicator');
+            
+            if (!select || !container) return;
+            
+            const deadlineTitle = appData.deadline.title?.trim();
+            
+            // Clear previous custom option
+            const existingCustomOption = select.querySelector('option[data-custom="true"]');
+            if (existingCustomOption) {
+                existingCustomOption.remove();
+            }
+            
+            // Clear container
+            container.innerHTML = '';
+            
+            if (deadlineTitle && deadlineTitle !== '') {
+                // Check if deadline title matches any existing option
+                const existingOption = Array.from(select.options).find(opt => 
+                    opt.value.toLowerCase() === deadlineTitle.toLowerCase()
+                );
+                
+                if (!existingOption) {
+                    // Add custom option from deadline
+                    const customOption = document.createElement('option');
+                    customOption.value = deadlineTitle;
+                    customOption.textContent = `📌 ${deadlineTitle} (Tugas Aktif)`;
+                    customOption.setAttribute('data-custom', 'true');
+                    select.insertBefore(customOption, select.options[1]);
+                }
+                
+                // Auto-select the deadline task
+                select.value = deadlineTitle;
+                
+                // Show indicator
+                if (indicator) {
+                    indicator.classList.remove('hidden');
+                }
+                
+                // Show badge
+                container.innerHTML = `
+                    <div class="auto-selected-badge mt-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Otomatis dipilih dari deadline guru
+                    </div>
+                `;
+            } else {
+                // Hide indicator if no deadline
+                if (indicator) {
+                    indicator.classList.add('hidden');
+                }
+            }
+        }
+
+        function renderDeadline() {
+            if (currentUser === 'guru') {
+                document.getElementById('deadline-title').value = appData.deadline.title || '';
+                document.getElementById('deadline-date').value = appData.deadline.date || '';
+                document.getElementById('deadline-time').value = appData.deadline.time || '';
+                document.getElementById('deadline-desc').value = appData.deadline.description || '';
+            }
+            
+            const deadlineDisplay = document.getElementById('current-deadline');
+            const deadline = appData.deadline;
+            
+            if (!deadline.title || !deadline.date) {
+                deadlineDisplay.innerHTML = `
+                    <div class="text-center py-8 text-slate-500">
+                        <svg class="w-12 h-12 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        <p>Belum ada tugas yang diberikan</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const deadlineDate = new Date(`${deadline.date}T${deadline.time || '23:59'}`);
+            const now = new Date();
+            const diffTime = deadlineDate - now;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            let urgencyClass = 'deadline-normal';
+            let urgencyText = 'Tenang, masih ada waktu';
+            let urgencyColor = 'text-emerald-600';
+            
+            if (diffDays <= 1) {
+                urgencyClass = 'deadline-urgent';
+                urgencyText = '⚠️ Deadline sangat dekat!';
+                urgencyColor = 'text-red-600';
+            } else if (diffDays <= 3) {
+                urgencyClass = 'deadline-warning';
+                urgencyText = '⏰ Segera kerjakan!';
+                urgencyColor = 'text-amber-600';
+            }
+            
+            const formattedDate = deadlineDate.toLocaleDateString('id-ID', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            deadlineDisplay.innerHTML = `
+                <div class="${urgencyClass} bg-white/50 rounded-2xl p-5">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-lg font-bold text-slate-800 mb-1">${deadline.title}</h4>
+                            <p class="text-sm text-slate-600 mb-3">${deadline.description || 'Tidak ada instruksi tambahan'}</p>
+                            <div class="flex flex-wrap items-center gap-3 text-sm">
+                                <span class="flex items-center gap-1 text-slate-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    ${formattedDate}
+                                </span>
+                                <span class="flex items-center gap-1 text-slate-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    ${deadline.time || '23:59'} WIB
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-200">
+                        <p class="font-semibold ${urgencyColor}">${urgencyText}</p>
+                        <p class="text-sm text-slate-500 mt-1">Sisa waktu: ${diffDays > 0 ? diffDays + ' hari' : 'Sudah lewat!'}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function saveDeadline() {
+            const title = document.getElementById('deadline-title').value.trim();
+            const date = document.getElementById('deadline-date').value;
+            const time = document.getElementById('deadline-time').value;
+            const desc = document.getElementById('deadline-desc').value.trim();
+            
+            if (!title || !date) {
+                showToast('Error', 'Judul dan tanggal harus diisi!', 'error');
+                return;
+            }
+            
+            appData.deadline = { title, date, time: time || '23:59', description: desc };
+            saveData();
+            renderDeadline();
+            updateTaskTypeDropdown(); // Update dropdown after saving deadline
+            showToast('Berhasil!', 'Deadline tugas berhasil disimpan & otomatis menjadi pilihan Jenis Tugas', 'success');
+        }
+
+        // ==================== GOOGLE SHEETS SUBMISSION ====================
+        async function submitTaskToGoogleSheets(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('submit-name').value.trim();
+            const className = document.getElementById('submit-class').value;
+            const taskType = document.getElementById('submit-task-type').value;
+            const link = document.getElementById('submit-link').value.trim();
+            const note = document.getElementById('submit-note').value.trim();
+            
+            if (!name || !className || !taskType || !link) {
+                showToast('Error', 'Semua field wajib diisi kecuali catatan!', 'error');
+                return;
+            }
+            
+            const submitButton = document.getElementById('submit-button');
+            submitButton.disabled = true;
+            showLoading();
+            
+            const timestamp = new Date().toLocaleString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            const formData = new FormData();
+            formData.append('nama', name);
+            formData.append('kelas', className);
+            formData.append('jenisTugas', taskType);
+            formData.append('linkTugas', link);
+            formData.append('catatan', note || '-');
+            formData.append('timestamp', timestamp);
+            
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                hideLoading();
+                
+                if (result.status === 'success') {
+                    const task = {
+                        id: Date.now(),
+                        name,
+                        class: className,
+                        taskType,
+                        link,
+                        note,
+                        submittedAt: new Date().toISOString()
+                    };
+                    
+                    appData.submittedTasks.push(task);
+                    saveData();
+                    
+                    document.getElementById('submit-form').reset();
+                    
+                    renderSubmittedTasks();
+                    updateTaskTypeDropdown(); // Re-apply auto-selection after form reset
+                    showToast('Berhasil!', 'Tugas berhasil dikirim ke Google Sheets', 'success');
+                } else {
+                    throw new Error(result.message || 'Gagal mengirim data');
+                }
+            } catch (error) {
+                hideLoading();
+                console.error('Error:', error);
+                showToast('Gagal Mengirim', 'Terjadi kesalahan saat mengirim tugas. Silakan coba lagi.', 'error');
+            } finally {
+                submitButton.disabled = false;
+            }
+        }
+
+        function renderSubmittedTasks() {
+            const container = document.getElementById('tasks-list');
+            
+            if (!appData.submittedTasks || appData.submittedTasks.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-6 text-slate-500">
+                        <p class="text-sm">Belum ada tugas yang dikumpulkan</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = appData.submittedTasks.map(task => {
+                const date = new Date(task.submittedAt).toLocaleString('id-ID', {
+                    day: 'numeric',
+                    month: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                return `
+                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                        <div>
+                            <p class="font-medium text-slate-800">${task.name} - ${task.class}</p>
+                            <p class="text-xs text-slate-500">${task.taskType} • ${date}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openLink('${task.link}', 'Tugas ${task.name}')" class="p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-all" title="Lihat Tugas">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+                            <button onclick="deleteTask(${task.id})" class="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-all" title="Hapus">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deleteTask(id) {
+            appData.submittedTasks = appData.submittedTasks.filter(t => t.id !== id);
+            saveData();
+            renderSubmittedTasks();
+            showToast('Dihapus', 'Data tugas berhasil dihapus', 'warning');
+        }
+
+        // ==================== PROFILE FUNCTIONS ====================
+        function renderProfile() {
+            const profile = appData.profile;
+            
+            document.getElementById('profile-name-display').textContent = profile.name;
+            document.getElementById('profile-nip-display').textContent = `NIP: ${profile.nip}`;
+            document.getElementById('profile-bio-display').textContent = profile.bio;
+            
+            document.getElementById('wa-link').href = `https://wa.me/${profile.whatsapp}`;
+            document.getElementById('email-link').href = `mailto:${profile.email}`;
+            
+            if (currentUser === 'guru') {
+                document.getElementById('edit-name').value = profile.name;
+                document.getElementById('edit-nip').value = profile.nip;
+                document.getElementById('edit-bio').value = profile.bio;
+                document.getElementById('edit-whatsapp').value = profile.whatsapp;
+                document.getElementById('edit-email').value = profile.email;
+            }
+        }
+
+        function saveProfile() {
+            const name = document.getElementById('edit-name').value.trim();
+            const nip = document.getElementById('edit-nip').value.trim();
+            const bio = document.getElementById('edit-bio').value.trim();
+            const whatsapp = document.getElementById('edit-whatsapp').value.trim();
+            const email = document.getElementById('edit-email').value.trim();
+            
+            if (!name) {
+                showToast('Error', 'Nama tidak boleh kosong!', 'error');
+                return;
+            }
+            
+            appData.profile = { name, nip, bio, whatsapp, email };
+            saveData();
+            renderProfile();
+            showToast('Berhasil!', 'Profil berhasil disimpan', 'success');
+        }
+
+        // ==================== ELEMENT SDK INTEGRATION ====================
+        const defaultConfig = {
+            portal_title: 'Portal IPS Kelas 7',
+            welcome_text: 'Selamat datang di portal pembelajaran',
+            google_script_url: 'https://script.google.com/macros/s/AKfycbxuBKz_csBSa1UbKeH7hxX-SKFZ0CaGKk5lPavd4vZxB2eoDhJCynydfdLN6c0ksunE/exec',
+            primary_color: '#667eea',
+            secondary_color: '#764ba2',
+            accent_color: '#f093fb',
+            text_color: '#1e293b',
+            background_color: '#f8fafc'
+        };
+
+        let config = { ...defaultConfig };
+
+        async function onConfigChange(newConfig) {
+            config = { ...config, ...newConfig };
+            
+            const titleDisplay = document.getElementById('portal-title-display');
+            if (titleDisplay) titleDisplay.textContent = config.portal_title || defaultConfig.portal_title;
+            
+            const headerTitle = document.getElementById('header-title');
+            if (headerTitle) headerTitle.textContent = config.portal_title || defaultConfig.portal_title;
+            
+            const welcomeDisplay = document.getElementById('welcome-text-display');
+            if (welcomeDisplay) welcomeDisplay.textContent = config.welcome_text || defaultConfig.welcome_text;
+            
+            if (config.google_script_url && config.google_script_url !== defaultConfig.google_script_url) {
+                GOOGLE_SCRIPT_URL = config.google_script_url;
+            }
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            config.primary_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_color || defaultConfig.secondary_color,
+                        set: (value) => {
+                            config.secondary_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ secondary_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ['portal_title', config.portal_title || defaultConfig.portal_title],
+                ['welcome_text', config.welcome_text || defaultConfig.welcome_text],
+                ['google_script_url', config.google_script_url || defaultConfig.google_script_url]
+            ]);
+        }
+
+        // ==================== INITIALIZATION ====================
+        function init() {
+            loadData();
+            
+            if (window.elementSdk) {
+                window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange,
+                    mapToCapabilities,
+                    mapToEditPanelValues
+                });
+                config = window.elementSdk.config || defaultConfig;
+                
+                if (config.google_script_url && config.google_script_url !== defaultConfig.google_script_url) {
+                    GOOGLE_SCRIPT_URL = config.google_script_url;
+                }
+            }
+            
+            onConfigChange(config);
+            
+            // Close modal on ESC key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        }
+
+        init();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1e7a34e2afe77e',t:'MTc2OTA3ODg5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
