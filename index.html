@@ -1239,19 +1239,20 @@
         }
 
         // ==================== MODAL IFRAME VIEWER ====================
-        function openLink(url, title) {
+        function openLink(url, title, type = '') {
             if (!url || url === '') {
                 showToast('Link Kosong', 'Guru belum mengisi link untuk materi ini', 'warning');
                 return;
             }
             
-            // Check if this is a quiz link - open in new tab instead of iframe
-            if (title && title.toLowerCase().includes('kuis')) {
+            // Check if this is a quiz - open directly in new tab
+            if (type === 'quiz' || (title && title.toLowerCase().includes('kuis'))) {
                 window.open(url, '_blank', 'noopener,noreferrer');
                 showToast('Quiz Dibuka', 'Quiz dibuka di tab baru', 'success');
                 return;
             }
             
+            // For PDF and Video - open in modal viewer
             // Convert YouTube URL to embed format
             let embedUrl = url;
             if (url.includes('youtube.com/watch?v=')) {
@@ -1261,7 +1262,7 @@
                 const videoId = url.split('youtu.be/')[1].split('?')[0];
                 embedUrl = `https://www.youtube.com/embed/${videoId}`;
             }
-            // Convert Canva presentation/quiz URL to embed format
+            // Convert Canva presentation URL to embed format
             else if (url.includes('canva.com/design/')) {
                 // Extract design ID from URL
                 const designId = url.split('/design/')[1].split('/')[0];
@@ -1520,7 +1521,7 @@
             
             return `
                 <div>
-                    <button onclick="openLink('${url}', '${sub.title} - ${label}')" 
+                    <button onclick="openLink('${url}', '${sub.title} - ${label}', '${type}')" 
                         class="material-btn ${hasLink ? 'has-link' : ''} w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r ${colorClasses[type]} text-white font-medium rounded-xl shadow-md">
                         ${icons[type]}
                         ${label}
@@ -2006,5 +2007,5 @@
 
         init();
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1f250311d2b593',t:'MTc2OTA4NTg4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1f2c9335b9d8a3',t:'MTc2OTA4NjE5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
