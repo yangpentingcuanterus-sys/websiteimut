@@ -819,7 +819,7 @@
      </div><!-- Profil Tab -->
      <div id="tab-profil" class="tab-content hidden">
       <div class="mb-8">
-       <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">👨‍����� Profil Guru</h2>
+       <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">👨‍🏫 Profil Guru</h2>
        <p class="text-slate-600">Informasi pengajar mata pelajaran IPS</p>
       </div>
       <div class="max-w-2xl mx-auto">
@@ -888,10 +888,14 @@
   </div>
   <script>
         // ==================== GOOGLE SHEETS CONFIGURATION ====================
-        let GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxuBKz_csBSa1UbKeH7hxX-SKFZ0CaGKk5lPavd4vZxB2eoDhJCynydfdLN6c0ksunE/exec';
+        let GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyLhzzvHgtsEHcHoD8Rs4dVdU5bUfT3GNcikn8AfHr9ChHOvsBa89DhCa1IsTUVYbPa/exec';
         
         // ==================== CONFIGURATION ====================
         const TEACHER_PASSWORD = 'jelly';
+        
+        // Auto-sync interval (check for updates every 30 seconds)
+        let syncInterval = null;
+        const SYNC_INTERVAL_MS = 30000; // 30 seconds
         
         // Default Data with COMPLETE Semester Structure
         const defaultData = {
@@ -1114,6 +1118,86 @@
 
         function saveData() {
             localStorage.setItem('portalIPSData', JSON.stringify(appData));
+            // Upload to cloud after saving
+            uploadDataToCloud();
+        }
+
+        // ==================== CLOUD SYNC FUNCTIONS ====================
+        async function uploadDataToCloud() {
+            if (currentUser !== 'guru') return; // Only teacher can upload
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'saveData');
+                formData.append('data', JSON.stringify({
+                    profile: appData.profile,
+                    deadline: appData.deadline,
+                    materials: appData.materials,
+                    currentSemester: appData.currentSemester
+                }));
+                
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+            } catch (error) {
+                console.error('Failed to upload data:', error);
+            }
+        }
+
+        async function downloadDataFromCloud() {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL + '?action=loadData');
+                const result = await response.json();
+                
+                if (result.status === 'success' && result.data) {
+                    const cloudData = JSON.parse(result.data);
+                    
+                    // Merge cloud data with local data (cloud data takes priority)
+                    appData.profile = { ...appData.profile, ...cloudData.profile };
+                    appData.deadline = { ...appData.deadline, ...cloudData.deadline };
+                    appData.materials = cloudData.materials || appData.materials;
+                    appData.currentSemester = cloudData.currentSemester || appData.currentSemester;
+                    
+                    // Save merged data locally
+                    localStorage.setItem('portalIPSData', JSON.stringify(appData));
+                    
+                    // Refresh UI
+                    if (currentUser) {
+                        renderMaterials();
+                        renderProfile();
+                        renderDeadline();
+                        updateTaskTypeDropdown();
+                    }
+                    
+                    return true;
+                }
+            } catch (error) {
+                console.error('Failed to download data:', error);
+            }
+            return false;
+        }
+
+        function startAutoSync() {
+            // Stop existing sync if any
+            if (syncInterval) {
+                clearInterval(syncInterval);
+            }
+            
+            // Sync immediately when starting
+            downloadDataFromCloud();
+            
+            // Set up periodic sync
+            syncInterval = setInterval(() => {
+                downloadDataFromCloud();
+            }, SYNC_INTERVAL_MS);
+        }
+
+        function stopAutoSync() {
+            if (syncInterval) {
+                clearInterval(syncInterval);
+                syncInterval = null;
+            }
         }
 
         // ==================== LINK MANAGEMENT (LocalStorage) ====================
@@ -1271,17 +1355,28 @@
             document.getElementById('user-role-badge').textContent = role === 'guru' ? '👨‍🏫 Mode Guru' : '👨‍🎓 Mode Siswa';
             
             updateVisibility();
-            renderMaterials();
-            renderProfile();
-            renderDeadline();
-            renderSubmittedTasks();
-            updateTaskTypeDropdown(); // Add this line
+            
+            // Download data from cloud and start auto-sync
+            downloadDataFromCloud().then(() => {
+                renderMaterials();
+                renderProfile();
+                renderDeadline();
+                renderSubmittedTasks();
+                updateTaskTypeDropdown();
+            });
+            
+            // Start automatic sync every 30 seconds
+            startAutoSync();
             
             showToast('Login Berhasil', `Selamat datang, ${role === 'guru' ? 'Bapak/Ibu Guru' : 'Siswa'}!`, 'success');
         }
 
         function logout() {
             currentUser = null;
+            
+            // Stop auto-sync when logging out
+            stopAutoSync();
+            
             document.getElementById('login-screen').classList.remove('hidden');
             document.getElementById('dashboard').classList.add('hidden');
             document.getElementById('teacher-password').value = '';
@@ -1808,7 +1903,7 @@
         const defaultConfig = {
             portal_title: 'Portal IPS Kelas 7',
             welcome_text: 'Selamat datang di portal pembelajaran',
-            google_script_url: 'https://script.google.com/macros/s/AKfycbxuBKz_csBSa1UbKeH7hxX-SKFZ0CaGKk5lPavd4vZxB2eoDhJCynydfdLN6c0ksunE/exec',
+            google_script_url: 'https://script.google.com/macros/s/AKfycbyLhzzvHgtsEHcHoD8Rs4dVdU5bUfT3GNcikn8AfHr9ChHOvsBa89DhCa1IsTUVYbPa/exec',
             primary_color: '#667eea',
             secondary_color: '#764ba2',
             accent_color: '#f093fb',
@@ -1904,5 +1999,5 @@
 
         init();
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1eb96357a89509',t:'MTc2OTA4MTQ3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1eee13014ce77e',t:'MTc2OTA4MzYzNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
