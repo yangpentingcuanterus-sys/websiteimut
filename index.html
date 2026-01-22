@@ -2,7 +2,10 @@
 <html lang="id" class="h-full">
  <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
   <title>Portal IPS Kelas 7</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
@@ -11,6 +14,82 @@
         body {
             box-sizing: border-box;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-y;
+        }
+        
+        /* Mobile Responsive Improvements */
+        @media screen and (max-width: 768px) {
+            .glassmorphism {
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+            }
+            
+            .modal-container {
+                max-width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                margin: 0;
+            }
+            
+            .modal-overlay {
+                padding: 0;
+            }
+        }
+        
+        /* Landscape Mode on Mobile */
+        @media screen and (max-width: 932px) and (orientation: landscape) {
+            .modal-container {
+                height: 100vh;
+            }
+            
+            .modal-header {
+                padding: 1rem 1.5rem;
+            }
+            
+            .modal-title {
+                font-size: 1rem;
+            }
+            
+            .modal-close-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            header .h-16, header .md\\:h-20 {
+                height: 3.5rem !important;
+            }
+            
+            .floating-shapes {
+                display: none;
+            }
+        }
+        
+        /* Portrait Mode on Mobile */
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+            .semester-card {
+                width: 100%;
+            }
+            
+            footer {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+        
+        /* iOS Safe Area Support */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right);
+            }
+            
+            header {
+                padding-top: env(safe-area-inset-top);
+            }
+            
+            footer {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
         }
         
         .glassmorphism {
@@ -634,18 +713,19 @@
        <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">📚 Materi Pembelajaran IPS</h2>
        <p class="text-slate-600">Pilih semester dan bab untuk mempelajari materi</p>
       </div><!-- Semester Toggle - Minimal & Side by Side -->
-      <div class="flex items-center justify-center gap-4 mb-8"><button onclick="switchSemester('semester1')" id="card-semester1" class="semester-card active glassmorphism rounded-2xl p-6 cursor-pointer flex items-center gap-4 hover:shadow-xl transition-all">
-        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center shadow-md"><span class="text-2xl">📘</span>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"><button onclick="switchSemester('semester1')" id="card-semester1" class="semester-card w-full sm:w-auto active glassmorphism rounded-2xl p-4 sm:p-6 cursor-pointer flex items-center gap-3 sm:gap-4 hover:shadow-xl transition-all">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center shadow-md flex-shrink-0"><span class="text-xl sm:text-2xl">📘</span>
         </div>
         <div class="text-left">
-         <h3 class="text-lg font-bold text-slate-800">Semester 1</h3>
+         <h3 class="text-base sm:text-lg font-bold text-slate-800">Semester 1</h3>
          <p class="text-xs text-slate-500">Geografi &amp; Sosiologi</p>
         </div></button>
-       <div class="w-px h-12 bg-slate-300"></div><button onclick="switchSemester('semester2')" id="card-semester2" class="semester-card glassmorphism rounded-2xl p-6 cursor-pointer flex items-center gap-4 hover:shadow-xl transition-all">
-        <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl flex items-center justify-center shadow-md"><span class="text-2xl">📗</span>
+       <div class="hidden sm:block w-px h-12 bg-slate-300"></div>
+       <div class="sm:hidden w-full h-px bg-slate-300"></div><button onclick="switchSemester('semester2')" id="card-semester2" class="semester-card w-full sm:w-auto glassmorphism rounded-2xl p-4 sm:p-6 cursor-pointer flex items-center gap-3 sm:gap-4 hover:shadow-xl transition-all">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl flex items-center justify-center shadow-md flex-shrink-0"><span class="text-xl sm:text-2xl">📗</span>
         </div>
         <div class="text-left">
-         <h3 class="text-lg font-bold text-slate-800">Semester 2</h3>
+         <h3 class="text-base sm:text-lg font-bold text-slate-800">Semester 2</h3>
          <p class="text-xs text-slate-500">SDA &amp; Ekonomi</p>
         </div></button>
       </div><!-- Materials Container -->
@@ -1813,5 +1893,5 @@
 
         init();
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1e7a34e2afe77e',t:'MTc2OTA3ODg5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1e8701e0c30ddc',t:'MTc2OTA3OTQxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
