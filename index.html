@@ -654,9 +654,11 @@
       <h1 id="portal-title-display" class="text-3xl font-bold gradient-text mb-2">Portal IPS Kelas 7</h1>
       <p id="welcome-text-display" class="text-slate-600">Selamat datang di portal pembelajaran</p>
      </div>
-     <div class="space-y-4"><button onclick="login('siswa')" class="w-full py-4 px-6 btn-primary text-white font-semibold rounded-2xl flex items-center justify-center gap-3">
-       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-       </svg> Masuk sebagai Siswa </button>
+     <div class="space-y-4"><!-- Student Login Form -->
+      <div class="space-y-3"><input type="text" id="student-name" placeholder="Nama Lengkap Siswa" class="w-full py-4 px-6 bg-white/50 border border-slate-200 rounded-2xl input-focus focus:outline-none text-slate-700 placeholder-slate-400"> <select id="student-class" class="w-full py-4 px-6 bg-white/50 border border-slate-200 rounded-2xl input-focus focus:outline-none text-slate-700"> <option value="">Pilih Kelas</option> <option value="7E">7E</option> <option value="7F">7F</option> <option value="7G">7G</option> </select> <button onclick="loginStudent()" class="w-full py-4 px-6 btn-primary text-white font-semibold rounded-2xl flex items-center justify-center gap-3">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+        </svg> Masuk sebagai Siswa </button>
+      </div>
       <div class="relative">
        <div class="absolute inset-0 flex items-center">
         <div class="w-full border-t border-slate-300"></div>
@@ -738,7 +740,7 @@
        <p class="text-slate-600">Kelola dan kumpulkan tugas dengan tepat waktu</p>
       </div>
       <div class="grid lg:grid-cols-2 gap-8"><!-- Left Column - Deadline Info / Form -->
-       <div><!-- Teacher: Deadline Form -->
+       <div><!-- Teacher: Deadline Management -->
         <div id="deadline-form-section" class="teacher-only glassmorphism rounded-3xl p-6 md:p-8 card-hover">
          <div class="flex items-center gap-3 mb-6">
           <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center">
@@ -746,24 +748,35 @@
            </svg>
           </div>
           <div>
-           <h3 class="text-xl font-bold text-slate-800">Atur Deadline</h3>
-           <p class="text-sm text-slate-500">Tetapkan batas waktu pengumpulan tugas</p>
+           <h3 class="text-xl font-bold text-slate-800">Kelola Deadline</h3>
+           <p class="text-sm text-slate-500">Atur batas waktu untuk setiap kelas</p>
           </div>
          </div>
          <div class="space-y-4">
           <div><label for="deadline-title" class="block text-sm font-medium text-slate-700 mb-2">Judul Tugas</label> <input type="text" id="deadline-title" placeholder="Masukkan judul tugas..." class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
            <p class="text-xs text-slate-500 mt-1">💡 Judul ini akan otomatis menjadi pilihan Jenis Tugas untuk siswa</p>
           </div>
+          <div><label class="block text-sm font-medium text-slate-700 mb-2">Pilih Kelas (Bisa pilih lebih dari satu)</label>
+           <div class="grid grid-cols-3 gap-2"><label class="flex items-center gap-2 p-3 bg-white/50 border border-slate-200 rounded-xl cursor-pointer hover:bg-white/80 transition-all"> <input type="checkbox" id="class-7E" value="7E" class="w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7E</span> </label> <label class="flex items-center gap-2 p-3 bg-white/50 border border-slate-200 rounded-xl cursor-pointer hover:bg-white/80 transition-all"> <input type="checkbox" id="class-7F" value="7F" class="w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7F</span> </label> <label class="flex items-center gap-2 p-3 bg-white/50 border border-slate-200 rounded-xl cursor-pointer hover:bg-white/80 transition-all"> <input type="checkbox" id="class-7G" value="7G" class="w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7G</span> </label>
+           </div>
+          </div>
           <div class="grid grid-cols-2 gap-4">
            <div><label for="deadline-date" class="block text-sm font-medium text-slate-700 mb-2">Tanggal</label> <input type="date" id="deadline-date" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
            </div>
-           <div><label for="deadline-time" class="block text-sm font-medium text-slate-700 mb-2">Jam</label> <input type="time" id="deadline-time" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
+           <div><label for="deadline-time" class="block text-sm font-medium text-slate-700 mb-2">Jam</label> <input type="time" id="deadline-time" value="23:59" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
            </div>
           </div>
           <div><label for="deadline-desc" class="block text-sm font-medium text-slate-700 mb-2">Deskripsi (Opsional)</label> <textarea id="deadline-desc" rows="3" placeholder="Tambahkan instruksi tugas..." class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none resize-none"></textarea>
           </div><button onclick="saveDeadline()" class="w-full py-4 btn-primary text-white font-semibold rounded-xl flex items-center justify-center gap-2">
            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
            </svg> Simpan Deadline </button>
+         </div><!-- All Deadlines List -->
+         <div class="mt-8 pt-6 border-t border-slate-200">
+          <h4 class="font-semibold text-slate-800 mb-4 flex items-center gap-2">
+           <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+           </svg> Semua Deadline Aktif</h4>
+          <div id="all-deadlines-list" class="space-y-3 max-h-96 overflow-y-auto scrollbar-thin"><!-- All deadlines will be rendered here -->
+          </div>
          </div>
         </div><!-- Student: Deadline Display -->
         <div id="deadline-display-section" class="student-only glassmorphism rounded-3xl p-6 md:p-8">
@@ -906,12 +919,7 @@
                 whatsapp: '628123456789',
                 email: 'guru.ips@sekolah.sch.id'
             },
-            deadline: {
-                title: 'Tugas Bab 1: Kondisi Geografis Indonesia',
-                date: '',
-                time: '23:59',
-                description: 'Kerjakan latihan soal hal 25-27 dan upload dalam format PDF'
-            },
+            deadlines: [], // Array of deadline objects: { id, title, class, date, time, description, createdAt }
             materials: {
                 semester1: [
                     {
@@ -925,6 +933,7 @@
                                 title: '1.1 Konsep Ruang',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -932,6 +941,7 @@
                                 title: '1.2 Letak Indonesia',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -939,6 +949,7 @@
                                 title: '1.3 Kondisi Alam',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -946,6 +957,7 @@
                                 title: '1.4 Sumber Daya Alam',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -953,6 +965,7 @@
                                 title: '1.5 Pengaruh Lingkungan',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             }
                         ]
@@ -968,6 +981,7 @@
                                 title: '2.1 Pengertian & Syarat Interaksi Sosial',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -975,6 +989,7 @@
                                 title: '2.2 Faktor Pengaruh Interaksi Sosial',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -982,6 +997,7 @@
                                 title: '2.3 Bentuk Interaksi Sosial',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -989,6 +1005,7 @@
                                 title: '2.4 Interaksi Sosial dalam Kehidupan Sehari-hari',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -996,6 +1013,7 @@
                                 title: '2.5 Dampak Interaksi Sosial',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             }
                         ]
@@ -1013,6 +1031,7 @@
                                 title: '3.1 Pemanfaatan & Pelestarian SDA',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -1020,6 +1039,7 @@
                                 title: '3.2 Potensi Negara Maju',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -1027,6 +1047,7 @@
                                 title: '3.3 Toponimi',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -1034,6 +1055,7 @@
                                 title: '3.4 Ekonomi Sekitar',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -1041,6 +1063,7 @@
                                 title: '3.5 Interaksi Ekonomi',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             }
                         ]
@@ -1056,6 +1079,7 @@
                                 title: '4.1 Permasalahan Sosial Budaya',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -1063,6 +1087,7 @@
                                 title: '4.2 Faktor Penyebab Masalah Sosial',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -1070,6 +1095,7 @@
                                 title: '4.3 Dampak Masalah Sosial',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -1077,6 +1103,7 @@
                                 title: '4.4 Pemberdayaan Masyarakat',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             },
                             {
@@ -1084,6 +1111,7 @@
                                 title: '4.5 Peran Komunitas',
                                 pdf: '',
                                 video: '',
+                                games: '',
                                 quiz: ''
                             }
                         ]
@@ -1096,6 +1124,7 @@
 
         // ==================== STATE MANAGEMENT ====================
         let currentUser = null;
+        let studentData = { name: '', class: '' }; // Store student info
         let appData = {};
         let openChapterId = null;
 
@@ -1104,15 +1133,12 @@
             if (saved) {
                 appData = JSON.parse(saved);
                 appData.profile = { ...defaultData.profile, ...appData.profile };
-                appData.deadline = { ...defaultData.deadline, ...appData.deadline };
+                appData.deadlines = appData.deadlines || [];
                 appData.materials = appData.materials || defaultData.materials;
                 appData.currentSemester = appData.currentSemester || 'semester1';
                 appData.submittedTasks = appData.submittedTasks || [];
             } else {
                 appData = JSON.parse(JSON.stringify(defaultData));
-                const tomorrow = new Date();
-                tomorrow.setDate(tomorrow.getDate() + 7);
-                appData.deadline.date = tomorrow.toISOString().split('T')[0];
             }
         }
 
@@ -1131,7 +1157,7 @@
                 formData.append('action', 'saveData');
                 formData.append('data', JSON.stringify({
                     profile: appData.profile,
-                    deadline: appData.deadline,
+                    deadlines: appData.deadlines,
                     materials: appData.materials,
                     currentSemester: appData.currentSemester
                 }));
@@ -1155,7 +1181,7 @@
                     
                     // Merge cloud data with local data (cloud data takes priority)
                     appData.profile = { ...appData.profile, ...cloudData.profile };
-                    appData.deadline = { ...appData.deadline, ...cloudData.deadline };
+                    appData.deadlines = cloudData.deadlines || appData.deadlines || [];
                     appData.materials = cloudData.materials || appData.materials;
                     appData.currentSemester = cloudData.currentSemester || appData.currentSemester;
                     
@@ -1347,6 +1373,42 @@
             document.getElementById('loading-overlay').classList.remove('show');
         }
 
+        function loginStudent() {
+            const name = document.getElementById('student-name').value.trim();
+            const className = document.getElementById('student-class').value;
+            
+            if (!name || !className) {
+                showToast('Login Gagal', 'Nama dan kelas harus diisi!', 'error');
+                return;
+            }
+            
+            currentUser = 'siswa';
+            studentData = { name, class: className };
+            
+            // Auto-fill student name and class in submit form
+            document.getElementById('submit-name').value = name;
+            document.getElementById('submit-class').value = className;
+            
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            
+            document.getElementById('user-role-badge').textContent = `👨‍🎓 ${name} - ${className}`;
+            
+            updateVisibility();
+            
+            downloadDataFromCloud().then(() => {
+                renderMaterials();
+                renderProfile();
+                renderDeadline();
+                renderSubmittedTasks();
+                updateTaskTypeDropdown();
+            });
+            
+            startAutoSync();
+            
+            showToast('Login Berhasil', `Selamat datang, ${name}!`, 'success');
+        }
+        
         function login(role) {
             if (role === 'guru') {
                 const password = document.getElementById('teacher-password').value;
@@ -1491,9 +1553,10 @@
                     
                     <div id="content-${sub.id}" class="sub-chapter-content">
                         <div class="px-4 pb-4">
-                            <div class="grid md:grid-cols-3 gap-3">
+                            <div class="grid md:grid-cols-4 gap-3">
                                 ${renderMaterialButton('PDF', 'pdf', sub, color)}
                                 ${renderMaterialButton('Video', 'video', sub, color)}
+                                ${renderMaterialButton('Games', 'games', sub, color)}
                                 ${renderMaterialButton('Kuis', 'quiz', sub, color)}
                             </div>
                         </div>
@@ -1506,12 +1569,14 @@
             const icons = {
                 pdf: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>',
                 video: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',
+                games: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>',
                 quiz: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>'
             };
             
             const colorClasses = {
                 pdf: 'from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700',
                 video: 'from-red-500 to-red-600 hover:from-red-600 hover:to-red-700',
+                games: 'from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700',
                 quiz: 'from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700'
             };
             
@@ -1588,49 +1653,60 @@
             
             if (!select || !container) return;
             
-            const deadlineTitle = appData.deadline.title?.trim();
+            // Get current student's class deadlines
+            const studentClass = currentUser === 'siswa' ? studentData.class : null;
+            const classDeadlines = studentClass ? 
+                appData.deadlines.filter(d => d.class === studentClass) : [];
             
-            // Clear previous custom option
-            const existingCustomOption = select.querySelector('option[data-custom="true"]');
-            if (existingCustomOption) {
-                existingCustomOption.remove();
-            }
+            // Clear previous custom options
+            const existingCustomOptions = select.querySelectorAll('option[data-custom="true"]');
+            existingCustomOptions.forEach(opt => opt.remove());
             
             // Clear container
             container.innerHTML = '';
             
-            if (deadlineTitle && deadlineTitle !== '') {
-                // Check if deadline title matches any existing option
-                const existingOption = Array.from(select.options).find(opt => 
-                    opt.value.toLowerCase() === deadlineTitle.toLowerCase()
-                );
+            if (classDeadlines.length > 0) {
+                // Add all deadline titles as options
+                classDeadlines.forEach(deadline => {
+                    const deadlineTitle = deadline.title?.trim();
+                    if (deadlineTitle && deadlineTitle !== '') {
+                        const existingOption = Array.from(select.options).find(opt => 
+                            opt.value.toLowerCase() === deadlineTitle.toLowerCase() && !opt.hasAttribute('data-custom')
+                        );
+                        
+                        if (!existingOption) {
+                            const customOption = document.createElement('option');
+                            customOption.value = deadlineTitle;
+                            customOption.textContent = `📌 ${deadlineTitle} (Tugas Aktif)`;
+                            customOption.setAttribute('data-custom', 'true');
+                            select.insertBefore(customOption, select.options[1]);
+                        }
+                    }
+                });
                 
-                if (!existingOption) {
-                    // Add custom option from deadline
-                    const customOption = document.createElement('option');
-                    customOption.value = deadlineTitle;
-                    customOption.textContent = `📌 ${deadlineTitle} (Tugas Aktif)`;
-                    customOption.setAttribute('data-custom', 'true');
-                    select.insertBefore(customOption, select.options[1]);
+                // Auto-select the most recent deadline
+                const latestDeadline = classDeadlines.sort((a, b) => 
+                    new Date(b.createdAt) - new Date(a.createdAt)
+                )[0];
+                
+                if (latestDeadline?.title) {
+                    select.value = latestDeadline.title;
+                    
+                    // Show indicator
+                    if (indicator) {
+                        indicator.classList.remove('hidden');
+                    }
+                    
+                    // Show badge
+                    container.innerHTML = `
+                        <div class="auto-selected-badge mt-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Otomatis dipilih dari deadline terbaru
+                        </div>
+                    `;
                 }
-                
-                // Auto-select the deadline task
-                select.value = deadlineTitle;
-                
-                // Show indicator
-                if (indicator) {
-                    indicator.classList.remove('hidden');
-                }
-                
-                // Show badge
-                container.innerHTML = `
-                    <div class="auto-selected-badge mt-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        Otomatis dipilih dari deadline guru
-                    </div>
-                `;
             } else {
                 // Hide indicator if no deadline
                 if (indicator) {
@@ -1639,88 +1715,297 @@
             }
         }
 
+        function getStudentDeadline() {
+            if (currentUser !== 'siswa' || !studentData.class) return null;
+            
+            // Get all deadlines for student's class
+            const classDeadlines = appData.deadlines.filter(d => d.class === studentData.class);
+            
+            if (classDeadlines.length === 0) return null;
+            
+            // Return the most recent deadline that's not expired
+            const now = new Date();
+            const activeDeadlines = classDeadlines.filter(d => {
+                const deadlineDate = new Date(`${d.date}T${d.time || '23:59'}`);
+                return deadlineDate > now;
+            });
+            
+            if (activeDeadlines.length === 0) {
+                // If all deadlines expired, return the most recent one (to show it's expired)
+                return classDeadlines.sort((a, b) => 
+                    new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`)
+                )[0];
+            }
+            
+            // Return the closest upcoming deadline
+            return activeDeadlines.sort((a, b) => 
+                new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`)
+            )[0];
+        }
+
         function renderDeadline() {
             if (currentUser === 'guru') {
-                document.getElementById('deadline-title').value = appData.deadline.title || '';
-                document.getElementById('deadline-date').value = appData.deadline.date || '';
-                document.getElementById('deadline-time').value = appData.deadline.time || '';
-                document.getElementById('deadline-desc').value = appData.deadline.description || '';
+                // Clear form
+                document.getElementById('deadline-title').value = '';
+                document.getElementById('class-7E').checked = false;
+                document.getElementById('class-7F').checked = false;
+                document.getElementById('class-7G').checked = false;
+                document.getElementById('deadline-date').value = '';
+                document.getElementById('deadline-time').value = '23:59';
+                document.getElementById('deadline-desc').value = '';
+                
+                // Render all deadlines list
+                renderAllDeadlinesList();
             }
             
             const deadlineDisplay = document.getElementById('current-deadline');
-            const deadline = appData.deadline;
             
-            if (!deadline.title || !deadline.date) {
-                deadlineDisplay.innerHTML = `
-                    <div class="text-center py-8 text-slate-500">
-                        <svg class="w-12 h-12 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                        </svg>
-                        <p>Belum ada tugas yang diberikan</p>
+            // For students, show only their class deadlines
+            if (currentUser === 'siswa') {
+                const studentClass = studentData.class;
+                const classDeadlines = appData.deadlines.filter(d => d.class === studentClass);
+                
+                if (!classDeadlines || classDeadlines.length === 0) {
+                    deadlineDisplay.innerHTML = `
+                        <div class="text-center py-8 text-slate-500">
+                            <svg class="w-12 h-12 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                            <p>Belum ada tugas untuk kelas ${studentClass}</p>
+                        </div>
+                    `;
+                    
+                    // Enable form
+                    enableSubmitForm();
+                    return;
+                }
+                
+                // Render all deadlines for this class
+                renderStudentDeadlinesList(classDeadlines, deadlineDisplay);
+            }
+        }
+        
+        function renderStudentDeadlinesList(deadlines, container) {
+            // Sort deadlines by date (closest first)
+            const sortedDeadlines = [...deadlines].sort((a, b) => 
+                new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`)
+            );
+            
+            const now = new Date();
+            let hasActiveDeadline = false;
+            
+            const deadlinesHTML = sortedDeadlines.map((deadline, index) => {
+                const deadlineDate = new Date(`${deadline.date}T${deadline.time || '23:59'}`);
+                const diffTime = deadlineDate - now;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const isExpired = now > deadlineDate;
+                
+                if (!isExpired) hasActiveDeadline = true;
+                
+                let urgencyClass = 'deadline-normal';
+                let urgencyText = 'Tenang, masih ada waktu';
+                let urgencyColor = 'text-emerald-600';
+                let borderColor = 'border-emerald-200';
+                
+                if (isExpired) {
+                    urgencyClass = 'deadline-urgent';
+                    urgencyText = '❌ Deadline sudah lewat!';
+                    urgencyColor = 'text-red-600';
+                    borderColor = 'border-red-200';
+                } else if (diffDays <= 1) {
+                    urgencyClass = 'deadline-urgent';
+                    urgencyText = '⚠️ Deadline sangat dekat!';
+                    urgencyColor = 'text-red-600';
+                    borderColor = 'border-red-200';
+                } else if (diffDays <= 3) {
+                    urgencyClass = 'deadline-warning';
+                    urgencyText = '⏰ Segera kerjakan!';
+                    urgencyColor = 'text-amber-600';
+                    borderColor = 'border-amber-200';
+                }
+                
+                const formattedDate = deadlineDate.toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                return `
+                    <div class="${urgencyClass} bg-white/50 rounded-2xl p-5 border-2 ${borderColor} ${index > 0 ? 'mt-4' : ''}">
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <h4 class="text-lg font-bold text-slate-800">${deadline.title}</h4>
+                                    ${isExpired ? 
+                                        '<span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-medium rounded-full">Berakhir</span>' : 
+                                        '<span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">Aktif</span>'
+                                    }
+                                </div>
+                                <p class="text-sm text-slate-600 mb-1">Untuk Kelas: <span class="font-semibold text-purple-600">${deadline.class}</span></p>
+                                <p class="text-sm text-slate-600 mb-3">${deadline.description || 'Tidak ada instruksi tambahan'}</p>
+                                <div class="flex flex-wrap items-center gap-3 text-sm">
+                                    <span class="flex items-center gap-1 text-slate-600">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                        ${formattedDate}
+                                    </span>
+                                    <span class="flex items-center gap-1 text-slate-600">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        ${deadline.time || '23:59'} WIB
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-200">
+                            <p class="font-semibold ${urgencyColor}">${urgencyText}</p>
+                            <p class="text-sm text-slate-500 mt-1">Sisa waktu: ${isExpired ? 'Sudah lewat!' : diffDays > 0 ? diffDays + ' hari' : 'Hari ini!'}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = `
+                <div class="mb-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <h4 class="font-semibold text-slate-800 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                            Daftar Tugas Kelas ${studentData.class}
+                        </h4>
+                        <span class="px-3 py-1 bg-purple-100 text-purple-700 text-sm font-semibold rounded-full">
+                            ${sortedDeadlines.length} Tugas
+                        </span>
+                    </div>
+                </div>
+                ${deadlinesHTML}
+            `;
+            
+            // Disable/enable submit form based on active deadlines
+            if (currentUser === 'siswa') {
+                if (hasActiveDeadline) {
+                    enableSubmitForm();
+                } else {
+                    disableSubmitForm();
+                }
+            }
+        }
+
+        function renderAllDeadlinesList() {
+            const container = document.getElementById('all-deadlines-list');
+            
+            if (!appData.deadlines || appData.deadlines.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-6 text-slate-500">
+                        <p class="text-sm">Belum ada deadline yang dibuat</p>
                     </div>
                 `;
                 return;
             }
             
-            const deadlineDate = new Date(`${deadline.date}T${deadline.time || '23:59'}`);
-            const now = new Date();
-            const diffTime = deadlineDate - now;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            // Sort by creation date (newest first)
+            const sortedDeadlines = [...appData.deadlines].sort((a, b) => 
+                new Date(b.createdAt) - new Date(a.createdAt)
+            );
             
-            let urgencyClass = 'deadline-normal';
-            let urgencyText = 'Tenang, masih ada waktu';
-            let urgencyColor = 'text-emerald-600';
+            container.innerHTML = sortedDeadlines.map(deadline => {
+                const deadlineDate = new Date(`${deadline.date}T${deadline.time || '23:59'}`);
+                const now = new Date();
+                const isExpired = now > deadlineDate;
+                
+                const formattedDate = deadlineDate.toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                return `
+                    <div class="flex items-start justify-between p-4 bg-white/50 rounded-xl border border-slate-200">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h5 class="font-semibold text-slate-800">${deadline.title}</h5>
+                                <span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">${deadline.class}</span>
+                                ${isExpired ? '<span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-medium rounded-full">Berakhir</span>' : '<span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">Aktif</span>'}
+                            </div>
+                            <p class="text-xs text-slate-600 mb-2">${deadline.description || 'Tidak ada deskripsi'}</p>
+                            <p class="text-xs text-slate-500">⏰ ${formattedDate}</p>
+                        </div>
+                        <div class="flex items-center gap-2 ml-3">
+                            <button onclick="editDeadline('${deadline.id}')" class="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-all" title="Edit Deadline">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                            </button>
+                            <button onclick="deleteDeadline('${deadline.id}')" class="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-all" title="Hapus Deadline">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function editDeadline(id) {
+            const deadline = appData.deadlines.find(d => d.id === id);
+            if (!deadline) return;
             
-            if (diffDays <= 1) {
-                urgencyClass = 'deadline-urgent';
-                urgencyText = '⚠️ Deadline sangat dekat!';
-                urgencyColor = 'text-red-600';
-            } else if (diffDays <= 3) {
-                urgencyClass = 'deadline-warning';
-                urgencyText = '⏰ Segera kerjakan!';
-                urgencyColor = 'text-amber-600';
+            // Fill form with deadline data
+            document.getElementById('deadline-title').value = deadline.title;
+            document.getElementById('deadline-date').value = deadline.date;
+            document.getElementById('deadline-time').value = deadline.time || '23:59';
+            document.getElementById('deadline-desc').value = deadline.description || '';
+            
+            // Check the appropriate class checkbox
+            document.getElementById('class-7E').checked = deadline.class === '7E';
+            document.getElementById('class-7F').checked = deadline.class === '7F';
+            document.getElementById('class-7G').checked = deadline.class === '7G';
+            
+            // Delete the old deadline (will be re-created when saved)
+            deleteDeadline(id);
+            
+            // Scroll to form
+            document.getElementById('deadline-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            showToast('Mode Edit', 'Data deadline dimuat ke form. Silakan edit dan simpan kembali.', 'warning');
+        }
+
+        function disableSubmitForm() {
+            const submitButton = document.getElementById('submit-button');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Pengumpulan Ditutup';
+                submitButton.classList.remove('from-emerald-500', 'to-teal-500', 'hover:from-emerald-600', 'hover:to-teal-600');
+                submitButton.classList.add('from-slate-400', 'to-slate-500', 'cursor-not-allowed');
             }
             
-            const formattedDate = deadlineDate.toLocaleDateString('id-ID', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
+            document.getElementById('submit-link').disabled = true;
+            document.getElementById('submit-note').disabled = true;
+        }
+
+        function enableSubmitForm() {
+            const submitButton = document.getElementById('submit-button');
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Kirim Tugas';
+                submitButton.classList.add('from-emerald-500', 'to-teal-500', 'hover:from-emerald-600', 'hover:to-teal-600');
+                submitButton.classList.remove('from-slate-400', 'to-slate-500', 'cursor-not-allowed');
+            }
             
-            deadlineDisplay.innerHTML = `
-                <div class="${urgencyClass} bg-white/50 rounded-2xl p-5">
-                    <div class="flex items-start gap-4">
-                        <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                            </svg>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="text-lg font-bold text-slate-800 mb-1">${deadline.title}</h4>
-                            <p class="text-sm text-slate-600 mb-3">${deadline.description || 'Tidak ada instruksi tambahan'}</p>
-                            <div class="flex flex-wrap items-center gap-3 text-sm">
-                                <span class="flex items-center gap-1 text-slate-600">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                    </svg>
-                                    ${formattedDate}
-                                </span>
-                                <span class="flex items-center gap-1 text-slate-600">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                    ${deadline.time || '23:59'} WIB
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-slate-200">
-                        <p class="font-semibold ${urgencyColor}">${urgencyText}</p>
-                        <p class="text-sm text-slate-500 mt-1">Sisa waktu: ${diffDays > 0 ? diffDays + ' hari' : 'Sudah lewat!'}</p>
-                    </div>
-                </div>
-            `;
+            document.getElementById('submit-link').disabled = false;
+            document.getElementById('submit-note').disabled = false;
         }
 
         function saveDeadline() {
@@ -1729,16 +2014,47 @@
             const time = document.getElementById('deadline-time').value;
             const desc = document.getElementById('deadline-desc').value.trim();
             
-            if (!title || !date) {
-                showToast('Error', 'Judul dan tanggal harus diisi!', 'error');
+            // Get selected classes
+            const selectedClasses = [];
+            if (document.getElementById('class-7E').checked) selectedClasses.push('7E');
+            if (document.getElementById('class-7F').checked) selectedClasses.push('7F');
+            if (document.getElementById('class-7G').checked) selectedClasses.push('7G');
+            
+            if (!title || selectedClasses.length === 0 || !date) {
+                showToast('Error', 'Judul, kelas, dan tanggal harus diisi!', 'error');
                 return;
             }
             
-            appData.deadline = { title, date, time: time || '23:59', description: desc };
+            // Create deadline for each selected class
+            selectedClasses.forEach(className => {
+                const deadlineId = `${Date.now()}-${className}`;
+                const newDeadline = {
+                    id: deadlineId,
+                    title,
+                    class: className,
+                    date,
+                    time: time || '23:59',
+                    description: desc,
+                    createdAt: new Date().toISOString()
+                };
+                
+                appData.deadlines.push(newDeadline);
+            });
+            
             saveData();
             renderDeadline();
-            updateTaskTypeDropdown(); // Update dropdown after saving deadline
-            showToast('Berhasil!', 'Deadline tugas berhasil disimpan & otomatis menjadi pilihan Jenis Tugas', 'success');
+            updateTaskTypeDropdown();
+            
+            const classText = selectedClasses.join(', ');
+            showToast('Berhasil!', `Deadline untuk kelas ${classText} berhasil disimpan`, 'success');
+        }
+
+        function deleteDeadline(id) {
+            appData.deadlines = appData.deadlines.filter(d => d.id !== id);
+            saveData();
+            renderAllDeadlinesList();
+            updateTaskTypeDropdown();
+            showToast('Dihapus', 'Deadline berhasil dihapus', 'warning');
         }
 
         // ==================== GOOGLE SHEETS SUBMISSION ====================
@@ -2007,5 +2323,5 @@
 
         init();
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1f2c9335b9d8a3',t:'MTc2OTA4NjE5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c233484c379ea8a',t:'MTc2OTEyODQ2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
