@@ -1707,7 +1707,7 @@
             </div>
             <div class="resource-card">
              <div class="resource-icon">
-              ���️
+              ▶️
              </div>
              <div class="resource-label">
               Video
@@ -2147,7 +2147,7 @@
            <div class="resource-grid">
             <div class="resource-card">
              <div class="resource-icon">
-              📄
+              ���
              </div>
              <div class="resource-label">
               PDF Materi
@@ -2357,7 +2357,7 @@
             </div>
             <div class="resource-card">
              <div class="resource-icon">
-              ���️
+              ▶️
              </div>
              <div class="resource-label">
               Video
@@ -2555,7 +2555,7 @@
         Guru IPS Kelas 7
        </div>
       </div><!-- Guru Edit Controls (Hidden for Students) -->
-      <div id="guruProfileEditControls" class="hidden"><button class="btn-add" onclick="showEditGuruProfileModal()" style="margin-bottom: 20px;"> ✏️ Edit Profile Guru </button>
+      <div id="guruProfileEditControls" class="hidden"><button class="btn-add" onclick="showEditGuruProfileModal()" style="margin-top: 20px; margin-bottom: 0px;"> ✏️ Edit Profile Guru </button>
       </div>
       <div class="progress-card">
        <div class="progress-title">
@@ -2971,11 +2971,11 @@
         document.getElementById('guruControls').classList.remove('hidden');
         document.querySelectorAll('.guru-input').forEach(el => el.classList.remove('hidden'));
         document.getElementById('menuProgress').classList.remove('hidden');
-        document.getElementById('guruProfileEditControls').style.display = 'block';
+        document.getElementById('guruProfileEditControls').classList.remove('hidden');
       } else {
         document.getElementById('studentProgressCard').style.display = 'block';
         document.getElementById('menuProgress').style.display = 'none'; // Hide progress menu for students
-        document.getElementById('guruProfileEditControls').style.display = 'none'; // Hide edit button for students
+        document.getElementById('guruProfileEditControls').classList.add('hidden'); // Hide edit button for students
         updateStudentProgress();
       }
       
@@ -3808,5 +3808,5 @@
       if (e.target === guruModal) closeEditGuruProfileModal();
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c2455be24aad8ca',t:'MTc2OTE0MDMxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c2461bc96faf4ec',t:'MTc2OTE0MDgwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
