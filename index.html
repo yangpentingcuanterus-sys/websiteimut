@@ -2,142 +2,68 @@
 <html lang="id" class="h-full">
  <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="mobile-web-app-capable" content="yes">
-  <title>Portal IPS Kelas 7</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Pembelajaran Google Auth</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
   <script src="/_sdk/element_sdk.js"></script>
   <style>
         body {
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-y;
+            font-family: 'Inter', sans-serif;
         }
         
-        /* Mobile Responsive Improvements */
-        @media screen and (max-width: 768px) {
-            .glassmorphism {
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-            }
-            
-            .modal-container {
-                max-width: 100%;
-                height: 100vh;
-                border-radius: 0;
-                margin: 0;
-            }
-            
-            .modal-overlay {
-                padding: 0;
-            }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
-        /* Landscape Mode on Mobile */
-        @media screen and (max-width: 932px) and (orientation: landscape) {
-            .modal-container {
-                height: 100vh;
-            }
-            
-            .modal-header {
-                padding: 1rem 1.5rem;
-            }
-            
-            .modal-title {
-                font-size: 1rem;
-            }
-            
-            .modal-close-btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.875rem;
-            }
-            
-            header .h-16, header .md\\:h-20 {
-                height: 3.5rem !important;
-            }
-            
-            .floating-shapes {
-                display: none;
-            }
-        }
-        
-        /* Portrait Mode on Mobile */
-        @media screen and (max-width: 768px) and (orientation: portrait) {
-            .semester-card {
-                width: 100%;
-            }
-            
-            footer {
-                padding-bottom: env(safe-area-inset-bottom);
-            }
-        }
-        
-        /* iOS Safe Area Support */
-        @supports (padding: max(0px)) {
-            body {
-                padding-left: env(safe-area-inset-left);
-                padding-right: env(safe-area-inset-right);
-            }
-            
-            header {
-                padding-top: env(safe-area-inset-top);
-            }
-            
-            footer {
-                padding-bottom: env(safe-area-inset-bottom);
-            }
+        .gradient-bg-alt {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
         
         .glassmorphism {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        .glassmorphism-dark {
-            background: rgba(30, 41, 59, 0.9);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
         .card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .card-hover:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px -12px rgba(102, 126, 234, 0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
         }
         
-        .rotate-icon {
-            transition: transform 0.3s ease;
-        }
-        
-        .rotate-icon.rotated {
-            transform: rotate(180deg);
-        }
-        
-        .tab-active {
+        .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 10px 30px -10px rgba(102, 126, 234, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .toast {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .deadline-card {
+            transition: all 0.3s ease;
         }
         
         .deadline-urgent {
@@ -158,1186 +84,939 @@
             50% { border-left-color: #fca5a5; }
         }
         
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-20px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .animate-slide-in {
-            animation: slideIn 0.5s ease forwards;
-        }
-        
         .animate-fade-in {
-            animation: fadeIn 0.3s ease forwards;
+            animation: fadeIn 0.5s ease forwards;
         }
         
-        .chapter-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease, opacity 0.3s ease;
-            opacity: 0;
-        }
-        
-        .chapter-content.open {
-            max-height: 5000px;
-            padding-top: 1rem;
-            opacity: 1;
-        }
-        
-        .sub-chapter-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-            opacity: 0;
-        }
-        
-        .sub-chapter-content.open {
-            max-height: 2000px;
-            opacity: 1;
-        }
-        
-        .toast {
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .toast.show {
-            transform: translateX(0);
-        }
-        
-        .input-focus {
-            transition: all 0.3s ease;
-        }
-        
-        .input-focus:focus {
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
-            border-color: #667eea;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px -10px rgba(102, 126, 234, 0.6);
-        }
-        
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        .floating-shapes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-        }
-        
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.1;
-        }
-        
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            background: #667eea;
-            top: -100px;
-            right: -100px;
-            animation: float 8s ease-in-out infinite;
-        }
-        
-        .shape-2 {
-            width: 200px;
-            height: 200px;
-            background: #764ba2;
-            bottom: 10%;
-            left: -50px;
-            animation: float 10s ease-in-out infinite reverse;
-        }
-        
-        .shape-3 {
-            width: 150px;
-            height: 150px;
-            background: #f093fb;
-            top: 40%;
-            right: 10%;
-            animation: float 12s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .spinner {
+        .loading-spinner {
             border: 3px solid rgba(255, 255, 255, 0.3);
             border-top-color: white;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             animation: spin 0.8s linear infinite;
         }
         
-        .scrollbar-thin::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .scrollbar-thin::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 3px;
-        }
-        
-        .scrollbar-thin::-webkit-scrollbar-thumb {
-            background: rgba(102, 126, 234, 0.5);
-            border-radius: 3px;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         .profile-avatar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        
-        .loading-overlay.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .semester-card {
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .semester-card.active {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
-        }
-        
-        .semester1-header {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-        }
-        
-        .semester2-header {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-        }
-        
-        .material-btn {
-            transition: all 0.3s ease;
-        }
-        
-        .material-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Modal Iframe Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-            padding: 1rem;
-        }
-        
-        .modal-overlay.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .modal-container {
-            width: 100%;
-            max-width: 1400px;
-            height: 90vh;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transform: scale(0.9);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .modal-overlay.show .modal-container {
-            transform: scale(1);
-        }
-        
-        .modal-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 1.5rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-shrink: 0;
-        }
-        
-        .modal-title {
-            color: white;
-            font-size: 1.25rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .modal-close-btn {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .modal-close-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .modal-body {
-            flex: 1;
-            position: relative;
-            background: #f8fafc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
-        }
-        
-        .iframe-loader {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1;
-        }
-        
-        .iframe-loader.hidden {
-            display: none;
-        }
-        
-        .loader-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(102, 126, 234, 0.2);
-            border-top-color: #667eea;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         
-        .loader-text {
-            color: #667eea;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-        
-        /* Link Input Styles for Teachers */
-        .link-input-group {
-            margin-top: 0.75rem;
-            padding: 1rem;
-            background: rgba(102, 126, 234, 0.05);
-            border: 2px dashed rgba(102, 126, 234, 0.3);
-            border-radius: 12px;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .link-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
-            margin-bottom: 0.5rem;
-        }
-        
-        .link-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
-        }
-        
-        .save-link-btn {
-            width: 100%;
-            padding: 0.625rem 1rem;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .google-signin-container {
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-        }
-        
-        .save-link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
-        }
-        
-        .save-link-btn:active {
-            transform: translateY(0);
-        }
-        
-        .link-status {
-            display: inline-flex;
             align-items: center;
-            gap: 0.375rem;
-            padding: 0.25rem 0.75rem;
-            background: rgba(16, 185, 129, 0.1);
-            color: #059669;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-top: 0.5rem;
-        }
-        
-        .link-status.empty {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-        }
-        
-        @keyframes pulse-ring {
-            0% {
-                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
-            }
-        }
-        
-        .material-btn.has-link {
-            animation: pulse-ring 2s infinite;
-        }
-        
-        /* Auto-selected task badge */
-        .auto-selected-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            border-radius: 10px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-top: 0.5rem;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            min-height: 60px;
         }
     </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full bg-slate-50 overflow-auto">
-  <div id="app" class="min-h-full w-full"><!-- Modal Iframe Viewer -->
-   <div id="modal-viewer" class="modal-overlay">
-    <div class="modal-container">
-     <div class="modal-header">
-      <div class="modal-title">
-       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-       </svg><span id="modal-content-title">Sedang Memuat Materi...</span>
-      </div><button onclick="closeModal()" class="modal-close-btn">
-       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-       </svg> Tutup Materi </button>
-     </div>
-     <div class="modal-body">
-      <div id="iframe-loader" class="iframe-loader">
-       <div class="loader-spinner"></div>
-       <div class="loader-text">
-        Memuat konten...
-       </div>
-      </div><iframe id="content-iframe" class="modal-iframe" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation"></iframe>
-     </div>
-    </div>
-   </div><!-- Loading Overlay -->
-   <div id="loading-overlay" class="loading-overlay">
-    <div class="glassmorphism rounded-3xl p-8 flex flex-col items-center gap-4 animate-slide-in">
-     <div class="spinner"></div>
-     <div class="text-center">
-      <p class="text-lg font-semibold text-slate-800">Sedang Mengirim...</p>
-      <p class="text-sm text-slate-600">Mohon tunggu sebentar</p>
-     </div>
-    </div>
-   </div><!-- Toast Notification -->
-   <div id="toast" class="toast fixed top-6 right-6 z-50 glassmorphism rounded-2xl px-6 py-4 shadow-2xl flex items-center gap-3">
-    <div id="toast-icon" class="w-10 h-10 rounded-full flex items-center justify-center">
-     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-     </svg>
-    </div>
+ <body class="h-full bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 overflow-auto">
+  <div id="app" class="min-h-full w-full"><!-- Toast Notification -->
+   <div id="toast" class="toast fixed top-6 right-6 z-50 glassmorphism rounded-2xl px-6 py-4 shadow-2xl flex items-center gap-3" style="display: none;">
+    <div id="toast-icon" class="w-10 h-10 rounded-full flex items-center justify-center"></div>
     <div>
      <p id="toast-title" class="font-semibold text-slate-800"></p>
      <p id="toast-message" class="text-sm text-slate-600"></p>
     </div>
    </div><!-- Login Screen -->
-   <div id="login-screen" class="min-h-full w-full gradient-bg flex items-center justify-center p-4 relative">
-    <div class="floating-shapes">
-     <div class="shape shape-1"></div>
-     <div class="shape shape-2"></div>
-     <div class="shape shape-3"></div>
-    </div>
-    <div class="glassmorphism rounded-3xl p-8 md:p-12 w-full max-w-md relative z-10 animate-slide-in">
+   <div id="login-screen" class="min-h-full w-full flex items-center justify-center p-4">
+    <div class="glassmorphism rounded-3xl p-8 md:p-12 w-full max-w-md shadow-2xl animate-fade-in">
      <div class="text-center mb-8">
-      <div class="w-20 h-20 mx-auto mb-6 profile-avatar rounded-2xl flex items-center justify-center shadow-lg">
+      <div class="w-20 h-20 mx-auto mb-6 gradient-bg rounded-2xl flex items-center justify-center shadow-lg">
        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
        </svg>
       </div>
-      <h1 id="portal-title-display" class="text-3xl font-bold gradient-text mb-2">Portal IPS Kelas 7</h1>
-      <p id="welcome-text-display" class="text-slate-600">Selamat datang di portal pembelajaran</p>
+      <h1 id="portal-title-display" class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">Portal Pembelajaran</h1>
+      <p id="welcome-message-display" class="text-slate-600">Masuk dengan akun Google Anda</p>
      </div>
-     <div class="space-y-4"><!-- Student Login Form -->
-      <div class="space-y-3"><input type="text" id="student-name" placeholder="Nama Lengkap Siswa" class="w-full py-4 px-6 bg-white/50 border border-slate-200 rounded-2xl input-focus focus:outline-none text-slate-700 placeholder-slate-400"> <select id="student-class" class="w-full py-4 px-6 bg-white/50 border border-slate-200 rounded-2xl input-focus focus:outline-none text-slate-700"> <option value="">Pilih Kelas</option> <option value="7E">7E</option> <option value="7F">7F</option> <option value="7G">7G</option> </select> <button onclick="loginStudent()" class="w-full py-4 px-6 btn-primary text-white font-semibold rounded-2xl flex items-center justify-center gap-3">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-        </svg> Masuk sebagai Siswa </button>
-      </div>
-      <div class="relative">
-       <div class="absolute inset-0 flex items-center">
-        <div class="w-full border-t border-slate-300"></div>
-       </div>
-       <div class="relative flex justify-center text-sm"><span class="px-4 bg-white/80 text-slate-500 rounded-full">atau</span>
-       </div>
-      </div>
-      <div class="space-y-3">
-       <div class="relative"><input type="password" id="teacher-password" placeholder="Password Guru" class="w-full py-4 px-6 bg-white/50 border border-slate-200 rounded-2xl input-focus focus:outline-none text-slate-700 placeholder-slate-400" onkeypress="if(event.key === 'Enter') login('guru')">
-        <svg class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-        </svg>
-       </div><button onclick="login('guru')" class="w-full py-4 px-6 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-2xl transition-all flex items-center justify-center gap-3">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg> Masuk sebagai Guru </button>
+     <div class="space-y-4">
+      <div id="google-signin-button" class="google-signin-container"></div>
+      <div class="text-center text-xs text-slate-500 mt-6">
+       <p>🔒 Login aman dengan Google OAuth</p>
+       <p class="mt-2">Data Anda dilindungi dan terenkripsi</p>
       </div>
      </div>
-     <p class="text-center text-xs text-slate-500 mt-8">© 2024 Portal Pembelajaran IPS</p>
+    </div>
+   </div><!-- Complete Profile Modal (First-time Students) -->
+   <div id="complete-profile-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="glassmorphism rounded-3xl p-8 w-full max-w-md shadow-2xl animate-fade-in">
+     <div class="text-center mb-6">
+      <div class="w-16 h-16 mx-auto mb-4 gradient-bg rounded-full flex items-center justify-center">
+       <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+       </svg>
+      </div>
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">Lengkapi Data Anda</h2>
+      <p class="text-slate-600">Pilih kelas untuk melanjutkan</p>
+     </div>
+     <div class="space-y-4">
+      <div><label for="student-class" class="block text-sm font-medium text-slate-700 mb-2">Pilih Kelas</label> <select id="student-class" class="w-full py-3 px-4 bg-white border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors"> <option value="">-- Pilih Kelas --</option> <option value="7A">Kelas 7A</option> <option value="7B">Kelas 7B</option> <option value="7C">Kelas 7C</option> <option value="7D">Kelas 7D</option> <option value="7E">Kelas 7E</option> <option value="7F">Kelas 7F</option> <option value="7G">Kelas 7G</option> <option value="8A">Kelas 8A</option> <option value="8B">Kelas 8B</option> <option value="8C">Kelas 8C</option> <option value="8D">Kelas 8D</option> <option value="8E">Kelas 8E</option> <option value="9A">Kelas 9A</option> <option value="9B">Kelas 9B</option> <option value="9C">Kelas 9C</option> <option value="9D">Kelas 9D</option> </select>
+      </div><button onclick="saveStudentClass()" class="w-full py-4 btn-primary text-white font-semibold rounded-xl flex items-center justify-center gap-2">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+       </svg> Simpan &amp; Lanjutkan </button>
+     </div>
     </div>
    </div><!-- Main Dashboard -->
-   <div id="dashboard" class="hidden min-h-full w-full bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50"><!-- Header -->
-    <header class="glassmorphism sticky top-0 z-40 border-b border-white/20">
+   <div id="dashboard" class="hidden min-h-full w-full"><!-- Header -->
+    <header class="glassmorphism sticky top-0 z-40 border-b border-white/20 shadow-sm">
      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 md:h-20">
        <div class="flex items-center gap-4">
-        <div class="w-10 h-10 md:w-12 md:h-12 profile-avatar rounded-xl flex items-center justify-center">
+        <div class="w-10 h-10 md:w-12 md:h-12 gradient-bg rounded-xl flex items-center justify-center shadow-md">
          <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
          </svg>
         </div>
         <div>
-         <h1 id="header-title" class="text-lg md:text-xl font-bold gradient-text">Portal IPS Kelas 7</h1>
+         <h1 id="header-title" class="text-lg md:text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Portal Pembelajaran</h1>
          <p id="user-role-badge" class="text-xs text-slate-500"></p>
         </div>
-       </div><button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-all text-sm font-medium">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-        </svg><span class="hidden sm:inline">Keluar</span> </button>
+       </div>
+       <div class="flex items-center gap-3"><img id="user-avatar" src="" alt="User" class="profile-avatar"> <button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-all text-sm font-medium">
+         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+         </svg><span class="hidden sm:inline">Keluar</span> </button>
+       </div>
       </div>
      </div>
     </header><!-- Tab Navigation -->
-    <nav class="glassmorphism border-b border-white/20">
+    <nav class="glassmorphism border-b border-white/20 shadow-sm">
      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex gap-2 py-4 overflow-x-auto scrollbar-thin"><button onclick="switchTab('materi')" data-tab="materi" class="tab-btn tab-active px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap transition-all flex items-center gap-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg> Materi </button> <button onclick="switchTab('tugas')" data-tab="tugas" class="tab-btn px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap transition-all flex items-center gap-2 bg-white/50 text-slate-600 hover:bg-white/80">
+      <div class="flex gap-2 py-4 overflow-x-auto"><button onclick="switchTab('tugas')" data-tab="tugas" class="tab-btn btn-primary px-6 py-3 rounded-xl font-semibold text-sm text-white whitespace-nowrap flex items-center gap-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-        </svg> Tugas </button> <button onclick="switchTab('profil')" data-tab="profil" class="tab-btn px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap transition-all flex items-center gap-2 bg-white/50 text-slate-600 hover:bg-white/80">
+        </svg> Tugas </button> <button onclick="switchTab('profil')" data-tab="profil" class="tab-btn px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap flex items-center gap-2 bg-white/50 text-slate-600 hover:bg-white/80 transition-all">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-        </svg> Profil Guru </button>
+        </svg> Profil </button>
       </div>
      </div>
     </nav><!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"><!-- Materi Tab -->
-     <div id="tab-materi" class="tab-content">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"><!-- Tugas Tab -->
+     <div id="tab-tugas" class="tab-content">
       <div class="mb-8">
-       <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">📚 Materi Pembelajaran IPS</h2>
-       <p class="text-slate-600">Pilih semester dan bab untuk mempelajari materi</p>
-      </div><!-- Semester Toggle - Minimal & Side by Side -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"><button onclick="switchSemester('semester1')" id="card-semester1" class="semester-card w-full sm:w-auto active glassmorphism rounded-2xl p-4 sm:p-6 cursor-pointer flex items-center gap-3 sm:gap-4 hover:shadow-xl transition-all">
-        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center shadow-md flex-shrink-0"><span class="text-xl sm:text-2xl">📘</span>
-        </div>
-        <div class="text-left">
-         <h3 class="text-base sm:text-lg font-bold text-slate-800">Semester 1</h3>
-         <p class="text-xs text-slate-500">Geografi &amp; Sosiologi</p>
-        </div></button>
-       <div class="hidden sm:block w-px h-12 bg-slate-300"></div>
-       <div class="sm:hidden w-full h-px bg-slate-300"></div><button onclick="switchSemester('semester2')" id="card-semester2" class="semester-card w-full sm:w-auto glassmorphism rounded-2xl p-4 sm:p-6 cursor-pointer flex items-center gap-3 sm:gap-4 hover:shadow-xl transition-all">
-        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl flex items-center justify-center shadow-md flex-shrink-0"><span class="text-xl sm:text-2xl">📗</span>
-        </div>
-        <div class="text-left">
-         <h3 class="text-base sm:text-lg font-bold text-slate-800">Semester 2</h3>
-         <p class="text-xs text-slate-500">SDA &amp; Ekonomi</p>
-        </div></button>
-      </div><!-- Materials Container -->
-      <div id="chapters-container" class="space-y-6"><!-- Chapters will be rendered here by JavaScript -->
+       <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">📝 Kelola Tugas &amp; Deadline</h2>
+       <p class="text-slate-600">Manajemen tugas dengan deadline per kelas</p>
       </div>
-     </div><!-- Tugas Tab -->
-     <div id="tab-tugas" class="tab-content hidden">
-      <div class="mb-8">
-       <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">📝 Tugas &amp; Deadline</h2>
-       <p class="text-slate-600">Kelola dan kumpulkan tugas dengan tepat waktu</p>
-      </div>
-      <div class="grid lg:grid-cols-2 gap-8"><!-- Left Column - Deadline Info / Form -->
-       <div><!-- Teacher: Deadline Management -->
-        <div id="deadline-form-section" class="teacher-only glassmorphism rounded-3xl p-6 md:p-8 card-hover">
-         <div class="flex items-center gap-3 mb-6">
-          <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center">
-           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-           </svg>
-          </div>
-          <div>
-           <h3 class="text-xl font-bold text-slate-800">Kelola Deadline</h3>
-           <p class="text-sm text-slate-500">Atur batas waktu untuk setiap kelas</p>
-          </div>
-         </div>
-         <div class="space-y-4">
-          <div><label for="deadline-title" class="block text-sm font-medium text-slate-700 mb-2">Judul Tugas</label> <input type="text" id="deadline-title" placeholder="Masukkan judul tugas..." class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
-           <p class="text-xs text-slate-500 mt-1">💡 Judul ini akan otomatis menjadi pilihan Jenis Tugas untuk siswa</p>
-          </div>
-          <div><label class="block text-sm font-medium text-slate-700 mb-2">Pilih Kelas (Bisa pilih lebih dari satu)</label>
-           <div class="grid grid-cols-3 gap-2"><label class="flex items-center gap-2 p-3 bg-white/50 border border-slate-200 rounded-xl cursor-pointer hover:bg-white/80 transition-all"> <input type="checkbox" id="class-7E" value="7E" class="w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7E</span> </label> <label class="flex items-center gap-2 p-3 bg-white/50 border border-slate-200 rounded-xl cursor-pointer hover:bg-white/80 transition-all"> <input type="checkbox" id="class-7F" value="7F" class="w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7F</span> </label> <label class="flex items-center gap-2 p-3 bg-white/50 border border-slate-200 rounded-xl cursor-pointer hover:bg-white/80 transition-all"> <input type="checkbox" id="class-7G" value="7G" class="w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7G</span> </label>
+      <div class="grid lg:grid-cols-2 gap-8"><!-- Left Column - Deadline Management (Teacher) / Deadline Display (Student) -->
+       <div><!-- Teacher: Create/Edit Deadlines -->
+        <div id="deadline-management-section" class="teacher-only hidden">
+         <div class="glassmorphism rounded-3xl p-6 md:p-8 card-hover shadow-lg">
+          <div class="flex items-center gap-3 mb-6">
+           <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-md">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+           </div>
+           <div>
+            <h3 class="text-xl font-bold text-slate-800">Buat Deadline Tugas</h3>
+            <p class="text-sm text-slate-500">Atur deadline untuk setiap kelas</p>
            </div>
           </div>
-          <div class="grid grid-cols-2 gap-4">
-           <div><label for="deadline-date" class="block text-sm font-medium text-slate-700 mb-2">Tanggal</label> <input type="date" id="deadline-date" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
+          <form id="deadline-form" class="space-y-4" onsubmit="saveDeadline(event)">
+           <div><label for="deadline-title" class="block text-sm font-medium text-slate-700 mb-2">Judul Tugas *</label> <input type="text" id="deadline-title" required class="w-full py-3 px-4 bg-white border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors" placeholder="Contoh: Tugas IPS Bab 3">
            </div>
-           <div><label for="deadline-time" class="block text-sm font-medium text-slate-700 mb-2">Jam</label> <input type="time" id="deadline-time" value="23:59" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
+           <div><label class="block text-sm font-medium text-slate-700 mb-2">Pilih Kelas * (bisa lebih dari satu)</label>
+            <div class="grid grid-cols-3 sm:grid-cols-4 gap-2"><label class="flex items-center gap-2 p-3 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-purple-500 transition-colors"> <input type="checkbox" value="7A" class="deadline-class-checkbox w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7A</span> </label> <label class="flex items-center gap-2 p-3 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-purple-500 transition-colors"> <input type="checkbox" value="7B" class="deadline-class-checkbox w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7B</span> </label> <label class="flex items-center gap-2 p-3 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-purple-500 transition-colors"> <input type="checkbox" value="7C" class="deadline-class-checkbox w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7C</span> </label> <label class="flex items-center gap-2 p-3 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-purple-500 transition-colors"> <input type="checkbox" value="7D" class="deadline-class-checkbox w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7D</span> </label> <label class="flex items-center gap-2 p-3 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-purple-500 transition-colors"> <input type="checkbox" value="7E" class="deadline-class-checkbox w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7E</span> </label> <label class="flex items-center gap-2 p-3 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-purple-500 transition-colors"> <input type="checkbox" value="7F" class="deadline-class-checkbox w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7F</span> </label> <label class="flex items-center gap-2 p-3 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-purple-500 transition-colors"> <input type="checkbox" value="7G" class="deadline-class-checkbox w-4 h-4 text-purple-600 rounded"> <span class="font-medium text-slate-700">7G</span> </label>
+            </div>
            </div>
-          </div>
-          <div><label for="deadline-desc" class="block text-sm font-medium text-slate-700 mb-2">Deskripsi (Opsional)</label> <textarea id="deadline-desc" rows="3" placeholder="Tambahkan instruksi tugas..." class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none resize-none"></textarea>
-          </div><button onclick="saveDeadline()" class="w-full py-4 btn-primary text-white font-semibold rounded-xl flex items-center justify-center gap-2">
-           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-           </svg> Simpan Deadline </button>
-         </div><!-- All Deadlines List -->
-         <div class="mt-8 pt-6 border-t border-slate-200">
-          <h4 class="font-semibold text-slate-800 mb-4 flex items-center gap-2">
-           <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+           <div class="grid grid-cols-2 gap-4">
+            <div><label for="deadline-date" class="block text-sm font-medium text-slate-700 mb-2">Tanggal *</label> <input type="date" id="deadline-date" required class="w-full py-3 px-4 bg-white border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors">
+            </div>
+            <div><label for="deadline-time" class="block text-sm font-medium text-slate-700 mb-2">Jam *</label> <input type="time" id="deadline-time" required value="23:59" class="w-full py-3 px-4 bg-white border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors">
+            </div>
+           </div>
+           <div><label for="deadline-description" class="block text-sm font-medium text-slate-700 mb-2">Deskripsi</label> <textarea id="deadline-description" rows="3" class="w-full py-3 px-4 bg-white border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors resize-none" placeholder="Tambahkan instruksi atau catatan tugas..."></textarea>
+           </div><button type="submit" class="w-full py-4 btn-primary text-white font-semibold rounded-xl flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg> Simpan Deadline </button>
+          </form>
+         </div><!-- All Deadlines List (Teacher) -->
+         <div class="mt-8 glassmorphism rounded-3xl p-6 md:p-8 shadow-lg">
+          <h4 class="font-semibold text-slate-800 mb-4 flex items-center gap-2 text-lg">
+           <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
            </svg> Semua Deadline Aktif</h4>
-          <div id="all-deadlines-list" class="space-y-3 max-h-96 overflow-y-auto scrollbar-thin"><!-- All deadlines will be rendered here -->
-          </div>
+          <div id="all-deadlines-list" class="space-y-3 max-h-96 overflow-y-auto"></div>
          </div>
         </div><!-- Student: Deadline Display -->
-        <div id="deadline-display-section" class="student-only glassmorphism rounded-3xl p-6 md:p-8">
-         <div class="flex items-center gap-3 mb-6">
-          <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-pink-500 rounded-2xl flex items-center justify-center animate-pulse">
-           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-           </svg>
+        <div id="deadline-display-section" class="student-only hidden">
+         <div class="glassmorphism rounded-3xl p-6 md:p-8 shadow-lg">
+          <div class="flex items-center gap-3 mb-6">
+           <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-pink-500 rounded-2xl flex items-center justify-center shadow-md animate-pulse">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+           </div>
+           <div>
+            <h3 class="text-xl font-bold text-slate-800">Deadline Tugas Kelas Anda</h3>
+            <p class="text-sm text-slate-500">Perhatikan batas waktu pengumpulan</p>
+           </div>
           </div>
-          <div>
-           <h3 class="text-xl font-bold text-slate-800">Informasi Tugas Utama</h3>
-           <p class="text-sm text-slate-500">Perhatikan deadline pengumpulan</p>
-          </div>
-         </div>
-         <div id="current-deadline" class="space-y-4"><!-- Deadline info will be rendered here -->
+          <div id="student-deadlines-list" class="space-y-4"></div>
          </div>
         </div>
        </div><!-- Right Column - Submit Form -->
-       <div class="glassmorphism rounded-3xl p-6 md:p-8 card-hover">
-        <div class="flex items-center gap-3 mb-6">
-         <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-          </svg>
+       <div>
+        <div class="glassmorphism rounded-3xl p-6 md:p-8 card-hover shadow-lg">
+         <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center shadow-md">
+           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+           </svg>
+          </div>
+          <div>
+           <h3 class="text-xl font-bold text-slate-800">Kumpulkan Tugas</h3>
+           <p class="text-sm text-slate-500">Upload tugas sebelum deadline</p>
+          </div>
          </div>
-         <div>
-          <h3 class="text-xl font-bold text-slate-800">Kumpulkan Tugas</h3>
-          <p class="text-sm text-slate-500">Upload tugas sebelum deadline</p>
-         </div>
-        </div>
-        <form id="submit-form" class="space-y-4" onsubmit="submitTaskToGoogleSheets(event)">
-         <div><label for="submit-name" class="block text-sm font-medium text-slate-700 mb-2">Nama Lengkap</label> <input type="text" id="submit-name" placeholder="Masukkan nama lengkap..." required class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
-         </div>
-         <div><label for="submit-class" class="block text-sm font-medium text-slate-700 mb-2">Kelas</label> <select id="submit-class" required class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none"> <option value="">Pilih Kelas</option> <option value="7E">7E</option> <option value="7F">7F</option> <option value="7G">7G</option> </select>
-         </div>
-         <div><label for="submit-task-type" class="block text-sm font-medium text-slate-700 mb-2"> Jenis Tugas <span id="auto-selected-indicator" class="hidden ml-2 text-xs text-emerald-600 font-semibold">✓ Otomatis dipilih</span> </label> <select id="submit-task-type" required class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none"> <option value="">Pilih Jenis Tugas</option> <option value="Tugas Harian">Tugas Harian</option> <option value="Tugas Proyek">Tugas Proyek</option> <option value="Tugas Kelompok">Tugas Kelompok</option> <option value="Ulangan Harian">Ulangan Harian</option> <option value="Remedial">Remedial</option> </select>
-          <div id="deadline-task-option-container"></div>
-         </div>
-         <div><label for="submit-link" class="block text-sm font-medium text-slate-700 mb-2">Link Tugas (Google Drive / Docs)</label> <input type="url" id="submit-link" placeholder="https://drive.google.com/..." required class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
-         </div>
-         <div><label for="submit-note" class="block text-sm font-medium text-slate-700 mb-2">Catatan (Opsional)</label> <textarea id="submit-note" rows="3" placeholder="Tambahkan catatan untuk guru..." class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none resize-none"></textarea>
-         </div><button type="submit" id="submit-button" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-          </svg> Kirim Tugas </button>
-        </form><!-- Submitted Tasks List (Teacher Only) -->
-        <div id="submitted-tasks" class="teacher-only mt-8 pt-6 border-t border-slate-200">
-         <h4 class="font-semibold text-slate-800 mb-4 flex items-center gap-2">
-          <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+         <form id="submit-form" class="space-y-4" onsubmit="submitTask(event)">
+          <div><label for="submit-name" class="block text-sm font-medium text-slate-700 mb-2">Nama Lengkap</label> <input type="text" id="submit-name" readonly class="w-full py-3 px-4 bg-slate-100 border-2 border-slate-200 rounded-xl text-slate-700">
+          </div>
+          <div><label for="submit-class" class="block text-sm font-medium text-slate-700 mb-2">Kelas</label> <input type="text" id="submit-class" readonly class="w-full py-3 px-4 bg-slate-100 border-2 border-slate-200 rounded-xl text-slate-700">
+          </div>
+          <div><label for="submit-task-type" class="block text-sm font-medium text-slate-700 mb-2">Pilih Tugas *</label> <select id="submit-task-type" required class="w-full py-3 px-4 bg-white border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors"> <option value="">-- Pilih Tugas --</option> </select>
+           <p class="text-xs text-slate-500 mt-1">💡 Hanya menampilkan tugas untuk kelas Anda</p>
+          </div>
+          <div><label for="submit-link" class="block text-sm font-medium text-slate-700 mb-2">Link Tugas (Google Drive / Docs) *</label> <input type="url" id="submit-link" required class="w-full py-3 px-4 bg-white border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors" placeholder="https://drive.google.com/...">
+          </div>
+          <div><label for="submit-note" class="block text-sm font-medium text-slate-700 mb-2">Catatan (Opsional)</label> <textarea id="submit-note" rows="3" class="w-full py-3 px-4 bg-white border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors resize-none" placeholder="Tambahkan catatan untuk guru..."></textarea>
+          </div><button type="submit" id="submit-button" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
+           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+           </svg> Kirim Tugas </button>
+         </form>
+        </div><!-- Submitted Tasks List (Teacher Only) -->
+        <div id="submitted-tasks-section" class="teacher-only hidden mt-8 glassmorphism rounded-3xl p-6 md:p-8 shadow-lg">
+         <h4 class="font-semibold text-slate-800 mb-4 flex items-center gap-2 text-lg">
+          <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg> Tugas Terkumpul</h4>
-         <div id="tasks-list" class="space-y-3 max-h-64 overflow-y-auto scrollbar-thin"><!-- Tasks will be rendered here -->
-         </div>
+         <div id="submitted-tasks-list" class="space-y-3 max-h-96 overflow-y-auto"></div>
         </div>
        </div>
       </div>
      </div><!-- Profil Tab -->
      <div id="tab-profil" class="tab-content hidden">
       <div class="mb-8">
-       <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">👨‍🏫 Profil Guru</h2>
-       <p class="text-slate-600">Informasi pengajar mata pelajaran IPS</p>
+       <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">👤 Profil Pengguna</h2>
+       <p class="text-slate-600">Informasi akun Google Anda</p>
       </div>
       <div class="max-w-2xl mx-auto">
-       <div class="glassmorphism rounded-3xl p-8 md:p-10 card-hover"><!-- Profile Header -->
-        <div class="text-center mb-8">
-         <div class="w-32 h-32 mx-auto mb-6 profile-avatar rounded-full flex items-center justify-center shadow-lg">
-          <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-         </div><!-- View Mode -->
-         <div id="profile-view" class="student-only">
-          <h3 id="profile-name-display" class="text-2xl font-bold text-slate-800 mb-1"></h3>
-          <p id="profile-nip-display" class="text-slate-500 mb-4"></p>
-          <p id="profile-bio-display" class="text-slate-600 italic"></p>
-         </div><!-- Edit Mode (Teacher) -->
-         <div id="profile-edit" class="teacher-only space-y-4">
-          <div><label for="edit-name" class="block text-sm font-medium text-slate-700 mb-2 text-left">Nama Lengkap</label> <input type="text" id="edit-name" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none text-center text-lg font-semibold">
-          </div>
-          <div><label for="edit-nip" class="block text-sm font-medium text-slate-700 mb-2 text-left">NIP</label> <input type="text" id="edit-nip" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none text-center">
-          </div>
-          <div><label for="edit-bio" class="block text-sm font-medium text-slate-700 mb-2 text-left">Bio / Motto</label> <textarea id="edit-bio" rows="2" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none text-center resize-none"></textarea>
-          </div>
-         </div>
-        </div><!-- Contact Info -->
+       <div class="glassmorphism rounded-3xl p-8 md:p-10 card-hover shadow-lg">
+        <div class="text-center mb-8"><img id="profile-avatar" src="" alt="Avatar" class="w-32 h-32 mx-auto mb-6 rounded-full border-4 border-white shadow-lg">
+         <h3 id="profile-name" class="text-2xl font-bold text-slate-800 mb-1"></h3>
+         <p id="profile-email" class="text-slate-500 mb-2"></p>
+         <div id="profile-role" class="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full font-semibold text-sm"></div>
+        </div>
         <div class="border-t border-slate-200 pt-6">
-         <h4 class="font-semibold text-slate-800 mb-4 text-center">Kontak &amp; Sosial Media</h4><!-- View Mode Contacts -->
-         <div id="contacts-view" class="student-only flex flex-wrap justify-center gap-3"><a id="wa-link" href="#" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-3 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl transition-all font-medium">
-           <svg class="w-5 h-5" viewbox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-           </svg> WhatsApp </a> <a id="email-link" href="#" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-3 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl transition-all font-medium">
-           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-           </svg> Email </a>
-         </div><!-- Edit Mode Contacts -->
-         <div id="contacts-edit" class="teacher-only space-y-4">
-          <div><label for="edit-whatsapp" class="block text-sm font-medium text-slate-700 mb-2">Nomor WhatsApp</label> <input type="tel" id="edit-whatsapp" placeholder="628xxxxxxxxxx" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
+         <h4 class="font-semibold text-slate-800 mb-4">Informasi Akun</h4>
+         <div class="space-y-3">
+          <div class="flex items-center justify-between p-4 bg-white/50 rounded-xl"><span class="text-sm text-slate-600">Email</span> <span id="profile-email-detail" class="font-medium text-slate-800"></span>
           </div>
-          <div><label for="edit-email" class="block text-sm font-medium text-slate-700 mb-2">Email</label> <input type="email" id="edit-email" placeholder="guru@email.com" class="w-full py-3 px-4 bg-white/50 border border-slate-200 rounded-xl input-focus focus:outline-none">
-          </div><button onclick="saveProfile()" class="w-full py-4 btn-primary text-white font-semibold rounded-xl flex items-center justify-center gap-2 mt-6">
-           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-           </svg> Simpan Profil </button>
+          <div id="profile-class-info" class="flex items-center justify-between p-4 bg-white/50 rounded-xl"><span class="text-sm text-slate-600">Kelas</span> <span id="profile-class-detail" class="font-medium text-slate-800"></span>
+          </div>
+          <div class="flex items-center justify-between p-4 bg-white/50 rounded-xl"><span class="text-sm text-slate-600">Status</span> <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">✓ Aktif</span>
+          </div>
          </div>
         </div>
        </div>
       </div>
      </div>
     </main><!-- Footer -->
-    <footer class="glassmorphism border-t border-white/20 mt-12">
+    <footer class="glassmorphism border-t border-white/20 mt-12 shadow-sm">
      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 profile-avatar rounded-xl flex items-center justify-center">
-         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-         </svg>
-        </div>
-        <div>
-         <p class="font-semibold text-slate-800">Portal IPS Kelas 7</p>
-         <p class="text-sm text-slate-500">Belajar dengan Mudah &amp; Menyenangkan</p>
-        </div>
-       </div>
-       <div class="text-center md:text-right">
-        <p class="text-sm text-slate-600">© 2024 Portal Pembelajaran IPS</p>
-        <p class="text-xs text-slate-500">Dibuat dengan ❤️ untuk Pendidikan Indonesia</p>
-       </div>
+      <div class="text-center">
+       <p class="text-sm text-slate-600">© 2024 Portal Pembelajaran - Powered by Google OAuth</p>
+       <p class="text-xs text-slate-500 mt-2">🔒 Data Anda aman dan terenkripsi</p>
       </div>
      </div>
     </footer>
    </div>
   </div>
   <script>
-        // ==================== GOOGLE SHEETS CONFIGURATION ====================
-        let GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyLhzzvHgtsEHcHoD8Rs4dVdU5bUfT3GNcikn8AfHr9ChHOvsBa89DhCa1IsTUVYbPa/exec';
-        
         // ==================== CONFIGURATION ====================
-        const TEACHER_PASSWORD = 'jelly';
-        
-        // Auto-sync interval (check for updates every 30 seconds)
-        let syncInterval = null;
-        const SYNC_INTERVAL_MS = 30000; // 30 seconds
-        
-        // Default Data with COMPLETE Semester Structure
-        const defaultData = {
-            profile: {
-                name: 'Bapak/Ibu Guru IPS',
-                nip: '19XX0101XXXXXX001',
-                bio: '"Pendidikan adalah senjata paling ampuh untuk mengubah dunia"',
-                whatsapp: '628123456789',
-                email: 'guru.ips@sekolah.sch.id'
-            },
-            deadlines: [], // Array of deadline objects: { id, title, class, date, time, description, createdAt }
-            materials: {
-                semester1: [
-                    {
-                        id: 'bab1',
-                        title: 'BAB 1: Manusia, Tempat, dan Lingkungannya',
-                        icon: '🌏',
-                        color: 'blue',
-                        subChapters: [
-                            {
-                                id: 'bab1-1',
-                                title: '1.1 Konsep Ruang',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab1-2',
-                                title: '1.2 Letak Indonesia',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab1-3',
-                                title: '1.3 Kondisi Alam',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab1-4',
-                                title: '1.4 Sumber Daya Alam',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab1-5',
-                                title: '1.5 Pengaruh Lingkungan',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            }
-                        ]
-                    },
-                    {
-                        id: 'bab2',
-                        title: 'BAB 2: Interaksi Sosial',
-                        icon: '🤝',
-                        color: 'blue',
-                        subChapters: [
-                            {
-                                id: 'bab2-1',
-                                title: '2.1 Pengertian & Syarat Interaksi Sosial',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab2-2',
-                                title: '2.2 Faktor Pengaruh Interaksi Sosial',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab2-3',
-                                title: '2.3 Bentuk Interaksi Sosial',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab2-4',
-                                title: '2.4 Interaksi Sosial dalam Kehidupan Sehari-hari',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab2-5',
-                                title: '2.5 Dampak Interaksi Sosial',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            }
-                        ]
-                    }
-                ],
-                semester2: [
-                    {
-                        id: 'bab3',
-                        title: 'BAB 3: Sumber Daya Alam dan Wilayah',
-                        icon: '🌾',
-                        color: 'emerald',
-                        subChapters: [
-                            {
-                                id: 'bab3-1',
-                                title: '3.1 Pemanfaatan & Pelestarian SDA',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab3-2',
-                                title: '3.2 Potensi Negara Maju',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab3-3',
-                                title: '3.3 Toponimi',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab3-4',
-                                title: '3.4 Ekonomi Sekitar',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab3-5',
-                                title: '3.5 Interaksi Ekonomi',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            }
-                        ]
-                    },
-                    {
-                        id: 'bab4',
-                        title: 'BAB 4: Kehidupan Sosial dan Pemberdayaan Masyarakat',
-                        icon: '🏘️',
-                        color: 'emerald',
-                        subChapters: [
-                            {
-                                id: 'bab4-1',
-                                title: '4.1 Permasalahan Sosial Budaya',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab4-2',
-                                title: '4.2 Faktor Penyebab Masalah Sosial',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab4-3',
-                                title: '4.3 Dampak Masalah Sosial',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab4-4',
-                                title: '4.4 Pemberdayaan Masyarakat',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            },
-                            {
-                                id: 'bab4-5',
-                                title: '4.5 Peran Komunitas',
-                                pdf: '',
-                                video: '',
-                                games: '',
-                                quiz: ''
-                            }
-                        ]
-                    }
-                ]
-            },
-            currentSemester: 'semester1',
-            submittedTasks: []
-        };
+        let GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+        let GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+        let TEACHER_EMAILS = [
+            'teacher1@school.com',
+            'teacher2@school.com',
+            'teacher3@school.com'
+        ];
 
         // ==================== STATE MANAGEMENT ====================
         let currentUser = null;
-        let studentData = { name: '', class: '' }; // Store student info
-        let appData = {};
-        let openChapterId = null;
+        let isTeacher = false;
+        let allDeadlines = [];
+        let submittedTasks = [];
 
-        function loadData() {
-            const saved = localStorage.getItem('portalIPSData');
-            if (saved) {
-                appData = JSON.parse(saved);
-                appData.profile = { ...defaultData.profile, ...appData.profile };
-                appData.deadlines = appData.deadlines || [];
-                appData.materials = appData.materials || defaultData.materials;
-                appData.currentSemester = appData.currentSemester || 'semester1';
-                appData.submittedTasks = appData.submittedTasks || [];
-            } else {
-                appData = JSON.parse(JSON.stringify(defaultData));
+        // ==================== GOOGLE AUTH ====================
+        function initGoogleSignIn() {
+            if (!window.google || !window.google.accounts) {
+                console.error('Google Sign-In library not loaded');
+                setTimeout(initGoogleSignIn, 500);
+                return;
+            }
+
+            window.google.accounts.id.initialize({
+                client_id: GOOGLE_CLIENT_ID,
+                callback: handleCredentialResponse,
+                auto_select: false,
+                cancel_on_tap_outside: true
+            });
+
+            window.google.accounts.id.renderButton(
+                document.getElementById('google-signin-button'),
+                {
+                    theme: 'outline',
+                    size: 'large',
+                    width: 350,
+                    text: 'signin_with',
+                    shape: 'rectangular',
+                    logo_alignment: 'left'
+                }
+            );
+        }
+
+        async function handleCredentialResponse(response) {
+            try {
+                const credential = response.credential;
+                const payload = parseJwt(credential);
+                
+                const userData = {
+                    email: payload.email,
+                    name: payload.name,
+                    picture: payload.picture,
+                    sub: payload.sub
+                };
+                
+                // Check if user is teacher
+                isTeacher = TEACHER_EMAILS.some(email => 
+                    email.toLowerCase() === userData.email.toLowerCase()
+                );
+                
+                // Check if user exists in database
+                const existingUser = await getUserFromServer(userData.email);
+                
+                if (existingUser && existingUser.class) {
+                    // User exists with class data
+                    currentUser = {
+                        ...userData,
+                        class: existingUser.class,
+                        role: isTeacher ? 'teacher' : 'student'
+                    };
+                    
+                    saveUserToLocal(currentUser);
+                    await loadAllData();
+                    showDashboard();
+                } else if (isTeacher) {
+                    // Teacher - no class needed
+                    currentUser = {
+                        ...userData,
+                        class: null,
+                        role: 'teacher'
+                    };
+                    
+                    await saveUserToServer(currentUser);
+                    saveUserToLocal(currentUser);
+                    await loadAllData();
+                    showDashboard();
+                } else {
+                    // New student - needs to complete profile
+                    currentUser = {
+                        ...userData,
+                        class: null,
+                        role: 'student'
+                    };
+                    
+                    saveUserToLocal(currentUser);
+                    showCompleteProfileModal();
+                }
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                showToast('Error Login', 'Terjadi kesalahan saat login', 'error');
             }
         }
 
-        function saveData() {
-            localStorage.setItem('portalIPSData', JSON.stringify(appData));
-            // Upload to cloud after saving
-            uploadDataToCloud();
+        function parseJwt(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
         }
 
-        // ==================== CLOUD SYNC FUNCTIONS ====================
-        async function uploadDataToCloud() {
-            if (currentUser !== 'guru') return; // Only teacher can upload
+        // ==================== USER DATA MANAGEMENT ====================
+        function saveUserToLocal(user) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+        }
+
+        function loadUserFromLocal() {
+            const userData = localStorage.getItem('currentUser');
+            return userData ? JSON.parse(userData) : null;
+        }
+
+        async function getUserFromServer(email) {
+            try {
+                const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getUser&email=${encodeURIComponent(email)}`);
+                const result = await response.json();
+                return result.status === 'success' ? result.data : null;
+            } catch (error) {
+                console.error('Error getting user:', error);
+                return null;
+            }
+        }
+
+        async function saveUserToServer(user) {
+            try {
+                const formData = new FormData();
+                formData.append('action', 'saveUser');
+                formData.append('email', user.email);
+                formData.append('name', user.name);
+                formData.append('picture', user.picture);
+                formData.append('class', user.class || '');
+                formData.append('role', user.role);
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                return result.status === 'success';
+            } catch (error) {
+                console.error('Error saving user:', error);
+                return false;
+            }
+        }
+
+        // ==================== COMPLETE PROFILE ====================
+        function showCompleteProfileModal() {
+            document.getElementById('complete-profile-modal').classList.remove('hidden');
+        }
+
+        async function saveStudentClass() {
+            const selectedClass = document.getElementById('student-class').value;
+            
+            if (!selectedClass) {
+                showToast('Error', 'Silakan pilih kelas terlebih dahulu', 'error');
+                return;
+            }
+            
+            currentUser.class = selectedClass;
+            
+            const saved = await saveUserToServer(currentUser);
+            
+            if (saved) {
+                saveUserToLocal(currentUser);
+                document.getElementById('complete-profile-modal').classList.add('hidden');
+                await loadAllData();
+                showDashboard();
+                showToast('Berhasil!', 'Data kelas berhasil disimpan', 'success');
+            } else {
+                showToast('Error', 'Gagal menyimpan data. Silakan coba lagi', 'error');
+            }
+        }
+
+        // ==================== DASHBOARD ====================
+        function showDashboard() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            
+            // Update UI
+            document.getElementById('header-title').textContent = config.portal_title || 'Portal Pembelajaran';
+            document.getElementById('user-avatar').src = currentUser.picture;
+            document.getElementById('user-role-badge').textContent = isTeacher ? 
+                '👨‍🏫 Guru / Admin' : `👨‍🎓 Siswa - Kelas ${currentUser.class}`;
+            
+            // Update profile
+            document.getElementById('profile-avatar').src = currentUser.picture;
+            document.getElementById('profile-name').textContent = currentUser.name;
+            document.getElementById('profile-email').textContent = currentUser.email;
+            document.getElementById('profile-email-detail').textContent = currentUser.email;
+            document.getElementById('profile-role').textContent = isTeacher ? '👨‍🏫 Guru' : '👨‍🎓 Siswa';
+            
+            if (!isTeacher) {
+                document.getElementById('profile-class-detail').textContent = currentUser.class;
+            } else {
+                document.getElementById('profile-class-info').style.display = 'none';
+            }
+            
+            // Show/hide sections based on role
+            updateVisibility();
+            
+            // Render data
+            renderDeadlines();
+            renderSubmittedTasks();
+            updateTaskTypeDropdown();
+            
+            // Pre-fill submit form for students
+            if (!isTeacher) {
+                document.getElementById('submit-name').value = currentUser.name;
+                document.getElementById('submit-class').value = currentUser.class;
+            }
+        }
+
+        function updateVisibility() {
+            const teacherSections = document.querySelectorAll('.teacher-only');
+            const studentSections = document.querySelectorAll('.student-only');
+            
+            teacherSections.forEach(el => {
+                el.classList.toggle('hidden', !isTeacher);
+            });
+            
+            studentSections.forEach(el => {
+                el.classList.toggle('hidden', isTeacher);
+            });
+        }
+
+        // ==================== DEADLINE MANAGEMENT ====================
+        async function loadAllData() {
+            try {
+                // Load deadlines
+                const deadlinesResponse = await fetch(`${GOOGLE_SCRIPT_URL}?action=getDeadlines`);
+                const deadlinesResult = await deadlinesResponse.json();
+                allDeadlines = deadlinesResult.status === 'success' ? deadlinesResult.data : [];
+                
+                // Load submitted tasks
+                const tasksResponse = await fetch(`${GOOGLE_SCRIPT_URL}?action=getTasks`);
+                const tasksResult = await tasksResponse.json();
+                submittedTasks = tasksResult.status === 'success' ? tasksResult.data : [];
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        async function saveDeadline(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('deadline-title').value.trim();
+            const date = document.getElementById('deadline-date').value;
+            const time = document.getElementById('deadline-time').value;
+            const description = document.getElementById('deadline-description').value.trim();
+            
+            const selectedClasses = Array.from(document.querySelectorAll('.deadline-class-checkbox:checked'))
+                .map(cb => cb.value);
+            
+            if (selectedClasses.length === 0) {
+                showToast('Error', 'Pilih minimal satu kelas', 'error');
+                return;
+            }
+            
+            const button = event.target.querySelector('button[type="submit"]');
+            button.disabled = true;
+            button.innerHTML = '<div class="loading-spinner"></div> Menyimpan...';
+            
+            try {
+                // Save deadline for each selected class
+                for (const className of selectedClasses) {
+                    const deadlineData = {
+                        taskId: `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                        title,
+                        class: className,
+                        date,
+                        time,
+                        description,
+                        createdAt: new Date().toISOString(),
+                        createdBy: currentUser.email
+                    };
+                    
+                    const formData = new FormData();
+                    formData.append('action', 'saveDeadline');
+                    formData.append('data', JSON.stringify(deadlineData));
+                    
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        body: formData
+                    });
+                }
+                
+                await loadAllData();
+                renderDeadlines();
+                updateTaskTypeDropdown();
+                
+                document.getElementById('deadline-form').reset();
+                document.getElementById('deadline-time').value = '23:59';
+                
+                showToast('Berhasil!', `Deadline disimpan untuk ${selectedClasses.length} kelas`, 'success');
+            } catch (error) {
+                console.error('Error saving deadline:', error);
+                showToast('Error', 'Gagal menyimpan deadline', 'error');
+            } finally {
+                button.disabled = false;
+                button.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Simpan Deadline';
+            }
+        }
+
+        function renderDeadlines() {
+            if (isTeacher) {
+                renderAllDeadlinesList();
+            } else {
+                renderStudentDeadlines();
+            }
+        }
+
+        function renderAllDeadlinesList() {
+            const container = document.getElementById('all-deadlines-list');
+            
+            if (allDeadlines.length === 0) {
+                container.innerHTML = '<div class="text-center py-8 text-slate-500"><p>Belum ada deadline yang dibuat</p></div>';
+                return;
+            }
+            
+            // Group by task and class
+            const grouped = {};
+            allDeadlines.forEach(deadline => {
+                const key = `${deadline.taskId}`;
+                if (!grouped[key]) {
+                    grouped[key] = [];
+                }
+                grouped[key].push(deadline);
+            });
+            
+            const html = Object.values(grouped).map(group => {
+                const first = group[0];
+                const classes = group.map(d => d.class).join(', ');
+                const deadlineDate = new Date(`${first.date}T${first.time}`);
+                const now = new Date();
+                const isExpired = now > deadlineDate;
+                
+                return `
+                    <div class="p-4 bg-white rounded-xl border-2 border-slate-200 hover:border-purple-300 transition-all">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <h5 class="font-bold text-slate-800">${first.title}</h5>
+                                    ${isExpired ? 
+                                        '<span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-medium rounded-full">Berakhir</span>' : 
+                                        '<span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">Aktif</span>'
+                                    }
+                                </div>
+                                <p class="text-sm text-slate-600 mb-2">${first.description || 'Tidak ada deskripsi'}</p>
+                                <div class="flex flex-wrap gap-1 mb-2">
+                                    ${group.map(d => `
+                                        <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">${d.class}</span>
+                                    `).join('')}
+                                </div>
+                                <p class="text-xs text-slate-500">⏰ ${deadlineDate.toLocaleDateString('id-ID')} - ${first.time}</p>
+                            </div>
+                            <button onclick="deleteDeadline('${first.taskId}')" 
+                                class="ml-3 p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-all">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = html;
+        }
+
+        function renderStudentDeadlines() {
+            const container = document.getElementById('student-deadlines-list');
+            const studentClass = currentUser.class;
+            
+            const classDeadlines = allDeadlines.filter(d => d.class === studentClass);
+            
+            if (classDeadlines.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-slate-500">
+                        <svg class="w-12 h-12 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        <p>Belum ada tugas untuk kelas ${studentClass}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const now = new Date();
+            
+            const html = classDeadlines.map(deadline => {
+                const deadlineDate = new Date(`${deadline.date}T${deadline.time}`);
+                const diffTime = deadlineDate - now;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const isExpired = now > deadlineDate;
+                
+                let urgencyClass = 'deadline-normal';
+                let urgencyText = '✅ Tenang, masih ada waktu';
+                let urgencyColor = 'text-emerald-600';
+                
+                if (isExpired) {
+                    urgencyClass = 'deadline-urgent';
+                    urgencyText = '❌ Deadline sudah lewat!';
+                    urgencyColor = 'text-red-600';
+                } else if (diffDays <= 1) {
+                    urgencyClass = 'deadline-urgent';
+                    urgencyText = '⚠️ Deadline sangat dekat!';
+                    urgencyColor = 'text-red-600';
+                } else if (diffDays <= 3) {
+                    urgencyClass = 'deadline-warning';
+                    urgencyText = '⏰ Segera kerjakan!';
+                    urgencyColor = 'text-amber-600';
+                }
+                
+                return `
+                    <div class="${urgencyClass} deadline-card bg-white/80 rounded-2xl p-5 border-2 border-slate-200">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <h4 class="text-lg font-bold text-slate-800">${deadline.title}</h4>
+                                    ${isExpired ? 
+                                        '<span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-medium rounded-full">Berakhir</span>' : 
+                                        '<span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">Aktif</span>'
+                                    }
+                                </div>
+                                <p class="text-sm text-slate-600 mb-3">${deadline.description || 'Tidak ada instruksi tambahan'}</p>
+                                <div class="flex flex-wrap items-center gap-3 text-sm mb-3">
+                                    <span class="flex items-center gap-1 text-slate-600">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                        ${deadlineDate.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                                    </span>
+                                    <span class="flex items-center gap-1 text-slate-600">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        ${deadline.time} WIB
+                                    </span>
+                                </div>
+                                <div class="pt-3 border-t border-slate-200">
+                                    <p class="font-semibold ${urgencyColor}">${urgencyText}</p>
+                                    <p class="text-sm text-slate-500 mt-1">
+                                        Sisa waktu: ${isExpired ? 'Sudah lewat!' : diffDays > 0 ? diffDays + ' hari' : 'Hari ini!'}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = html;
+        }
+
+        async function deleteDeadline(taskId) {
+            if (!confirm('Hapus deadline untuk semua kelas yang terkait?')) return;
             
             try {
                 const formData = new FormData();
-                formData.append('action', 'saveData');
-                formData.append('data', JSON.stringify({
-                    profile: appData.profile,
-                    deadlines: appData.deadlines,
-                    materials: appData.materials,
-                    currentSemester: appData.currentSemester
-                }));
+                formData.append('action', 'deleteDeadline');
+                formData.append('taskId', taskId);
                 
                 await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     body: formData
                 });
+                
+                await loadAllData();
+                renderDeadlines();
+                updateTaskTypeDropdown();
+                
+                showToast('Berhasil', 'Deadline berhasil dihapus', 'success');
             } catch (error) {
-                console.error('Failed to upload data:', error);
+                console.error('Error deleting deadline:', error);
+                showToast('Error', 'Gagal menghapus deadline', 'error');
             }
         }
 
-        async function downloadDataFromCloud() {
+        function updateTaskTypeDropdown() {
+            if (isTeacher) return;
+            
+            const select = document.getElementById('submit-task-type');
+            const studentClass = currentUser.class;
+            const now = new Date();
+            
+            // Get active deadlines for student's class
+            const activeDeadlines = allDeadlines.filter(d => {
+                if (d.class !== studentClass) return false;
+                const deadlineDate = new Date(`${d.date}T${d.time}`);
+                return deadlineDate > now;
+            });
+            
+            // Clear existing options except first
+            while (select.options.length > 1) {
+                select.remove(1);
+            }
+            
+            // Add active deadlines
+            activeDeadlines.forEach(deadline => {
+                const option = document.createElement('option');
+                option.value = deadline.taskId;
+                option.textContent = `📌 ${deadline.title}`;
+                select.appendChild(option);
+            });
+            
+            // Disable submit if no active deadlines
+            const submitButton = document.getElementById('submit-button');
+            const submitLink = document.getElementById('submit-link');
+            const submitNote = document.getElementById('submit-note');
+            
+            if (activeDeadlines.length === 0) {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Tidak Ada Tugas Aktif';
+                submitButton.classList.add('bg-slate-400', 'cursor-not-allowed');
+                submitButton.classList.remove('from-emerald-500', 'to-teal-500');
+                submitLink.disabled = true;
+                submitNote.disabled = true;
+                select.disabled = true;
+            } else {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Kirim Tugas';
+                submitButton.classList.remove('bg-slate-400', 'cursor-not-allowed');
+                submitButton.classList.add('from-emerald-500', 'to-teal-500');
+                submitLink.disabled = false;
+                submitNote.disabled = false;
+                select.disabled = false;
+            }
+        }
+
+        // ==================== SUBMIT TASK ====================
+        async function submitTask(event) {
+            event.preventDefault();
+            
+            const taskId = document.getElementById('submit-task-type').value;
+            const link = document.getElementById('submit-link').value.trim();
+            const note = document.getElementById('submit-note').value.trim();
+            
+            if (!taskId) {
+                showToast('Error', 'Pilih tugas terlebih dahulu', 'error');
+                return;
+            }
+            
+            const deadline = allDeadlines.find(d => d.taskId === taskId);
+            if (!deadline) {
+                showToast('Error', 'Tugas tidak ditemukan', 'error');
+                return;
+            }
+            
+            // Check if deadline has passed
+            const deadlineDate = new Date(`${deadline.date}T${deadline.time}`);
+            const now = new Date();
+            if (now > deadlineDate) {
+                showToast('Error', 'Deadline sudah lewat!', 'error');
+                return;
+            }
+            
+            const button = event.target.querySelector('button[type="submit"]');
+            button.disabled = true;
+            button.innerHTML = '<div class="loading-spinner"></div> Mengirim...';
+            
             try {
-                const response = await fetch(GOOGLE_SCRIPT_URL + '?action=loadData');
-                const result = await response.json();
-                
-                if (result.status === 'success' && result.data) {
-                    const cloudData = JSON.parse(result.data);
-                    
-                    // Merge cloud data with local data (cloud data takes priority)
-                    appData.profile = { ...appData.profile, ...cloudData.profile };
-                    appData.deadlines = cloudData.deadlines || appData.deadlines || [];
-                    appData.materials = cloudData.materials || appData.materials;
-                    appData.currentSemester = cloudData.currentSemester || appData.currentSemester;
-                    
-                    // Save merged data locally
-                    localStorage.setItem('portalIPSData', JSON.stringify(appData));
-                    
-                    // Refresh UI
-                    if (currentUser) {
-                        renderMaterials();
-                        renderProfile();
-                        renderDeadline();
-                        updateTaskTypeDropdown();
-                    }
-                    
-                    return true;
-                }
-            } catch (error) {
-                console.error('Failed to download data:', error);
-            }
-            return false;
-        }
-
-        function startAutoSync() {
-            // Stop existing sync if any
-            if (syncInterval) {
-                clearInterval(syncInterval);
-            }
-            
-            // Sync immediately when starting
-            downloadDataFromCloud();
-            
-            // Set up periodic sync
-            syncInterval = setInterval(() => {
-                downloadDataFromCloud();
-            }, SYNC_INTERVAL_MS);
-        }
-
-        function stopAutoSync() {
-            if (syncInterval) {
-                clearInterval(syncInterval);
-                syncInterval = null;
-            }
-        }
-
-        // ==================== LINK MANAGEMENT (LocalStorage) ====================
-        function saveLink(subId, type) {
-            const inputId = `input-${type}-${subId}`;
-            const input = document.getElementById(inputId);
-            
-            if (!input) return;
-            
-            const url = input.value.trim();
-            
-            // Find and update the sub-chapter
-            for (const semester in appData.materials) {
-                appData.materials[semester].forEach(chapter => {
-                    chapter.subChapters.forEach(sub => {
-                        if (sub.id === subId) {
-                            sub[type] = url;
-                        }
-                    });
-                });
-            }
-            
-            saveData();
-            renderMaterials();
-            showToast('Link Tersimpan!', `Link ${type.toUpperCase()} berhasil disimpan`, 'success');
-        }
-
-        function getStoredLink(subId, type) {
-            for (const semester in appData.materials) {
-                for (const chapter of appData.materials[semester]) {
-                    for (const sub of chapter.subChapters) {
-                        if (sub.id === subId) {
-                            return sub[type] || '';
-                        }
-                    }
-                }
-            }
-            return '';
-        }
-
-        // ==================== MODAL IFRAME VIEWER ====================
-        function openLink(url, title, type = '') {
-            if (!url || url === '') {
-                showToast('Link Kosong', 'Guru belum mengisi link untuk materi ini', 'warning');
-                return;
-            }
-            
-            // Check if this is a quiz - open directly in new tab
-            if (type === 'quiz' || (title && title.toLowerCase().includes('kuis'))) {
-                window.open(url, '_blank', 'noopener,noreferrer');
-                showToast('Quiz Dibuka', 'Quiz dibuka di tab baru', 'success');
-                return;
-            }
-            
-            // For PDF and Video - open in modal viewer
-            // Convert YouTube URL to embed format
-            let embedUrl = url;
-            if (url.includes('youtube.com/watch?v=')) {
-                const videoId = url.split('watch?v=')[1].split('&')[0];
-                embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            } else if (url.includes('youtu.be/')) {
-                const videoId = url.split('youtu.be/')[1].split('?')[0];
-                embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            }
-            // Convert Canva presentation URL to embed format
-            else if (url.includes('canva.com/design/')) {
-                // Extract design ID from URL
-                const designId = url.split('/design/')[1].split('/')[0];
-                embedUrl = `https://www.canva.com/design/${designId}/view?embed`;
-            }
-            // Support Canva Site URLs (my.canva.site)
-            else if (url.includes('my.canva.site')) {
-                // Canva Site URLs can be embedded directly
-                embedUrl = url;
-            }
-            
-            const modal = document.getElementById('modal-viewer');
-            const iframe = document.getElementById('content-iframe');
-            const loader = document.getElementById('iframe-loader');
-            const modalTitle = document.getElementById('modal-content-title');
-            
-            modalTitle.textContent = title || 'Memuat Materi...';
-            loader.classList.remove('hidden');
-            iframe.src = '';
-            
-            modal.classList.add('show');
-            
-            // Load iframe after modal animation
-            setTimeout(() => {
-                iframe.src = embedUrl;
-                
-                iframe.onload = () => {
-                    loader.classList.add('hidden');
+                const taskData = {
+                    id: `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                    taskId: taskId,
+                    taskTitle: deadline.title,
+                    studentName: currentUser.name,
+                    studentEmail: currentUser.email,
+                    class: currentUser.class,
+                    link: link,
+                    note: note || '-',
+                    submittedAt: new Date().toISOString()
                 };
                 
-                // Hide loader after 3 seconds even if onload doesn't fire
-                setTimeout(() => {
-                    loader.classList.add('hidden');
-                }, 3000);
-            }, 300);
+                const formData = new FormData();
+                formData.append('action', 'submitTask');
+                formData.append('data', JSON.stringify(taskData));
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    await loadAllData();
+                    renderSubmittedTasks();
+                    
+                    document.getElementById('submit-form').reset();
+                    document.getElementById('submit-name').value = currentUser.name;
+                    document.getElementById('submit-class').value = currentUser.class;
+                    
+                    showToast('Berhasil!', 'Tugas berhasil dikumpulkan', 'success');
+                } else {
+                    throw new Error(result.message || 'Gagal mengirim tugas');
+                }
+            } catch (error) {
+                console.error('Error submitting task:', error);
+                showToast('Error', 'Gagal mengirim tugas. Coba lagi', 'error');
+            } finally {
+                button.disabled = false;
+                button.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Kirim Tugas';
+            }
         }
 
-        function closeModal() {
-            const modal = document.getElementById('modal-viewer');
-            const iframe = document.getElementById('content-iframe');
+        function renderSubmittedTasks() {
+            if (!isTeacher) return;
             
-            modal.classList.remove('show');
+            const container = document.getElementById('submitted-tasks-list');
             
-            setTimeout(() => {
-                iframe.src = '';
-            }, 400);
+            if (submittedTasks.length === 0) {
+                container.innerHTML = '<div class="text-center py-6 text-slate-500"><p class="text-sm">Belum ada tugas yang dikumpulkan</p></div>';
+                return;
+            }
+            
+            const html = submittedTasks.map(task => {
+                const date = new Date(task.submittedAt).toLocaleString('id-ID', {
+                    day: 'numeric',
+                    month: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                return `
+                    <div class="flex items-center justify-between p-3 bg-white rounded-xl border-2 border-slate-200">
+                        <div class="flex-1">
+                            <p class="font-medium text-slate-800">${task.studentName}</p>
+                            <p class="text-sm text-slate-600">${task.taskTitle} - ${task.class}</p>
+                            <p class="text-xs text-slate-500">${date}</p>
+                        </div>
+                        <a href="${task.link}" target="_blank" rel="noopener noreferrer" 
+                            class="p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                            </svg>
+                        </a>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = html;
         }
 
         // ==================== UI FUNCTIONS ====================
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.dataset.tab === tabName) {
+                    btn.classList.add('btn-primary', 'text-white');
+                    btn.classList.remove('bg-white/50', 'text-slate-600', 'hover:bg-white/80');
+                } else {
+                    btn.classList.remove('btn-primary', 'text-white');
+                    btn.classList.add('bg-white/50', 'text-slate-600', 'hover:bg-white/80');
+                }
+            });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+        }
+
         function showToast(title, message, type = 'success') {
             const toast = document.getElementById('toast');
             const toastIcon = document.getElementById('toast-icon');
@@ -1358,881 +1037,42 @@
                 toastIcon.innerHTML = '<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
             }
             
-            toast.classList.add('show');
+            toast.style.display = 'flex';
+            setTimeout(() => toast.classList.add('show'), 10);
             
             setTimeout(() => {
                 toast.classList.remove('show');
+                setTimeout(() => toast.style.display = 'none', 400);
             }, 3500);
         }
 
-        function showLoading() {
-            document.getElementById('loading-overlay').classList.add('show');
-        }
-
-        function hideLoading() {
-            document.getElementById('loading-overlay').classList.remove('show');
-        }
-
-        function loginStudent() {
-            const name = document.getElementById('student-name').value.trim();
-            const className = document.getElementById('student-class').value;
-            
-            if (!name || !className) {
-                showToast('Login Gagal', 'Nama dan kelas harus diisi!', 'error');
-                return;
-            }
-            
-            currentUser = 'siswa';
-            studentData = { name, class: className };
-            
-            // Auto-fill student name and class in submit form
-            document.getElementById('submit-name').value = name;
-            document.getElementById('submit-class').value = className;
-            
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
-            
-            document.getElementById('user-role-badge').textContent = `👨‍🎓 ${name} - ${className}`;
-            
-            updateVisibility();
-            
-            downloadDataFromCloud().then(() => {
-                renderMaterials();
-                renderProfile();
-                renderDeadline();
-                renderSubmittedTasks();
-                updateTaskTypeDropdown();
-            });
-            
-            startAutoSync();
-            
-            showToast('Login Berhasil', `Selamat datang, ${name}!`, 'success');
-        }
-        
-        function login(role) {
-            if (role === 'guru') {
-                const password = document.getElementById('teacher-password').value;
-                if (password !== TEACHER_PASSWORD) {
-                    showToast('Login Gagal', 'Password salah! Silakan coba lagi.', 'error');
-                    return;
-                }
-            }
-            
-            currentUser = role;
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
-            
-            document.getElementById('user-role-badge').textContent = role === 'guru' ? '👨‍🏫 Mode Guru' : '👨‍🎓 Mode Siswa';
-            
-            updateVisibility();
-            
-            // Download data from cloud and start auto-sync
-            downloadDataFromCloud().then(() => {
-                renderMaterials();
-                renderProfile();
-                renderDeadline();
-                renderSubmittedTasks();
-                updateTaskTypeDropdown();
-            });
-            
-            // Start automatic sync every 30 seconds
-            startAutoSync();
-            
-            showToast('Login Berhasil', `Selamat datang, ${role === 'guru' ? 'Bapak/Ibu Guru' : 'Siswa'}!`, 'success');
-        }
-
         function logout() {
+            if (window.google && window.google.accounts && window.google.accounts.id) {
+                window.google.accounts.id.disableAutoSelect();
+            }
+            
+            localStorage.removeItem('currentUser');
             currentUser = null;
+            isTeacher = false;
             
-            // Stop auto-sync when logging out
-            stopAutoSync();
-            
-            document.getElementById('login-screen').classList.remove('hidden');
             document.getElementById('dashboard').classList.add('hidden');
-            document.getElementById('teacher-password').value = '';
-            switchTab('materi');
+            document.getElementById('login-screen').classList.remove('hidden');
+            
+            showToast('Logout Berhasil', 'Anda telah keluar dari sistem', 'success');
         }
 
-        function updateVisibility() {
-            const teacherOnly = document.querySelectorAll('.teacher-only');
-            const studentOnly = document.querySelectorAll('.student-only');
-            
-            teacherOnly.forEach(el => {
-                el.style.display = currentUser === 'guru' ? '' : 'none';
-            });
-            
-            studentOnly.forEach(el => {
-                el.style.display = currentUser === 'siswa' ? '' : 'none';
-            });
-        }
-
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                if (btn.dataset.tab === tabName) {
-                    btn.classList.add('tab-active');
-                    btn.classList.remove('bg-white/50', 'text-slate-600', 'hover:bg-white/80');
-                } else {
-                    btn.classList.remove('tab-active');
-                    btn.classList.add('bg-white/50', 'text-slate-600', 'hover:bg-white/80');
-                }
-            });
-            
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.add('hidden');
-            });
-            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-            
-            // Update dropdown when switching to tugas tab
-            if (tabName === 'tugas') {
-                updateTaskTypeDropdown();
-            }
-        }
-
-        // ==================== SEMESTER FUNCTIONS ====================
-        function switchSemester(semester) {
-            appData.currentSemester = semester;
-            saveData();
-            
-            // Update active card styling
-            document.getElementById('card-semester1').classList.toggle('active', semester === 'semester1');
-            document.getElementById('card-semester2').classList.toggle('active', semester === 'semester2');
-            
-            // Reset open chapter
-            openChapterId = null;
-            
-            // Re-render materials
-            renderMaterials();
-            
-            showToast('Semester Diganti', `Menampilkan materi ${semester === 'semester1' ? 'Semester 1' : 'Semester 2'}`, 'success');
-        }
-
-        // ==================== MATERIALS FUNCTIONS ====================
-        function renderMaterials() {
-            const container = document.getElementById('chapters-container');
-            const currentSemester = appData.currentSemester;
-            const chapters = appData.materials[currentSemester];
-            
-            if (!chapters || chapters.length === 0) {
-                container.innerHTML = '<p class="text-center text-slate-500 py-8">Belum ada materi untuk semester ini</p>';
-                return;
-            }
-            
-            container.innerHTML = chapters.map(chapter => `
-                <div class="glassmorphism rounded-3xl overflow-hidden card-hover">
-                    <button onclick="toggleChapter('${chapter.id}')" class="w-full p-6 ${chapter.color === 'blue' ? 'semester1-header' : 'semester2-header'} text-left flex items-center justify-between hover:opacity-90 transition-all">
-                        <div class="flex items-center gap-4">
-                            <span class="text-4xl">${chapter.icon}</span>
-                            <div>
-                                <h3 class="text-xl font-bold text-white">${chapter.title}</h3>
-                                <p class="text-sm text-white/80">${chapter.subChapters.length} Sub Bab</p>
-                            </div>
-                        </div>
-                        <svg id="icon-${chapter.id}" class="w-6 h-6 text-white rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    
-                    <div id="content-${chapter.id}" class="chapter-content px-6 pb-6">
-                        <div class="space-y-3">
-                            ${chapter.subChapters.map(sub => renderSubChapter(sub, chapter.id, chapter.color)).join('')}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderSubChapter(sub, chapterId, color) {
-            return `
-                <div class="bg-white/50 rounded-2xl overflow-hidden">
-                    <button onclick="toggleSubChapter('${sub.id}')" class="w-full p-4 text-left flex items-center justify-between hover:bg-white/80 transition-all">
-                        <span class="font-semibold text-slate-700">${sub.title}</span>
-                        <svg id="icon-${sub.id}" class="w-5 h-5 text-slate-400 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    
-                    <div id="content-${sub.id}" class="sub-chapter-content">
-                        <div class="px-4 pb-4">
-                            <div class="grid md:grid-cols-4 gap-3">
-                                ${renderMaterialButton('PDF', 'pdf', sub, color)}
-                                ${renderMaterialButton('Video', 'video', sub, color)}
-                                ${renderMaterialButton('Games', 'games', sub, color)}
-                                ${renderMaterialButton('Kuis', 'quiz', sub, color)}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderMaterialButton(label, type, sub, color) {
-            const icons = {
-                pdf: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>',
-                video: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',
-                games: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>',
-                quiz: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>'
-            };
-            
-            const colorClasses = {
-                pdf: 'from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700',
-                video: 'from-red-500 to-red-600 hover:from-red-600 hover:to-red-700',
-                games: 'from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700',
-                quiz: 'from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700'
-            };
-            
-            const url = sub[type] || '';
-            const hasLink = url !== '';
-            const isTeacher = currentUser === 'guru';
-            
-            return `
-                <div>
-                    <button onclick="openLink('${url}', '${sub.title} - ${label}', '${type}')" 
-                        class="material-btn ${hasLink ? 'has-link' : ''} w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r ${colorClasses[type]} text-white font-medium rounded-xl shadow-md">
-                        ${icons[type]}
-                        ${label}
-                    </button>
-                    ${isTeacher ? `
-                        <div class="link-input-group">
-                            <input type="url" id="input-${type}-${sub.id}" value="${url}" 
-                                placeholder="Masukkan link ${label}..." 
-                                class="link-input">
-                            <button onclick="saveLink('${sub.id}', '${type}')" 
-                                class="save-link-btn">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                                Simpan Link ${label}
-                            </button>
-                            <div class="link-status ${hasLink ? '' : 'empty'}">
-                                ${hasLink ? '✓ Link Tersimpan' : '⚠ Belum Ada Link'}
-                            </div>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-        }
-
-        function toggleChapter(id) {
-            const content = document.getElementById(`content-${id}`);
-            const icon = document.getElementById(`icon-${id}`);
-            
-            // If clicking the same chapter, just toggle it
-            if (openChapterId === id) {
-                content.classList.toggle('open');
-                icon.classList.toggle('rotated');
-                openChapterId = content.classList.contains('open') ? id : null;
-            } else {
-                // Close previously open chapter
-                if (openChapterId) {
-                    const prevContent = document.getElementById(`content-${openChapterId}`);
-                    const prevIcon = document.getElementById(`icon-${openChapterId}`);
-                    if (prevContent) prevContent.classList.remove('open');
-                    if (prevIcon) prevIcon.classList.remove('rotated');
-                }
-                
-                // Open new chapter
-                content.classList.add('open');
-                icon.classList.add('rotated');
-                openChapterId = id;
-            }
-        }
-
-        function toggleSubChapter(id) {
-            const content = document.getElementById(`content-${id}`);
-            const icon = document.getElementById(`icon-${id}`);
-            
-            content.classList.toggle('open');
-            icon.classList.toggle('rotated');
-        }
-
-        // ==================== DEADLINE & TASK TYPE SYNC ====================
-        function updateTaskTypeDropdown() {
-            const select = document.getElementById('submit-task-type');
-            const container = document.getElementById('deadline-task-option-container');
-            const indicator = document.getElementById('auto-selected-indicator');
-            
-            if (!select || !container) return;
-            
-            // Get current student's class deadlines
-            const studentClass = currentUser === 'siswa' ? studentData.class : null;
-            const classDeadlines = studentClass ? 
-                appData.deadlines.filter(d => d.class === studentClass) : [];
-            
-            // Clear previous custom options
-            const existingCustomOptions = select.querySelectorAll('option[data-custom="true"]');
-            existingCustomOptions.forEach(opt => opt.remove());
-            
-            // Clear container
-            container.innerHTML = '';
-            
-            if (classDeadlines.length > 0) {
-                // Add all deadline titles as options
-                classDeadlines.forEach(deadline => {
-                    const deadlineTitle = deadline.title?.trim();
-                    if (deadlineTitle && deadlineTitle !== '') {
-                        const existingOption = Array.from(select.options).find(opt => 
-                            opt.value.toLowerCase() === deadlineTitle.toLowerCase() && !opt.hasAttribute('data-custom')
-                        );
-                        
-                        if (!existingOption) {
-                            const customOption = document.createElement('option');
-                            customOption.value = deadlineTitle;
-                            customOption.textContent = `📌 ${deadlineTitle} (Tugas Aktif)`;
-                            customOption.setAttribute('data-custom', 'true');
-                            select.insertBefore(customOption, select.options[1]);
-                        }
-                    }
-                });
-                
-                // Auto-select the most recent deadline
-                const latestDeadline = classDeadlines.sort((a, b) => 
-                    new Date(b.createdAt) - new Date(a.createdAt)
-                )[0];
-                
-                if (latestDeadline?.title) {
-                    select.value = latestDeadline.title;
-                    
-                    // Show indicator
-                    if (indicator) {
-                        indicator.classList.remove('hidden');
-                    }
-                    
-                    // Show badge
-                    container.innerHTML = `
-                        <div class="auto-selected-badge mt-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            Otomatis dipilih dari deadline terbaru
-                        </div>
-                    `;
-                }
-            } else {
-                // Hide indicator if no deadline
-                if (indicator) {
-                    indicator.classList.add('hidden');
-                }
-            }
-        }
-
-        function getStudentDeadline() {
-            if (currentUser !== 'siswa' || !studentData.class) return null;
-            
-            // Get all deadlines for student's class
-            const classDeadlines = appData.deadlines.filter(d => d.class === studentData.class);
-            
-            if (classDeadlines.length === 0) return null;
-            
-            // Return the most recent deadline that's not expired
-            const now = new Date();
-            const activeDeadlines = classDeadlines.filter(d => {
-                const deadlineDate = new Date(`${d.date}T${d.time || '23:59'}`);
-                return deadlineDate > now;
-            });
-            
-            if (activeDeadlines.length === 0) {
-                // If all deadlines expired, return the most recent one (to show it's expired)
-                return classDeadlines.sort((a, b) => 
-                    new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`)
-                )[0];
-            }
-            
-            // Return the closest upcoming deadline
-            return activeDeadlines.sort((a, b) => 
-                new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`)
-            )[0];
-        }
-
-        function renderDeadline() {
-            if (currentUser === 'guru') {
-                // Clear form
-                document.getElementById('deadline-title').value = '';
-                document.getElementById('class-7E').checked = false;
-                document.getElementById('class-7F').checked = false;
-                document.getElementById('class-7G').checked = false;
-                document.getElementById('deadline-date').value = '';
-                document.getElementById('deadline-time').value = '23:59';
-                document.getElementById('deadline-desc').value = '';
-                
-                // Render all deadlines list
-                renderAllDeadlinesList();
-            }
-            
-            const deadlineDisplay = document.getElementById('current-deadline');
-            
-            // For students, show only their class deadlines
-            if (currentUser === 'siswa') {
-                const studentClass = studentData.class;
-                const classDeadlines = appData.deadlines.filter(d => d.class === studentClass);
-                
-                if (!classDeadlines || classDeadlines.length === 0) {
-                    deadlineDisplay.innerHTML = `
-                        <div class="text-center py-8 text-slate-500">
-                            <svg class="w-12 h-12 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                            </svg>
-                            <p>Belum ada tugas untuk kelas ${studentClass}</p>
-                        </div>
-                    `;
-                    
-                    // Enable form
-                    enableSubmitForm();
-                    return;
-                }
-                
-                // Render all deadlines for this class
-                renderStudentDeadlinesList(classDeadlines, deadlineDisplay);
-            }
-        }
-        
-        function renderStudentDeadlinesList(deadlines, container) {
-            // Sort deadlines by date (closest first)
-            const sortedDeadlines = [...deadlines].sort((a, b) => 
-                new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`)
-            );
-            
-            const now = new Date();
-            let hasActiveDeadline = false;
-            
-            const deadlinesHTML = sortedDeadlines.map((deadline, index) => {
-                const deadlineDate = new Date(`${deadline.date}T${deadline.time || '23:59'}`);
-                const diffTime = deadlineDate - now;
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                const isExpired = now > deadlineDate;
-                
-                if (!isExpired) hasActiveDeadline = true;
-                
-                let urgencyClass = 'deadline-normal';
-                let urgencyText = 'Tenang, masih ada waktu';
-                let urgencyColor = 'text-emerald-600';
-                let borderColor = 'border-emerald-200';
-                
-                if (isExpired) {
-                    urgencyClass = 'deadline-urgent';
-                    urgencyText = '❌ Deadline sudah lewat!';
-                    urgencyColor = 'text-red-600';
-                    borderColor = 'border-red-200';
-                } else if (diffDays <= 1) {
-                    urgencyClass = 'deadline-urgent';
-                    urgencyText = '⚠️ Deadline sangat dekat!';
-                    urgencyColor = 'text-red-600';
-                    borderColor = 'border-red-200';
-                } else if (diffDays <= 3) {
-                    urgencyClass = 'deadline-warning';
-                    urgencyText = '⏰ Segera kerjakan!';
-                    urgencyColor = 'text-amber-600';
-                    borderColor = 'border-amber-200';
-                }
-                
-                const formattedDate = deadlineDate.toLocaleDateString('id-ID', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-                
-                return `
-                    <div class="${urgencyClass} bg-white/50 rounded-2xl p-5 border-2 ${borderColor} ${index > 0 ? 'mt-4' : ''}">
-                        <div class="flex items-start gap-4">
-                            <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <h4 class="text-lg font-bold text-slate-800">${deadline.title}</h4>
-                                    ${isExpired ? 
-                                        '<span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-medium rounded-full">Berakhir</span>' : 
-                                        '<span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">Aktif</span>'
-                                    }
-                                </div>
-                                <p class="text-sm text-slate-600 mb-1">Untuk Kelas: <span class="font-semibold text-purple-600">${deadline.class}</span></p>
-                                <p class="text-sm text-slate-600 mb-3">${deadline.description || 'Tidak ada instruksi tambahan'}</p>
-                                <div class="flex flex-wrap items-center gap-3 text-sm">
-                                    <span class="flex items-center gap-1 text-slate-600">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                        ${formattedDate}
-                                    </span>
-                                    <span class="flex items-center gap-1 text-slate-600">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                        ${deadline.time || '23:59'} WIB
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-slate-200">
-                            <p class="font-semibold ${urgencyColor}">${urgencyText}</p>
-                            <p class="text-sm text-slate-500 mt-1">Sisa waktu: ${isExpired ? 'Sudah lewat!' : diffDays > 0 ? diffDays + ' hari' : 'Hari ini!'}</p>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            container.innerHTML = `
-                <div class="mb-4">
-                    <div class="flex items-center justify-between mb-3">
-                        <h4 class="font-semibold text-slate-800 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                            </svg>
-                            Daftar Tugas Kelas ${studentData.class}
-                        </h4>
-                        <span class="px-3 py-1 bg-purple-100 text-purple-700 text-sm font-semibold rounded-full">
-                            ${sortedDeadlines.length} Tugas
-                        </span>
-                    </div>
-                </div>
-                ${deadlinesHTML}
-            `;
-            
-            // Disable/enable submit form based on active deadlines
-            if (currentUser === 'siswa') {
-                if (hasActiveDeadline) {
-                    enableSubmitForm();
-                } else {
-                    disableSubmitForm();
-                }
-            }
-        }
-
-        function renderAllDeadlinesList() {
-            const container = document.getElementById('all-deadlines-list');
-            
-            if (!appData.deadlines || appData.deadlines.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-6 text-slate-500">
-                        <p class="text-sm">Belum ada deadline yang dibuat</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Sort by creation date (newest first)
-            const sortedDeadlines = [...appData.deadlines].sort((a, b) => 
-                new Date(b.createdAt) - new Date(a.createdAt)
-            );
-            
-            container.innerHTML = sortedDeadlines.map(deadline => {
-                const deadlineDate = new Date(`${deadline.date}T${deadline.time || '23:59'}`);
-                const now = new Date();
-                const isExpired = now > deadlineDate;
-                
-                const formattedDate = deadlineDate.toLocaleDateString('id-ID', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                
-                return `
-                    <div class="flex items-start justify-between p-4 bg-white/50 rounded-xl border border-slate-200">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <h5 class="font-semibold text-slate-800">${deadline.title}</h5>
-                                <span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">${deadline.class}</span>
-                                ${isExpired ? '<span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-medium rounded-full">Berakhir</span>' : '<span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">Aktif</span>'}
-                            </div>
-                            <p class="text-xs text-slate-600 mb-2">${deadline.description || 'Tidak ada deskripsi'}</p>
-                            <p class="text-xs text-slate-500">⏰ ${formattedDate}</p>
-                        </div>
-                        <div class="flex items-center gap-2 ml-3">
-                            <button onclick="editDeadline('${deadline.id}')" class="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-all" title="Edit Deadline">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                </svg>
-                            </button>
-                            <button onclick="deleteDeadline('${deadline.id}')" class="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-all" title="Hapus Deadline">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        function editDeadline(id) {
-            const deadline = appData.deadlines.find(d => d.id === id);
-            if (!deadline) return;
-            
-            // Fill form with deadline data
-            document.getElementById('deadline-title').value = deadline.title;
-            document.getElementById('deadline-date').value = deadline.date;
-            document.getElementById('deadline-time').value = deadline.time || '23:59';
-            document.getElementById('deadline-desc').value = deadline.description || '';
-            
-            // Check the appropriate class checkbox
-            document.getElementById('class-7E').checked = deadline.class === '7E';
-            document.getElementById('class-7F').checked = deadline.class === '7F';
-            document.getElementById('class-7G').checked = deadline.class === '7G';
-            
-            // Delete the old deadline (will be re-created when saved)
-            deleteDeadline(id);
-            
-            // Scroll to form
-            document.getElementById('deadline-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            
-            showToast('Mode Edit', 'Data deadline dimuat ke form. Silakan edit dan simpan kembali.', 'warning');
-        }
-
-        function disableSubmitForm() {
-            const submitButton = document.getElementById('submit-button');
-            if (submitButton) {
-                submitButton.disabled = true;
-                submitButton.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Pengumpulan Ditutup';
-                submitButton.classList.remove('from-emerald-500', 'to-teal-500', 'hover:from-emerald-600', 'hover:to-teal-600');
-                submitButton.classList.add('from-slate-400', 'to-slate-500', 'cursor-not-allowed');
-            }
-            
-            document.getElementById('submit-link').disabled = true;
-            document.getElementById('submit-note').disabled = true;
-        }
-
-        function enableSubmitForm() {
-            const submitButton = document.getElementById('submit-button');
-            if (submitButton) {
-                submitButton.disabled = false;
-                submitButton.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Kirim Tugas';
-                submitButton.classList.add('from-emerald-500', 'to-teal-500', 'hover:from-emerald-600', 'hover:to-teal-600');
-                submitButton.classList.remove('from-slate-400', 'to-slate-500', 'cursor-not-allowed');
-            }
-            
-            document.getElementById('submit-link').disabled = false;
-            document.getElementById('submit-note').disabled = false;
-        }
-
-        function saveDeadline() {
-            const title = document.getElementById('deadline-title').value.trim();
-            const date = document.getElementById('deadline-date').value;
-            const time = document.getElementById('deadline-time').value;
-            const desc = document.getElementById('deadline-desc').value.trim();
-            
-            // Get selected classes
-            const selectedClasses = [];
-            if (document.getElementById('class-7E').checked) selectedClasses.push('7E');
-            if (document.getElementById('class-7F').checked) selectedClasses.push('7F');
-            if (document.getElementById('class-7G').checked) selectedClasses.push('7G');
-            
-            if (!title || selectedClasses.length === 0 || !date) {
-                showToast('Error', 'Judul, kelas, dan tanggal harus diisi!', 'error');
-                return;
-            }
-            
-            // Create deadline for each selected class
-            selectedClasses.forEach(className => {
-                const deadlineId = `${Date.now()}-${className}`;
-                const newDeadline = {
-                    id: deadlineId,
-                    title,
-                    class: className,
-                    date,
-                    time: time || '23:59',
-                    description: desc,
-                    createdAt: new Date().toISOString()
-                };
-                
-                appData.deadlines.push(newDeadline);
-            });
-            
-            saveData();
-            renderDeadline();
-            updateTaskTypeDropdown();
-            
-            const classText = selectedClasses.join(', ');
-            showToast('Berhasil!', `Deadline untuk kelas ${classText} berhasil disimpan`, 'success');
-        }
-
-        function deleteDeadline(id) {
-            appData.deadlines = appData.deadlines.filter(d => d.id !== id);
-            saveData();
-            renderAllDeadlinesList();
-            updateTaskTypeDropdown();
-            showToast('Dihapus', 'Deadline berhasil dihapus', 'warning');
-        }
-
-        // ==================== GOOGLE SHEETS SUBMISSION ====================
-        async function submitTaskToGoogleSheets(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('submit-name').value.trim();
-            const className = document.getElementById('submit-class').value;
-            const taskType = document.getElementById('submit-task-type').value;
-            const link = document.getElementById('submit-link').value.trim();
-            const note = document.getElementById('submit-note').value.trim();
-            
-            if (!name || !className || !taskType || !link) {
-                showToast('Error', 'Semua field wajib diisi kecuali catatan!', 'error');
-                return;
-            }
-            
-            const submitButton = document.getElementById('submit-button');
-            submitButton.disabled = true;
-            showLoading();
-            
-            const timestamp = new Date().toLocaleString('id-ID', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            
-            const formData = new FormData();
-            formData.append('nama', name);
-            formData.append('kelas', className);
-            formData.append('jenisTugas', taskType);
-            formData.append('linkTugas', link);
-            formData.append('catatan', note || '-');
-            formData.append('timestamp', timestamp);
-            
-            try {
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                hideLoading();
-                
-                if (result.status === 'success') {
-                    const task = {
-                        id: Date.now(),
-                        name,
-                        class: className,
-                        taskType,
-                        link,
-                        note,
-                        submittedAt: new Date().toISOString()
-                    };
-                    
-                    appData.submittedTasks.push(task);
-                    saveData();
-                    
-                    document.getElementById('submit-form').reset();
-                    
-                    renderSubmittedTasks();
-                    updateTaskTypeDropdown(); // Re-apply auto-selection after form reset
-                    showToast('Berhasil!', 'Tugas berhasil dikirim ke Google Sheets', 'success');
-                } else {
-                    throw new Error(result.message || 'Gagal mengirim data');
-                }
-            } catch (error) {
-                hideLoading();
-                console.error('Error:', error);
-                showToast('Gagal Mengirim', 'Terjadi kesalahan saat mengirim tugas. Silakan coba lagi.', 'error');
-            } finally {
-                submitButton.disabled = false;
-            }
-        }
-
-        function renderSubmittedTasks() {
-            const container = document.getElementById('tasks-list');
-            
-            if (!appData.submittedTasks || appData.submittedTasks.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-6 text-slate-500">
-                        <p class="text-sm">Belum ada tugas yang dikumpulkan</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = appData.submittedTasks.map(task => {
-                const date = new Date(task.submittedAt).toLocaleString('id-ID', {
-                    day: 'numeric',
-                    month: 'short',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                
-                return `
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
-                        <div>
-                            <p class="font-medium text-slate-800">${task.name} - ${task.class}</p>
-                            <p class="text-xs text-slate-500">${task.taskType} • ${date}</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="openLink('${task.link}', 'Tugas ${task.name}')" class="p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-all" title="Lihat Tugas">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                </svg>
-                            </button>
-                            <button onclick="deleteTask(${task.id})" class="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-all" title="Hapus">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function deleteTask(id) {
-            appData.submittedTasks = appData.submittedTasks.filter(t => t.id !== id);
-            saveData();
-            renderSubmittedTasks();
-            showToast('Dihapus', 'Data tugas berhasil dihapus', 'warning');
-        }
-
-        // ==================== PROFILE FUNCTIONS ====================
-        function renderProfile() {
-            const profile = appData.profile;
-            
-            document.getElementById('profile-name-display').textContent = profile.name;
-            document.getElementById('profile-nip-display').textContent = `NIP: ${profile.nip}`;
-            document.getElementById('profile-bio-display').textContent = profile.bio;
-            
-            document.getElementById('wa-link').href = `https://wa.me/${profile.whatsapp}`;
-            document.getElementById('email-link').href = `mailto:${profile.email}`;
-            
-            if (currentUser === 'guru') {
-                document.getElementById('edit-name').value = profile.name;
-                document.getElementById('edit-nip').value = profile.nip;
-                document.getElementById('edit-bio').value = profile.bio;
-                document.getElementById('edit-whatsapp').value = profile.whatsapp;
-                document.getElementById('edit-email').value = profile.email;
-            }
-        }
-
-        function saveProfile() {
-            const name = document.getElementById('edit-name').value.trim();
-            const nip = document.getElementById('edit-nip').value.trim();
-            const bio = document.getElementById('edit-bio').value.trim();
-            const whatsapp = document.getElementById('edit-whatsapp').value.trim();
-            const email = document.getElementById('edit-email').value.trim();
-            
-            if (!name) {
-                showToast('Error', 'Nama tidak boleh kosong!', 'error');
-                return;
-            }
-            
-            appData.profile = { name, nip, bio, whatsapp, email };
-            saveData();
-            renderProfile();
-            showToast('Berhasil!', 'Profil berhasil disimpan', 'success');
-        }
-
-        // ==================== ELEMENT SDK INTEGRATION ====================
+        // ==================== ELEMENT SDK ====================
         const defaultConfig = {
-            portal_title: 'Portal IPS Kelas 7',
-            welcome_text: 'Selamat datang di portal pembelajaran',
-            google_script_url: 'https://script.google.com/macros/s/AKfycbyLhzzvHgtsEHcHoD8Rs4dVdU5bUfT3GNcikn8AfHr9ChHOvsBa89DhCa1IsTUVYbPa/exec',
+            portal_title: 'Portal Pembelajaran',
+            welcome_message: 'Masuk dengan akun Google Anda',
+            google_client_id: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+            google_script_url: 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec',
+            teacher_email_1: 'teacher1@school.com',
+            teacher_email_2: 'teacher2@school.com',
+            teacher_email_3: 'teacher3@school.com',
             primary_color: '#667eea',
             secondary_color: '#764ba2',
-            accent_color: '#f093fb',
-            text_color: '#1e293b',
-            background_color: '#f8fafc'
+            text_color: '#1e293b'
         };
 
         let config = { ...defaultConfig };
@@ -2240,18 +1080,32 @@
         async function onConfigChange(newConfig) {
             config = { ...config, ...newConfig };
             
+            // Update title and message
             const titleDisplay = document.getElementById('portal-title-display');
             if (titleDisplay) titleDisplay.textContent = config.portal_title || defaultConfig.portal_title;
             
             const headerTitle = document.getElementById('header-title');
             if (headerTitle) headerTitle.textContent = config.portal_title || defaultConfig.portal_title;
             
-            const welcomeDisplay = document.getElementById('welcome-text-display');
-            if (welcomeDisplay) welcomeDisplay.textContent = config.welcome_text || defaultConfig.welcome_text;
+            const welcomeDisplay = document.getElementById('welcome-message-display');
+            if (welcomeDisplay) welcomeDisplay.textContent = config.welcome_message || defaultConfig.welcome_message;
             
+            // Update Google Client ID
+            if (config.google_client_id && config.google_client_id !== defaultConfig.google_client_id) {
+                GOOGLE_CLIENT_ID = config.google_client_id;
+            }
+            
+            // Update Google Script URL
             if (config.google_script_url && config.google_script_url !== defaultConfig.google_script_url) {
                 GOOGLE_SCRIPT_URL = config.google_script_url;
             }
+            
+            // Update teacher emails
+            TEACHER_EMAILS = [
+                config.teacher_email_1 || '',
+                config.teacher_email_2 || '',
+                config.teacher_email_3 || ''
+            ].filter(email => email.trim() !== '');
         }
 
         function mapToCapabilities(config) {
@@ -2288,15 +1142,17 @@
         function mapToEditPanelValues(config) {
             return new Map([
                 ['portal_title', config.portal_title || defaultConfig.portal_title],
-                ['welcome_text', config.welcome_text || defaultConfig.welcome_text],
-                ['google_script_url', config.google_script_url || defaultConfig.google_script_url]
+                ['welcome_message', config.welcome_message || defaultConfig.welcome_message],
+                ['google_client_id', config.google_client_id || defaultConfig.google_client_id],
+                ['google_script_url', config.google_script_url || defaultConfig.google_script_url],
+                ['teacher_email_1', config.teacher_email_1 || defaultConfig.teacher_email_1],
+                ['teacher_email_2', config.teacher_email_2 || defaultConfig.teacher_email_2],
+                ['teacher_email_3', config.teacher_email_3 || defaultConfig.teacher_email_3]
             ]);
         }
 
         // ==================== INITIALIZATION ====================
         function init() {
-            loadData();
-            
             if (window.elementSdk) {
                 window.elementSdk.init({
                     defaultConfig,
@@ -2306,22 +1162,49 @@
                 });
                 config = window.elementSdk.config || defaultConfig;
                 
+                // Update configuration from Element SDK
+                if (config.google_client_id && config.google_client_id !== defaultConfig.google_client_id) {
+                    GOOGLE_CLIENT_ID = config.google_client_id;
+                }
                 if (config.google_script_url && config.google_script_url !== defaultConfig.google_script_url) {
                     GOOGLE_SCRIPT_URL = config.google_script_url;
                 }
+                TEACHER_EMAILS = [
+                    config.teacher_email_1 || '',
+                    config.teacher_email_2 || '',
+                    config.teacher_email_3 || ''
+                ].filter(email => email.trim() !== '');
             }
             
             onConfigChange(config);
             
-            // Close modal on ESC key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeModal();
-                }
-            });
+            // Check if user is already logged in
+            const savedUser = loadUserFromLocal();
+            if (savedUser && savedUser.email) {
+                currentUser = savedUser;
+                isTeacher = TEACHER_EMAILS.some(email => 
+                    email.toLowerCase() === currentUser.email.toLowerCase()
+                );
+                
+                loadAllData().then(() => {
+                    if (currentUser.class || isTeacher) {
+                        showDashboard();
+                    } else {
+                        showCompleteProfileModal();
+                    }
+                });
+            } else {
+                // Initialize Google Sign-In
+                initGoogleSignIn();
+            }
         }
 
-        init();
+        // Start app when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c233484c379ea8a',t:'MTc2OTEyODQ2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c2346088642ea86',t:'MTc2OTEyOTE4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
